@@ -1,0 +1,19 @@
+---
+title: "Networks_HW1"
+author: "KiseokUchicago"
+date: "2021-04-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Homework1 
+## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual** \
+Student: **Kiseok Lee** 
+
