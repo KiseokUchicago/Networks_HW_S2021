@@ -36,6 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -337,7 +339,13 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/KiseokUchicago/Networks_HW_S2021">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -374,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-09
+<strong>Last updated:</strong> 2021-04-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -465,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstronge09905a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> e09905a </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeacdc82b746cca949d8c3b4319423379d68a73165targetblankacdc82ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/acdc82b746cca949d8c3b4319423379d68a73165" target="_blank">acdc82b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstronge09905a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeacdc82b746cca949d8c3b4319423379d68a73165targetblankacdc82ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version e09905a. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/acdc82b746cca949d8c3b4319423379d68a73165" target="_blank">acdc82b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -482,6 +490,15 @@ Note that you need to be careful to ensure that all relevant files for the analy
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/Chesapeake_bay_links.csv
+    Untracked:  data/Chesapeake_bay_nodes.csv
+    Untracked:  data/Dunne2013PBioSupData.xlsx
+    Untracked:  data/M_PA_003.csv
+    Untracked:  data/Otago_Data_Links.csv
+    Untracked:  data/Otago_Data_Nodes.csv
+    Untracked:  data/Ural_valley_A_HP_048.csv
 
 </code></pre>
 <p>
@@ -525,7 +542,41 @@ Message
 Rmd
 </td>
 <td>
-e09905a
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/acdc82b746cca949d8c3b4319423379d68a73165/analysis/Networks_HW1.Rmd" target="_blank">acdc82b</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-10
+</td>
+<td>
+HW1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/a70c6a8f69082b1b8d4bf4fab505a773060018ff/docs/Networks_HW1.html" target="_blank">a70c6a8</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/e09905a665be467e5f4a3ffe8d5a678b54618534/analysis/Networks_HW1.Rmd" target="_blank">e09905a</a>
 </td>
 <td>
 KiseokUchicago
@@ -549,8 +600,851 @@ HW1
 </div>
 <div id="coding-assignment-for-ecev-44500-networks-in-ecology-and-evolution" class="section level2">
 <h2>Coding assignment for ECEV 44500 Networks in Ecology and Evolution</h2>
-<p>Professor: <strong>Mercedes Pascual</strong><br />
+<p>Professor: <strong>Mercedes Pascual</strong>, <strong>Sergio A. Alcala Corona</strong><br />
 Student: <strong>Kiseok Lee</strong></p>
+<pre class="r"><code># libraries
+library(&#39;igraph&#39;)
+library(&#39;bipartite&#39;)</code></pre>
+</div>
+<div id="data-structures" class="section level2">
+<h2>1. Data structures</h2>
+</div>
+<div id="networks-as-matrices" class="section level2">
+<h2>1.1 Networks as matrices</h2>
+<div id="undirected-graph" class="section level3">
+<h3>1.1.1. Undirected graph</h3>
+<pre class="r"><code>A_u &lt;- matrix(c(0,1,1,0,0, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,0,0,0),5,5, byrow=F)
+isSymmetric(A_u)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_u, mode = &#39;undirected&#39;)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-2-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="directed-graph" class="section level3">
+<h3>1.1.2. Directed graph</h3>
+<pre class="r"><code>A_d &lt;- matrix(c(0,1,1,0,1, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_d, mode = &#39;directed&#39;)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-1.-try-to-add-a-self-loop-to-one-of-the-networks." class="section level3">
+<h3>Problem 1. Try to add a self-loop to one of the networks.</h3>
+<pre class="r"><code>A_d &lt;- matrix(c(1,1,1,0,1, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_d, mode = &#39;directed&#39;)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-2.-try-to-create-a-directed-graph-in-which-there-is-a-singleton-a-node-without-any-interactions." class="section level3">
+<h3>Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).</h3>
+<pre class="r"><code>A_d &lt;- matrix(c(0,1,1,0,1, # An example input matrix
+                1,0,0,0,1,
+                1,0,0,0,0,
+                0,0,0,0,0,
+                0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_d, mode = &#39;directed&#39;)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="weighted-networks" class="section level3">
+<h3>1.1.3. Weighted networks</h3>
+<pre class="r"><code>A_w &lt;- matrix(c(0,1,1,0,0, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,0,0,0),5,5, byrow=F)
+random_weights &lt;- round(rnorm(10, 10, 4),2) # take weights from a normal distribution.
+A_w[lower.tri(A_w)] &lt;- A_w[lower.tri(A_w)]*random_weights # Fill the lower traiangle
+A_w &lt;- A_w+t(A_w) # This makes the matrix symmetric
+isSymmetric(A_w)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_w, mode = &#39;undirected&#39;, weighted = T)
+E(g)$weight</code></pre>
+<pre><code>[1] 12.02  5.63  9.01  7.57</code></pre>
+<pre class="r"><code>par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-3.-try-do-follow-the-code-above-to-create-a-directed-weighted-network." class="section level3">
+<h3>Problem 3. Try do follow the code above to create a directed weighted network.</h3>
+<pre class="r"><code>A_w &lt;- matrix(c(0,1,1,0,0, # An example input matrix
+                1,0,0,1,1,
+                0,0,0,0,1,
+                0,1,1,0,1,
+                0,1,0,0,0),5,5, byrow=F)
+random_weights &lt;- round(rnorm(25, 10, 4),2) # take weights from a normal distribution.
+A_w &lt;- A_w*random_weights # Fill the lower traiangle
+isSymmetric(A_w)</code></pre>
+<pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_w, mode = &#39;directed&#39;, weighted = T)
+E(g)$weight</code></pre>
+<pre><code> [1] 13.46 10.33 13.68 12.26 10.73  2.72  3.82 11.12  4.69  6.88</code></pre>
+<pre class="r"><code>par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-4.-what-can-edge-weights-be-in-ecological-networks-try-to-think-of-at-least-3-different-measures-for-an-ecological-interaction.-if-you-work-with-other-network-types-answer-the-question-according-to-your-domain-of-expertise." class="section level3">
+<h3>Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.</h3>
+<ol style="list-style-type: decimal">
+<li>Microbiome data: interaction strengths: either negative or positive correlation coefficient in co-occurrence networks</li>
+<li>General ecology data: manually curated metadata of weights</li>
+<li>Protein network data: the weight is defined by the edge clustering coefficient and the gene expression correlation between the interacting proteins (<a href="https://pubmed.ncbi.nlm.nih.gov/27771556/" class="uri">https://pubmed.ncbi.nlm.nih.gov/27771556/</a>)</li>
+</ol>
+</div>
+</div>
+<div id="networks-as-edge-lists" class="section level2">
+<h2>1.2 Networks as edge lists</h2>
+<div id="unweighted" class="section level3">
+<h3>1.2.1. Unweighted</h3>
+<pre class="r"><code># undirected
+L_u &lt;- data.frame(i=c(1,1,2,2),
+                j=c(2,3,4,5))
+g &lt;- igraph::graph.data.frame(L_u, directed = F)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-8-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># directed
+L_u &lt;- data.frame(i=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
+                j=c(2, 3, 1, 4, 5, 1, 5, 2, 1, 2))
+g &lt;- igraph::graph.data.frame(L_u, directed = T)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="unweighted-1" class="section level3">
+<h3>1.2.1. Unweighted</h3>
+</div>
+<div id="problem-5.-try-to-add-a-self-loop-to-the-edge-list-using-from-and-to-as-column-names." class="section level3">
+<h3>Problem 5. Try to add a self-loop to the edge list, using from and to as column names.</h3>
+<pre class="r"><code># undirected
+L_u &lt;- data.frame(i=c(1,1,1,2,2),
+                j=c(1,2,3,4,5))
+g &lt;- igraph::graph.data.frame(L_u, directed = F)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="weighted" class="section level3">
+<h3>1.2.2. Weighted</h3>
+<pre class="r"><code># undirected
+L_w &lt;- data.frame(i=c(1,1,2,2),
+                j=c(2,3,4,5),
+                weight=round(rnorm(4, 10, 4),2) # take weights from a normal distribution.
+                )
+g &lt;- igraph::graph.data.frame(L_w, directed = F)
+E(g)$weight</code></pre>
+<pre><code>[1]  5.01  5.56  4.75 14.13</code></pre>
+<pre class="r"><code>par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-11-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># directed
+L_wd &lt;- data.frame(from=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
+                to=c(2, 3, 1, 4, 5, 1, 5, 2, 1, 2),
+                weight=round(rnorm(10, 1, 0.2),2))
+g &lt;- igraph::graph.data.frame(L_wd, directed = T)
+g</code></pre>
+<pre><code>IGRAPH 296cf01 DNW- 5 10 -- 
++ attr: name (v/c), weight (e/n)
++ edges from 296cf01 (vertex names):
+ [1] 1-&gt;2 1-&gt;3 2-&gt;1 2-&gt;4 2-&gt;5 3-&gt;1 3-&gt;5 4-&gt;2 5-&gt;1 5-&gt;2</code></pre>
+<pre class="r"><code>E(g)$weight</code></pre>
+<pre><code> [1] 1.12 0.86 1.19 1.04 1.10 0.83 1.25 0.84 1.22 0.79</code></pre>
+<pre class="r"><code>par(mar=c(0,0,0,0))
+plot(g, edge.width=log(E(g)$weight)*10, # possible to rescale edge weights when plotting 
+       edge.arrow.size=1.2,
+       edge.curved=0.5,
+     edge.color=&#39;black&#39;)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-12-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-6.-what-are-the-advantagesdisadvantages-of-edge-lists-compared-to-matrices" class="section level3">
+<h3>Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?</h3>
+<p>Advantages: more direct and intuitive (only when having a small number of edges) Disadvantages: cannot use matrix operations. not good when there are many number of edges</p>
+</div>
+</div>
+<div id="converting-between-matrices-and-edge-lists" class="section level2">
+<h2>1.3 Converting between matrices and edge lists</h2>
+<pre class="r"><code>A_w</code></pre>
+<pre><code>      [,1]  [,2] [,3]  [,4]  [,5]
+[1,]  0.00 13.46 0.00  0.00  0.00
+[2,] 10.33  0.00 0.00 13.68 12.26
+[3,] 10.73  0.00 0.00  2.72  0.00
+[4,]  0.00  3.82 0.00  0.00  0.00
+[5,]  0.00 11.12 4.69  6.88  0.00</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.adjacency(A_w, mode = &#39;directed&#39;, weighted = T)
+L &lt;- igraph::as_data_frame(g, what = &#39;edges&#39;)
+L</code></pre>
+<pre><code>   from to weight
+1     1  2  13.46
+2     2  1  10.33
+3     2  4  13.68
+4     2  5  12.26
+5     3  1  10.73
+6     3  4   2.72
+7     4  2   3.82
+8     5  2  11.12
+9     5  3   4.69
+10    5  4   6.88</code></pre>
+<pre class="r"><code>g &lt;- igraph::graph.data.frame(L_wd, directed = T)
+A &lt;- igraph::as_adjacency_matrix(g, attr = &#39;weight&#39;, sparse=F)
+A</code></pre>
+<pre><code>     1    2    3    4    5
+1 0.00 1.12 0.86 0.00 0.00
+2 1.19 0.00 0.00 1.04 1.10
+3 0.83 0.00 0.00 0.00 1.25
+4 0.00 0.84 0.00 0.00 0.00
+5 1.22 0.79 0.00 0.00 0.00</code></pre>
+<div id="problem-7.-try-programming-a-function-that-takes-a-matrix-and-returns-an-edge-list.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level3">
+<h3>Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.</h3>
+<pre class="r"><code>matrix_to_edge_list &lt;- function(A){
+  # is it symmetric?
+  if (isSymmetric(A)){
+    g &lt;- igraph::graph.adjacency(A, mode = &#39;undirected&#39;, weighted = T)
+    L &lt;- igraph::as_data_frame(g, what = &#39;edges&#39;)
+    return(L)
+  } else{
+    g &lt;- igraph::graph.adjacency(A, mode = &#39;directed&#39;, weighted = T)
+    L &lt;- igraph::as_data_frame(g, what = &#39;edges&#39;)
+    return(L)
+  }
+}
+
+matrix_to_edge_list(A_w)</code></pre>
+<pre><code>   from to weight
+1     1  2  13.46
+2     2  1  10.33
+3     2  4  13.68
+4     2  5  12.26
+5     3  1  10.73
+6     3  4   2.72
+7     4  2   3.82
+8     5  2  11.12
+9     5  3   4.69
+10    5  4   6.88</code></pre>
+<pre class="r"><code>matrix_to_edge_list(A_d)</code></pre>
+<pre><code>  from to weight
+1    1  2      1
+2    1  3      1
+3    2  1      1
+4    2  5      1
+5    3  1      1
+6    3  5      1
+7    5  1      1
+8    5  2      1</code></pre>
+<pre class="r"><code>matrix_to_edge_list(A_u)</code></pre>
+<pre><code>  from to weight
+1    1  2      1
+2    1  3      1
+3    2  4      1
+4    2  5      1</code></pre>
+</div>
+<div id="problem-8.-try-programming-a-function-that-takes-an-edge-list-and-returns-a-matrix.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level3">
+<h3>Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.</h3>
+<pre class="r"><code>edge_list_to_matrix_list &lt;- function(L_w){
+  g &lt;- igraph::graph.data.frame(L_w, directed = T)
+  A &lt;- igraph::as_adjacency_matrix(g, attr = &#39;weight&#39;, sparse=F)
+  
+  # make it symmetric if it is undirected
+  if (all(A[lower.tri(A)]==0)){
+    A &lt;- A+t(A)
+    return(A)
+  }else{ # when directed
+    return(A)
+  }
+}
+
+edge_list_to_matrix_list(L_w)</code></pre>
+<pre><code>     1     2    3    4     5
+1 0.00  5.01 5.56 0.00  0.00
+2 5.01  0.00 0.00 4.75 14.13
+3 5.56  0.00 0.00 0.00  0.00
+4 0.00  4.75 0.00 0.00  0.00
+5 0.00 14.13 0.00 0.00  0.00</code></pre>
+<pre class="r"><code>edge_list_to_matrix_list(L_wd)</code></pre>
+<pre><code>     1    2    3    4    5
+1 0.00 1.12 0.86 0.00 0.00
+2 1.19 0.00 0.00 1.04 1.10
+3 0.83 0.00 0.00 0.00 1.25
+4 0.00 0.84 0.00 0.00 0.00
+5 1.22 0.79 0.00 0.00 0.00</code></pre>
+</div>
+</div>
+<div id="bipartite-networks" class="section level2">
+<h2>2. Bipartite networks</h2>
+</div>
+<div id="loading-data" class="section level2">
+<h2>2.1 Loading data</h2>
+<pre class="r"><code>data(&quot;memmott1999&quot;) # load
+class(memmott1999)</code></pre>
+<pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
+<pre class="r"><code>memmott1999[1:4,1:4] # view first lines</code></pre>
+<pre><code>                      Coleoptera.spec1 Coleoptera.spec2 Coleoptera.spec3
+Agrimonium.eupatorium                0                0                0
+Leontodon.autumnalis                 0                0                0
+Lotus.corniculatus                   0                0                0
+Medicago.lupulina                    0                0                0
+                      Coleoptera.spec4
+Agrimonium.eupatorium                0
+Leontodon.autumnalis                 0
+Lotus.corniculatus                   0
+Medicago.lupulina                    0</code></pre>
+<div id="problem-9.-now-try-to-load-a-different-data-set.-where-can-you-find-available-ones" class="section level3">
+<h3>Problem 9. Now try to load a different data set. Where can you find available ones?</h3>
+<p>We can find other database information in bipartite package manual. <a href="https://cran.r-project.org/web/packages/bipartite/bipartite.pdf" class="uri">https://cran.r-project.org/web/packages/bipartite/bipartite.pdf</a></p>
+<p>For example,</p>
+<pre class="r"><code>data(&quot;elberling1999&quot;)
+class(elberling1999)</code></pre>
+<pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
+<pre class="r"><code>elberling1999[1:4,1:4] # view first lines</code></pre>
+<pre><code>                   Phytomyza.aquilonia Alliopsis.glacialis Botanophilia.bidens
+Arabis.alpina                        0                   0                   0
+Astragalus.alpinus                   0                   0                   0
+Bartsia.alpina                       0                   0                   0
+Cassiope.hypniodes                   0                   0                   0
+                   Delai.piliventris
+Arabis.alpina                      0
+Astragalus.alpinus                 0
+Bartsia.alpina                     0
+Cassiope.hypniodes                 0</code></pre>
+</div>
+</div>
+<div id="visualizaing-data" class="section level2">
+<h2>2.2 Visualizaing data</h2>
+<pre class="r"><code>visweb(memmott1999)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># binary
+memmott1999_binary &lt;- 1*(memmott1999&gt;0)
+visweb(memmott1999_binary)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-19-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>visweb(memmott1999,prednames = F, prey.lablength = 10)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotweb(memmott1999)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<div id="problem-10.-can-you-say-something-about-the-network-using-this-representation-what-does-it-reveal-just-by-looking" class="section level3">
+<h3>Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?</h3>
+<p>Can’t really see in detail.</p>
+</div>
+<div id="problem-11.-try-to-browse-through-the-options-in-plotweb-and-tweak-the-plot." class="section level3">
+<h3>Problem 11. Try to browse through the options in plotweb and tweak the plot.</h3>
+<pre class="r"><code>plotweb(memmott1999,y.width.low=0.05, y.width.high=0.1, method=&quot;normal&quot;, 
+    add=TRUE, low.y=2.95, high.y=3.95, col.low=&quot;green&quot;, text.low.col=&quot;black&quot;, 
+    low.lab.dis=0, arrow=&quot;down&quot;, adj.low=c(0.5,1.1), low.lablength=4)</code></pre>
+<pre><code>Error in strheight(colnames(web)[1], cex = 0.6): plot.new has not been called yet</code></pre>
+</div>
+</div>
+<div id="importing-data" class="section level2">
+<h2>2.3 Importing data</h2>
+<pre class="r"><code>ural_data &lt;- read.csv(&#39;data/Ural_valley_A_HP_048.csv&#39;)
+ural_data[1:4,1:4]</code></pre>
+<pre><code>                        X Num..of.hosts.sampled Ctenophthalmus.wagneri
+1 Clethrionomys glareolus                  5209                   1748
+2      Apodemus uralensis                 15198                   1408
+3        Microtus arvalis                  1920                    494
+4           Sorex araneus                   856                    237
+  Nosopsyllus.consimilis
+1                    337
+2                    893
+3                    193
+4                      6</code></pre>
+<p>The first column is species names and the second is the number of hosts sampled, and the rest of the columns are the parasites. Columns 1 and 2 are not part of the network itself. So we will put the hosts as the row names and remove the number of hosts sampled. We also want the data as a matrix, rather than a data frame.</p>
+<pre class="r"><code>rownames(ural_data) &lt;- ural_data[,1] # Set row names
+num_hosts_sampled &lt;- ural_data[,2] # save in a variable
+ural_data &lt;- ural_data[,-2] # remove column
+dim(ural_data)</code></pre>
+<pre><code>[1] 12 15</code></pre>
+<pre class="r"><code>ural_data &lt;- ural_data[,-1] # remove column
+dim(ural_data)</code></pre>
+<pre><code>[1] 12 14</code></pre>
+<pre class="r"><code>head(ural_data)</code></pre>
+<pre><code>                        Ctenophthalmus.wagneri Nosopsyllus.consimilis
+Clethrionomys glareolus                   1748                    337
+Apodemus uralensis                        1408                    893
+Microtus arvalis                           494                    193
+Sorex araneus                              237                      6
+Crocidura suaveolens                        39                     21
+Arvicola terrestris                         19                      0
+                        Megabothris.turbidus Amphipsylla.rossica
+Clethrionomys glareolus                  811                 144
+Apodemus uralensis                       414                  41
+Microtus arvalis                          97                 177
+Sorex araneus                             20                   4
+Crocidura suaveolens                       0                   0
+Arvicola terrestris                        3                   3
+                        Nosopsyllus.mokrzeckyi Leptopsylla.taschenbergi
+Clethrionomys glareolus                      7                        7
+Apodemus uralensis                         120                       96
+Microtus arvalis                             8                        0
+Sorex araneus                                0                        0
+Crocidura suaveolens                         0                        0
+Arvicola terrestris                          0                        0
+                        Amalaraeus.penicilliger Peromyscopsylla.bidentata
+Clethrionomys glareolus                      43                         0
+Apodemus uralensis                           25                        33
+Microtus arvalis                             11                        44
+Sorex araneus                                 3                         0
+Crocidura suaveolens                          0                         2
+Arvicola terrestris                           2                         0
+                        Ctenophthalmus.breviatus Palaeopsylla.soricis
+Clethrionomys glareolus                       13                    3
+Apodemus uralensis                            29                   17
+Microtus arvalis                              12                    2
+Sorex araneus                                  2                   25
+Crocidura suaveolens                           0                    0
+Arvicola terrestris                           10                    0
+                        Corrodopsylla.birulai Megabothris.walkeri
+Clethrionomys glareolus                     3                  23
+Apodemus uralensis                          0                   7
+Microtus arvalis                            0                   3
+Sorex araneus                              36                   2
+Crocidura suaveolens                        1                   0
+Arvicola terrestris                         0                   3
+                        Leptopsylla.segnis Hystrichopsylla.talpae
+Clethrionomys glareolus                  8                      2
+Apodemus uralensis                      17                      5
+Microtus arvalis                         6                     12
+Sorex araneus                            0                      6
+Crocidura suaveolens                     0                      0
+Arvicola terrestris                      0                      0</code></pre>
+<pre class="r"><code># convert to matrix
+ural_data &lt;- data.matrix(ural_data) # Transform to a matrix format
+head(ural_data)</code></pre>
+<pre><code>                        Ctenophthalmus.wagneri Nosopsyllus.consimilis
+Clethrionomys glareolus                   1748                    337
+Apodemus uralensis                        1408                    893
+Microtus arvalis                           494                    193
+Sorex araneus                              237                      6
+Crocidura suaveolens                        39                     21
+Arvicola terrestris                         19                      0
+                        Megabothris.turbidus Amphipsylla.rossica
+Clethrionomys glareolus                  811                 144
+Apodemus uralensis                       414                  41
+Microtus arvalis                          97                 177
+Sorex araneus                             20                   4
+Crocidura suaveolens                       0                   0
+Arvicola terrestris                        3                   3
+                        Nosopsyllus.mokrzeckyi Leptopsylla.taschenbergi
+Clethrionomys glareolus                      7                        7
+Apodemus uralensis                         120                       96
+Microtus arvalis                             8                        0
+Sorex araneus                                0                        0
+Crocidura suaveolens                         0                        0
+Arvicola terrestris                          0                        0
+                        Amalaraeus.penicilliger Peromyscopsylla.bidentata
+Clethrionomys glareolus                      43                         0
+Apodemus uralensis                           25                        33
+Microtus arvalis                             11                        44
+Sorex araneus                                 3                         0
+Crocidura suaveolens                          0                         2
+Arvicola terrestris                           2                         0
+                        Ctenophthalmus.breviatus Palaeopsylla.soricis
+Clethrionomys glareolus                       13                    3
+Apodemus uralensis                            29                   17
+Microtus arvalis                              12                    2
+Sorex araneus                                  2                   25
+Crocidura suaveolens                           0                    0
+Arvicola terrestris                           10                    0
+                        Corrodopsylla.birulai Megabothris.walkeri
+Clethrionomys glareolus                     3                  23
+Apodemus uralensis                          0                   7
+Microtus arvalis                            0                   3
+Sorex araneus                              36                   2
+Crocidura suaveolens                        1                   0
+Arvicola terrestris                         0                   3
+                        Leptopsylla.segnis Hystrichopsylla.talpae
+Clethrionomys glareolus                  8                      2
+Apodemus uralensis                      17                      5
+Microtus arvalis                         6                     12
+Sorex araneus                            0                      6
+Crocidura suaveolens                     0                      0
+Arvicola terrestris                      0                      0</code></pre>
+<div id="problem-12.-try-to-plot-the-ural-valley-data" class="section level3">
+<h3>Problem 12. Try to plot the Ural Valley data!</h3>
+<pre class="r"><code>visweb(ural_data)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-25-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotweb(ural_data)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-25-2.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="metadata" class="section level2">
+<h2>2.4 Metadata</h2>
+<pre class="r"><code>plant_species &lt;- rownames(memmott1999)
+flower_visitor_species &lt;- colnames(memmott1999)
+head(plant_species, 3)</code></pre>
+<pre><code>[1] &quot;Agrimonium.eupatorium&quot; &quot;Leontodon.autumnalis&quot;  &quot;Lotus.corniculatus&quot;   </code></pre>
+<pre class="r"><code>head(flower_visitor_species, 3)</code></pre>
+<pre><code>[1] &quot;Coleoptera.spec1&quot; &quot;Coleoptera.spec2&quot; &quot;Coleoptera.spec3&quot;</code></pre>
+</div>
+<div id="unipartite-networks" class="section level2">
+<h2>3. Unipartite networks</h2>
+<div id="problem-13.-browse-through-the-metadata-and-particularly-the-data-set-structural-descriptors." class="section level3">
+<h3>Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.</h3>
+<p><a href="https://esapubs.org/archive/" class="uri">https://esapubs.org/archive/</a> Can’t locate the metadata file.</p>
+<pre class="r"><code>otago_nodes &lt;- read.csv(&#39;data/Otago_Data_Nodes.csv&#39;)
+otago_links &lt;- read.csv(&#39;data/Otago_Data_Links.csv&#39;)
+head(otago_nodes)</code></pre>
+<pre><code>  NodeID SpeciesID StageID Stage Species.StageID         WorkingName
+1      1         1       1 Adult             1.1       Phytoplankton
+2      2         2       1 Adult             2.1     Epipellic Flora
+3      3         3       1 Adult             3.1 Macroalgae/Seagrass
+4      4         4       1 Adult             4.1         Zooplankton
+5      5         5       1 Adult             5.1           Meiofauna
+6      6         6       1 Adult             6.1            Bacteria
+  OrganismalGroup    NodeType Resolution ResolutionNotes   Feeding
+1           Plant Common Name Assemblage              NA Autotroph
+2           Plant Common Name Assemblage              NA Autotroph
+3           Plant Common Name Assemblage              NA Autotroph
+4     Zooplankton Common Name Assemblage              NA   Feeding
+5       Meiofauna Common Name Assemblage              NA   Feeding
+6        Bacteria Common Name Assemblage              NA   Feeding
+  Lifestyle.stage. Lifestyle.species. ConsumerStrategy.stage. System
+1      Free-Living        Free-Living               Autotroph     NA
+2      Free-Living        Free-Living               Autotroph     NA
+3      Free-Living        Free-Living               Autotroph     NA
+4      Free-Living        Free-Living                Predator     NA
+5      Free-Living        Free-Living                Predator     NA
+6      Free-Living        Free-Living              Detrivtore     NA
+  HabitatAffiliation Mobility Residency NativeStatus BodySize.g.
+1                 NA      Low  Resident           NA          NA
+2                 NA      Low  Resident           NA          NA
+3                 NA      Low  Resident           NA          NA
+4                 NA      Low  Resident           NA          NA
+5                 NA      Low  Resident           NA          NA
+6                 NA      Low  Resident           NA          NA
+  BodySizeEstimation BodySizeNotes BodySizeN Biomass.kg.ha. BiomassEstimation
+1                 NA            NA        NA             NA                NA
+2                 NA            NA        NA             NA                NA
+3                 NA            NA        NA             NA                NA
+4                 NA            NA        NA             NA                NA
+5                 NA            NA        NA             NA                NA
+6                 NA            NA        NA             NA                NA
+  BiomassNotes  Kingdom Phylum Subphylum Superclass Class Subclass Order
+1           NA  Plantae               NA         NA             NA      
+2           NA  Plantae               NA         NA             NA      
+3           NA  Plantae               NA         NA             NA      
+4           NA Animalia               NA         NA             NA      
+5           NA Animalia               NA         NA             NA      
+6           NA Protista               NA         NA             NA      
+  Suborder Infraorder Superfamily Family Genus SpecificEpithet Subspecies
+1       NA         NA          NA                                      NA
+2       NA         NA          NA                                      NA
+3       NA         NA          NA                                      NA
+4       NA         NA          NA                                      NA
+5       NA         NA          NA                                      NA
+6       NA         NA          NA                                      NA
+  NodeNotes
+1        NA
+2        NA
+3        NA
+4        NA
+5        NA
+6        NA</code></pre>
+<pre class="r"><code>head(otago_links)</code></pre>
+<pre><code>  ConsumerNodeID ResourceNodeID ConsumerSpeciesID ResourceSpeciesID
+1              4              1                 4                 1
+2              4              4                 4                 4
+3              4              6                 4                 6
+4              5              1                 5                 1
+5              5              2                 5                 2
+6              5              3                 5                 3
+  ConsumerSpecies.StageID ResourceSpecies.StageID LinkTypeID  LinkType
+1                       1                       1          1 Predation
+2                       1                       1          1 Predation
+3                       1                       1          1 Predation
+4                       1                       1          1 Predation
+5                       1                       1          1 Predation
+6                       1                       1          1 Predation
+  LinkEvidence LinkEvidenceNotes LinkFrequency LinkN DietFraction
+1           NA                NA            NA    NA           NA
+2           NA                NA            NA    NA           NA
+3           NA                NA            NA    NA           NA
+4           NA                NA            NA    NA           NA
+5           NA                NA            NA    NA           NA
+6           NA                NA            NA    NA           NA
+  ConsumptionRate VectorFrom PreyFrom
+1              NA         NA       NA
+2              NA         NA       NA
+3              NA         NA       NA
+4              NA         NA       NA
+5              NA         NA       NA
+6              NA         NA       NA</code></pre>
+<pre class="r"><code># import to igraph
+otago_web &lt;- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
+
+names(edge.attributes(otago_web))</code></pre>
+<pre><code> [1] &quot;ConsumerSpeciesID&quot;       &quot;ResourceSpeciesID&quot;      
+ [3] &quot;ConsumerSpecies.StageID&quot; &quot;ResourceSpecies.StageID&quot;
+ [5] &quot;LinkTypeID&quot;              &quot;LinkType&quot;               
+ [7] &quot;LinkEvidence&quot;            &quot;LinkEvidenceNotes&quot;      
+ [9] &quot;LinkFrequency&quot;           &quot;LinkN&quot;                  
+[11] &quot;DietFraction&quot;            &quot;ConsumptionRate&quot;        
+[13] &quot;VectorFrom&quot;              &quot;PreyFrom&quot;               </code></pre>
+<pre class="r"><code>unique(E(otago_web)$LinkType)</code></pre>
+<pre><code> [1] &quot;Predation&quot;                                  
+ [2] &quot;Parasitic Castration&quot;                       
+ [3] &quot;Macroparasitism&quot;                            
+ [4] &quot;Commensalism&quot;                               
+ [5] &quot;Trophically Transmitted Parasitism&quot;         
+ [6] &quot;Concomitant Predation on Symbionts&quot;         
+ [7] &quot;Trophic Transmission&quot;                       
+ [8] &quot;Predation on free-living non-feeding stages&quot;
+ [9] &quot;Predation on commensal non-feeding stages&quot;  
+[10] &quot;Parasite intraguild trophic interaction&quot;    </code></pre>
+<pre class="r"><code>names(vertex.attributes(otago_web))</code></pre>
+<pre><code> [1] &quot;name&quot;                    &quot;SpeciesID&quot;              
+ [3] &quot;StageID&quot;                 &quot;Stage&quot;                  
+ [5] &quot;Species.StageID&quot;         &quot;WorkingName&quot;            
+ [7] &quot;OrganismalGroup&quot;         &quot;NodeType&quot;               
+ [9] &quot;Resolution&quot;              &quot;ResolutionNotes&quot;        
+[11] &quot;Feeding&quot;                 &quot;Lifestyle.stage.&quot;       
+[13] &quot;Lifestyle.species.&quot;      &quot;ConsumerStrategy.stage.&quot;
+[15] &quot;System&quot;                  &quot;HabitatAffiliation&quot;     
+[17] &quot;Mobility&quot;                &quot;Residency&quot;              
+[19] &quot;NativeStatus&quot;            &quot;BodySize.g.&quot;            
+[21] &quot;BodySizeEstimation&quot;      &quot;BodySizeNotes&quot;          
+[23] &quot;BodySizeN&quot;               &quot;Biomass.kg.ha.&quot;         
+[25] &quot;BiomassEstimation&quot;       &quot;BiomassNotes&quot;           
+[27] &quot;Kingdom&quot;                 &quot;Phylum&quot;                 
+[29] &quot;Subphylum&quot;               &quot;Superclass&quot;             
+[31] &quot;Class&quot;                   &quot;Subclass&quot;               
+[33] &quot;Order&quot;                   &quot;Suborder&quot;               
+[35] &quot;Infraorder&quot;              &quot;Superfamily&quot;            
+[37] &quot;Family&quot;                  &quot;Genus&quot;                  
+[39] &quot;SpecificEpithet&quot;         &quot;Subspecies&quot;             
+[41] &quot;NodeNotes&quot;              </code></pre>
+<pre class="r"><code>head(unique(V(otago_web)$name))</code></pre>
+<pre><code>[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot;</code></pre>
+</div>
+<div id="problem-14.-try-to-load-a-new-food-web-the-bahia-falsa.-the-bahia-falsa-data-set-is-described-here." class="section level3">
+<h3>Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.</h3>
+<p><a href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c" class="uri">https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c</a></p>
+<pre class="r"><code>Bahia_Falsa_metadata &lt;- openxlsx::read.xlsx(&#39;data/Dunne2013PBioSupData.xlsx&#39;,sheet=3)
+head(Bahia_Falsa_metadata)</code></pre>
+<pre><code>  FalsFree.web X2 FalsPar.web X4 FalsParCon.web X6
+1           18  2          18  2             18  2
+2           18  5          18  5             18  5
+3           19  2          19  2             19  2
+4           19 10          19 10             19 10
+5           20  2          20  2             20  2
+6           20 10          20 10             20 10</code></pre>
+</div>
+</div>
+<div id="plotting-with-igraph" class="section level2">
+<h2>4. Plotting with igraph</h2>
+<pre class="r"><code>par(mar=c(0,0,0,0)) #Reduce margin size
+plot(otago_web)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-30-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># tweaks
+plot(otago_web, vertex.size=3, edge.arrow.size=0.4, vertex.label=NA, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-30-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Now, let’s try to both set link attributes and use them for plotting. We will color edges by the type of interactin they represent:</p>
+<pre class="r"><code>E(otago_web)$color &lt;- &quot;grey&quot; # First, we set a default color
+E(otago_web)[otago_links$LinkType == &#39;Predation&#39;]$color &lt;- &quot;black&quot;
+E(otago_web)[otago_links$LinkType == &#39;Macroparasitism&#39;]$color &lt;- &quot;blue&quot;
+E(otago_web)[otago_links$LinkType == &#39;Trophic Transmission&#39;]$color &lt;- &quot;red&quot;
+# Now plot
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=2, edge.arrow.size=0.2, vertex.label=NA, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-31-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>In food webs, species can be divided into three main trophic groups: basal, intermediate and top predators. Let’s try to classify the species on the Otago food web.</p>
+<pre class="r"><code># Basal species (those that do not consume) -- do not have incoming links
+basal &lt;- which(igraph::degree(otago_web, mode = &#39;in&#39;) == 0)
+# Top species do not have outgoing links
+top &lt;- which(igraph::degree(otago_web, mode = &#39;out&#39;) == 0)
+# Intermediate are all the rest
+interm &lt;- V(otago_web)[which(!V(otago_web) %in% c(basal,top))]
+# Are all the nodes included?
+all(c(basal,top,interm) %in% V(otago_web))</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>all(V(otago_web) %in% c(basal,top,interm))</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<p>Now let’s try to re-plot the food web using these classifications. We will use our own layout, which is a matrix with coordinates.</p>
+<pre class="r"><code>V(otago_web)$troph_pos &lt;- rep(0,length(V(otago_web)))
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% basal)] &lt;- 1
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% top)] &lt;- 3
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% interm)] &lt;- 2
+# create a matrix forthe layout coordinates.
+coords &lt;- matrix(nrow=length(V(otago_web)), ncol=2) #
+# The x positions are randomly selected
+coords[,1] &lt;- runif(length(V(otago_web)))
+# The y positions are the trophoc positions
+coords[,2] &lt;- V(otago_web)$troph_pos
+par(mar=c(0,0,0,0))
+plot(otago_web,layout=coords,
+            vertex.color=V(otago_web)$troph_pos,
+            vertex.label=NA,
+            vertex.size=8,
+            edge.color=&#39;black&#39;,
+            edge.arrow.size=.3,
+            edge.width=.5)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<div id="problem-15.-try-to-set-other-node-and-edge-attributes-based-on-otago_nodes-and-otago_links.-for-example-try-to-color-nodes-by-organismalgroup-and-plot.-does-the-organismal-group-correspond-to-the-trophic-position" class="section level3">
+<h3>Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?</h3>
+<pre class="r"><code>Org_vec &lt;- unique(otago_nodes$OrganismalGroup)
+
+
+Col_vec &lt;- c(
+  &quot;#5F7FC7&quot;, &quot;orange&quot;, &quot;#AD6F3B&quot;, &quot;#673770&quot;, 
+  &quot;#D14285&quot;, &quot;#652926&quot;, &quot;#C84248&quot;, &quot;#8569D5&quot;, &quot;#5E738F&quot;,
+  &quot;#D1A33D&quot;, &quot;#8A7C64&quot;, &quot;#599861&quot;,&quot;#616163&quot;, &quot;#FFCDB2&quot;,
+  &quot;#6D9F71&quot;, &quot;#242F40&quot;,
+   &quot;#CCA43B&quot;, &quot;#F92A82&quot;, &quot;#ED7B84&quot;, &quot;#7EB77F&quot;, 
+  &quot;#DEC4A1&quot;, &quot;#E5D1D0&quot;, &#39;#0E8482&#39;, &#39;#C9DAEA&#39;, &#39;#337357&#39;, 
+  &#39;#95C623&#39;, &#39;#E55812&#39;, &#39;#04471C&#39;, &#39;#F2D7EE&#39;, &#39;#D3BCC0&#39;, 
+  &#39;#A5668B&#39;, &#39;#69306D&#39;, &#39;#0E103D&#39;, &#39;#1A535C&#39;, &#39;#4ECDC4&#39;, 
+  &#39;#F7FFF7&#39;, &#39;#FF6B6B&#39;, &#39;#FFE66D&#39;, &#39;#6699CC&#39;, &#39;#FFF275&#39;, 
+  &#39;#FF8C42&#39;, &#39;#FF3C38&#39;, &#39;#A23E48&#39;, &#39;#000000&#39;, &#39;#CF5C36&#39;, 
+  &#39;#EEE5E9&#39;, &#39;#7C7C7C&#39;, &#39;#EFC88B&#39;, &#39;#2E5266&#39;, &#39;#6E8898&#39;, 
+  &#39;#9FB1BC&#39;, &#39;#D3D0CB&#39;, &#39;#E2C044&#39;, &#39;#5BC0EB&#39;, &#39;#FDE74C&#39;, 
+  &#39;#9BC53D&#39;, &#39;#E55934&#39;, &#39;#FA7921&#39;, &quot;#CD9BCD&quot;, &quot;#508578&quot;, &quot;#DA5724&quot;)
+
+V(otago_web)$color &lt;- &quot;grey&quot; # First, we set a default color
+# assign color to nodes
+for (i in 1:length(Org_vec)){
+  V(otago_web)[otago_nodes$OrganismalGroup == Org_vec[i]]$color &lt;- Col_vec[i]
+}
+
+V(otago_web)$color # no grey -&gt; so all of them are assigned with colors</code></pre>
+<pre><code>  [1] &quot;#5F7FC7&quot; &quot;#5F7FC7&quot; &quot;#5F7FC7&quot; &quot;orange&quot;  &quot;#AD6F3B&quot; &quot;#673770&quot; &quot;#D14285&quot;
+  [8] &quot;#D14285&quot; &quot;#652926&quot; &quot;#652926&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [15] &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [22] &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [29] &quot;#C84248&quot; &quot;#8569D5&quot; &quot;#8569D5&quot; &quot;#5E738F&quot; &quot;#D1A33D&quot; &quot;#D1A33D&quot; &quot;#D1A33D&quot;
+ [36] &quot;#D1A33D&quot; &quot;#D1A33D&quot; &quot;#8A7C64&quot; &quot;#599861&quot; &quot;#599861&quot; &quot;#616163&quot; &quot;#616163&quot;
+ [43] &quot;#616163&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#6D9F71&quot;
+ [50] &quot;#6D9F71&quot; &quot;#6D9F71&quot; &quot;#6D9F71&quot; &quot;#6D9F71&quot; &quot;#6D9F71&quot; &quot;#242F40&quot; &quot;#D14285&quot;
+ [57] &quot;#652926&quot; &quot;#652926&quot; &quot;#652926&quot; &quot;#652926&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [64] &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [71] &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot;
+ [78] &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#C84248&quot; &quot;#8569D5&quot; &quot;#CCA43B&quot; &quot;#D1A33D&quot;
+ [85] &quot;#D1A33D&quot; &quot;#D1A33D&quot; &quot;#D1A33D&quot; &quot;#D1A33D&quot; &quot;#8A7C64&quot; &quot;#8A7C64&quot; &quot;#616163&quot;
+ [92] &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#FFCDB2&quot; &quot;#F92A82&quot; &quot;#6D9F71&quot;
+ [99] &quot;#FFCDB2&quot; &quot;#ED7B84&quot; &quot;#ED7B84&quot; &quot;#ED7B84&quot; &quot;#ED7B84&quot; &quot;#ED7B84&quot; &quot;#7EB77F&quot;
+[106] &quot;#7EB77F&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot;
+[113] &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot;
+[120] &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#DEC4A1&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[127] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[134] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[141] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[148] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[155] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[162] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#0E8482&quot; &quot;#0E8482&quot; &quot;#0E8482&quot; &quot;#0E8482&quot; &quot;#C9DAEA&quot;
+[169] &quot;#C9DAEA&quot; &quot;#C9DAEA&quot; &quot;#C9DAEA&quot; &quot;#337357&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot;
+[176] &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#E5D1D0&quot; &quot;#616163&quot;</code></pre>
+<pre class="r"><code># Now plot
+plot(otago_web, vertex.size=3, edge.arrow.size=0.2, vertex.label=NA, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-34-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Basal species (those that do not consume) -- do not have incoming links
+basal &lt;- which(igraph::degree(otago_web, mode = &#39;in&#39;) == 0)
+# Top species do not have outgoing links
+top &lt;- which(igraph::degree(otago_web, mode = &#39;out&#39;) == 0)
+# Intermediate are all the rest
+interm &lt;- V(otago_web)[which(!V(otago_web) %in% c(basal,top))]
+
+V(otago_web)$troph_pos &lt;- rep(0,length(V(otago_web)))
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% basal)] &lt;- 1
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% top)] &lt;- 3
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% interm)] &lt;- 2
+
+# create a matrix forthe layout coordinates.
+coords &lt;- matrix(nrow=length(V(otago_web)), ncol=2) #
+# The x positions are randomly selected
+coords[,1] &lt;- runif(length(V(otago_web)))
+# The y positions are the trophoc positions
+coords[,2] &lt;- V(otago_web)$troph_pos
+
+## Now put in organism data
+V(otago_web)$organism &lt;- rep(0,length(V(otago_web)))
+
+for (i in 1:length(Org_vec)){
+  V(otago_web)[otago_nodes$OrganismalGroup == Org_vec[i]]$organism &lt;- Col_vec[i]
+}
+
+par(mar=c(0,0,0,0))
+plot(otago_web,layout=coords,
+            vertex.color=V(otago_web)$organism,
+            vertex.label=NA,
+            vertex.size=8,
+            edge.color=&#39;black&#39;,
+            edge.arrow.size=.3,
+            edge.width=.5)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-34-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Does the organismal group correspond to the trophic position? No, it does not seem to have correspondence.</p>
+</div>
+<div id="problem-16.-find-5-different-repositories-or-data-sources-for-ecological-networks." class="section level3">
+<h3>Problem 16. Find 5 different repositories or data sources for ecological networks.</h3>
+<ol style="list-style-type: decimal">
+<li>Web of Life: ecological networks database: <a href="http://www.web-of-life.es/" class="uri">http://www.web-of-life.es/</a></li>
+<li>An Online Database for Informing Ecological Network Models: <a href="http://kelpforest.ucsc.edu" class="uri">http://kelpforest.ucsc.edu</a></li>
+<li>Mangal - Ecological interactions database: <a href="https://mangal.io/#/" class="uri">https://mangal.io/#/</a></li>
+<li>Ecology Networks | Network Data Repository: <a href="http://networkrepository.com" class="uri">http://networkrepository.com</a></li>
+<li>Botanical Information and Ecology Network: <a href="https://bien.nceas.ucsb.edu/bien/" class="uri">https://bien.nceas.ucsb.edu/bien/</a></li>
+</ol>
+</div>
+<div id="problem-17.-try-to-obtain-2-data-sets-from-2-different-repositories-load-them-and-plot-them." class="section level3">
+<h3>Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.</h3>
+<ol style="list-style-type: decimal">
+<li>Plant Ant networks from Web of Life: ecological networks database: <a href="http://www.web-of-life.es/" class="uri">http://www.web-of-life.es/</a> Network:M_PA_003 Locality of study:Biological Dynamics of Forest Fragments ProjectCoord(Lat/Lon):-2.4 , -59.716667 Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347. Source:<a href="http://www.jstor.org/stable/5880" class="uri">http://www.jstor.org/stable/5880</a>, Full Paper Species:39Ants (Columns):24Plants (Rows):15 Interactions:45Connectance:0.125Components:4 Description:Cell values indicate number of visits.</li>
+</ol>
+<pre class="r"><code>plant_ant_df &lt;- read.csv(&#39;data/M_PA_003.csv&#39;,header=T)
+head(plant_ant_df)</code></pre>
+<pre><code>                           X Maieta.guianensis Hirtella.physophora
+1          Pheidole minutula                93                   0
+2 Allomerus octoarticulatus                  0                  70
+3        Azteca sp2 M_PA_001                 2                   0
+4      Pseudomyrmex concolor                 0                   0
+5     Allomerus sp1 M_PA_001                 0                   0
+6    Pseudomyrmex nigrescens                 0                   0
+  Tachigali.myrmecophila Cordia.nodosa Maieta.poeppiggi Duroia.saccifera
+1                      0             0               28                0
+2                      0             0                0               27
+3                      0            24                0                0
+4                     18             0                0                0
+5                      0             0                0                0
+6                     16             0                0                0
+  Tachigali.polyphylla Tococa.bullifera Pourouma.heterophylla
+1                    0                1                     0
+2                    0                0                     0
+3                    0               11                     0
+4                   16                0                     0
+5                    0                0                    23
+6                    7                0                     0
+  Cecropia.purpurascens Amaioua.guianensis Cecropia.ficifolia
+1                     0                  0                  0
+2                     0                  0                  0
+3                     0                  0                  0
+4                     0                  0                  0
+5                     0                  0                  0
+6                     0                  0                  0
+  Hirtella.myrmecophila Cecropia.concolor Cecropia.distachya
+1                     0                 0                  0
+2                     3                 0                  0
+3                     0                 0                  0
+4                     0                 0                  0
+5                     0                 0                  0
+6                     0                 0                  0</code></pre>
+<pre class="r"><code>plant_ant_matrix &lt;- data.matrix(plant_ant_df)
+isSymmetric(plant_ant_matrix)</code></pre>
+<pre><code>[1] FALSE</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -576,18 +1470,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.6.2
+[1] bipartite_2.16       sna_2.6              network_1.16.1      
+[4] statnet.common_4.4.1 vegan_2.5-7          lattice_0.20-41     
+[7] permute_0.9-5        igraph_1.2.6         workflowr_1.6.2     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.5        whisker_0.4       knitr_1.31        magrittr_2.0.1   
- [5] R6_2.5.0          rlang_0.4.10      fansi_0.4.2       stringr_1.4.0    
- [9] tools_4.0.3       xfun_0.20         utf8_1.1.4        git2r_0.28.0     
-[13] jquerylib_0.1.3   htmltools_0.5.1.1 ellipsis_0.3.1    rprojroot_2.0.2  
-[17] yaml_2.2.1        digest_0.6.27     tibble_3.0.4      lifecycle_1.0.0  
-[21] crayon_1.4.1      later_1.1.0.1     sass_0.3.1        vctrs_0.3.6      
-[25] promises_1.1.1    fs_1.5.0          glue_1.4.2        evaluate_0.14    
-[29] rmarkdown_2.7     stringi_1.5.3     bslib_0.2.4       compiler_4.0.3   
-[33] pillar_1.5.1      jsonlite_1.7.2    httpuv_1.5.4      pkgconfig_2.0.3  </code></pre>
+ [1] spam_2.6-0        xfun_0.20         bslib_0.2.4       splines_4.0.3    
+ [5] rle_0.9.2         vctrs_0.3.6       htmltools_0.5.1.1 yaml_2.2.1       
+ [9] mgcv_1.8-33       utf8_1.1.4        rlang_0.4.10      jquerylib_0.1.3  
+[13] later_1.1.0.1     pillar_1.5.1      glue_1.4.2        lifecycle_1.0.0  
+[17] stringr_1.4.0     fields_11.6       dotCall64_1.0-1   zip_2.1.1        
+[21] coda_0.19-4       evaluate_0.14     knitr_1.31        httpuv_1.5.4     
+[25] parallel_4.0.3    fansi_0.4.2       highr_0.8         Rcpp_1.0.5       
+[29] promises_1.1.1    jsonlite_1.7.2    fs_1.5.0          digest_0.6.27    
+[33] openxlsx_4.2.3    stringi_1.5.3     grid_4.0.3        rprojroot_2.0.2  
+[37] tools_4.0.3       magrittr_2.0.1    sass_0.3.1        maps_3.3.0       
+[41] tibble_3.0.4      cluster_2.1.0     crayon_1.4.1      whisker_0.4      
+[45] pkgconfig_2.0.3   ellipsis_0.3.1    MASS_7.3-53       Matrix_1.2-18    
+[49] rmarkdown_2.7     R6_2.5.0          nlme_3.1-149      git2r_0.28.0     
+[53] compiler_4.0.3   </code></pre>
+</div>
 </div>
 </div>
 
