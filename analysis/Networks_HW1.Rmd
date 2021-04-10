@@ -14,6 +14,531 @@ knitr::opts_chunk$set(fig.width=11, fig.height=9,
 
 ## Homework1 
 ## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
-Professor: **Mercedes Pascual** \
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
 Student: **Kiseok Lee** 
+
+```{r}
+# libraries
+library('igraph')
+library('bipartite')
+```
+
+## 1. Data structures
+## 1.1 Networks as matrices
+
+### 1.1.1. Undirected graph
+```{r}
+A_u <- matrix(c(0,1,1,0,0, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,0,0,0),5,5, byrow=F)
+isSymmetric(A_u)
+g <- igraph::graph.adjacency(A_u, mode = 'undirected')
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+### 1.1.2. Directed graph
+```{r}
+A_d <- matrix(c(0,1,1,0,1, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)
+g <- igraph::graph.adjacency(A_d, mode = 'directed')
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+### Problem 1. Try to add a self-loop to one of the networks.
+```{r}
+A_d <- matrix(c(1,1,1,0,1, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)
+g <- igraph::graph.adjacency(A_d, mode = 'directed')
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+### Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).
+```{r}
+A_d <- matrix(c(0,1,1,0,1, # An example input matrix
+                1,0,0,0,1,
+                1,0,0,0,0,
+                0,0,0,0,0,
+                0,1,1,0,0),5,5, byrow=F)
+isSymmetric(A_d)
+g <- igraph::graph.adjacency(A_d, mode = 'directed')
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+
+### 1.1.3. Weighted networks
+```{r}
+A_w <- matrix(c(0,1,1,0,0, # An example input matrix
+              1,0,0,1,1,
+              1,0,0,0,0,
+              0,1,0,0,0,
+              0,1,0,0,0),5,5, byrow=F)
+random_weights <- round(rnorm(10, 10, 4),2) # take weights from a normal distribution.
+A_w[lower.tri(A_w)] <- A_w[lower.tri(A_w)]*random_weights # Fill the lower traiangle
+A_w <- A_w+t(A_w) # This makes the matrix symmetric
+isSymmetric(A_w)
+
+g <- igraph::graph.adjacency(A_w, mode = 'undirected', weighted = T)
+E(g)$weight
+
+par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)
+
+```
+
+### Problem 3. Try do follow the code above to create a directed weighted network.
+```{r}
+A_w <- matrix(c(0,1,1,0,0, # An example input matrix
+                1,0,0,1,1,
+                0,0,0,0,1,
+                0,1,1,0,1,
+                0,1,0,0,0),5,5, byrow=F)
+random_weights <- round(rnorm(25, 10, 4),2) # take weights from a normal distribution.
+A_w <- A_w*random_weights # Fill the lower traiangle
+isSymmetric(A_w)
+
+g <- igraph::graph.adjacency(A_w, mode = 'directed', weighted = T)
+E(g)$weight
+
+par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)
+```
+
+### Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.
+
+1. Microbiome data: interaction strengths: either negative or positive correlation coefficient in co-occurrence networks
+2. General ecology data: manually curated metadata of weights
+3. Protein network data: the weight is defined by the edge clustering coefficient and the gene expression correlation between the interacting proteins (https://pubmed.ncbi.nlm.nih.gov/27771556/)
+
+## 1.2 Networks as edge lists
+### 1.2.1. Unweighted
+```{r}
+# undirected
+L_u <- data.frame(i=c(1,1,2,2),
+                j=c(2,3,4,5))
+g <- igraph::graph.data.frame(L_u, directed = F)
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+```{r}
+# directed
+L_u <- data.frame(i=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
+                j=c(2, 3, 1, 4, 5, 1, 5, 2, 1, 2))
+g <- igraph::graph.data.frame(L_u, directed = T)
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+### 1.2.1. Unweighted
+
+### Problem 5. Try to add a self-loop to the edge list, using from and to as column names.
+```{r}
+# undirected
+L_u <- data.frame(i=c(1,1,1,2,2),
+                j=c(1,2,3,4,5))
+g <- igraph::graph.data.frame(L_u, directed = F)
+par(mar=c(0,0,0,0))
+plot(g)
+```
+
+### 1.2.2. Weighted
+```{r}
+# undirected
+L_w <- data.frame(i=c(1,1,2,2),
+                j=c(2,3,4,5),
+                weight=round(rnorm(4, 10, 4),2) # take weights from a normal distribution.
+                )
+g <- igraph::graph.data.frame(L_w, directed = F)
+E(g)$weight
+par(mar=c(0,0,0,0))
+plot(g, edge.width=E(g)$weight)
+```
+
+```{r}
+# directed
+L_wd <- data.frame(from=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
+                to=c(2, 3, 1, 4, 5, 1, 5, 2, 1, 2),
+                weight=round(rnorm(10, 1, 0.2),2))
+g <- igraph::graph.data.frame(L_wd, directed = T)
+g
+E(g)$weight
+par(mar=c(0,0,0,0))
+plot(g, edge.width=log(E(g)$weight)*10, # possible to rescale edge weights when plotting 
+       edge.arrow.size=1.2,
+       edge.curved=0.5,
+     edge.color='black')
+
+```
+
+### Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?
+Advantages: more direct and intuitive (only when having a small number of edges)
+Disadvantages: cannot use matrix operations. not good when there are many number of edges
+
+## 1.3 Converting between matrices and edge lists
+
+```{r}
+A_w
+g <- igraph::graph.adjacency(A_w, mode = 'directed', weighted = T)
+L <- igraph::as_data_frame(g, what = 'edges')
+L
+g <- igraph::graph.data.frame(L_wd, directed = T)
+A <- igraph::as_adjacency_matrix(g, attr = 'weight', sparse=F)
+A
+
+```
+
+### Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.
+
+```{r}
+matrix_to_edge_list <- function(A){
+  # is it symmetric?
+  if (isSymmetric(A)){
+    g <- igraph::graph.adjacency(A, mode = 'undirected', weighted = T)
+    L <- igraph::as_data_frame(g, what = 'edges')
+    return(L)
+  } else{
+    g <- igraph::graph.adjacency(A, mode = 'directed', weighted = T)
+    L <- igraph::as_data_frame(g, what = 'edges')
+    return(L)
+  }
+}
+
+matrix_to_edge_list(A_w)
+matrix_to_edge_list(A_d)
+matrix_to_edge_list(A_u)
+
+```
+
+### Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.
+
+```{r}
+
+edge_list_to_matrix_list <- function(L_w){
+  g <- igraph::graph.data.frame(L_w, directed = T)
+  A <- igraph::as_adjacency_matrix(g, attr = 'weight', sparse=F)
+  
+  # make it symmetric if it is undirected
+  if (all(A[lower.tri(A)]==0)){
+    A <- A+t(A)
+    return(A)
+  }else{ # when directed
+    return(A)
+  }
+}
+
+edge_list_to_matrix_list(L_w)
+edge_list_to_matrix_list(L_wd)
+
+```
+
+## 2. Bipartite networks
+## 2.1 Loading data
+
+```{r}
+data("memmott1999") # load
+class(memmott1999)
+memmott1999[1:4,1:4] # view first lines
+```
+
+### Problem 9. Now try to load a different data set. Where can you find available ones?
+We can find other database information in bipartite package manual.
+https://cran.r-project.org/web/packages/bipartite/bipartite.pdf
+
+For example,
+```{r}
+data("elberling1999")
+class(elberling1999)
+elberling1999[1:4,1:4] # view first lines
+```
+
+## 2.2 Visualizaing data
+```{r}
+visweb(memmott1999)
+```
+
+```{r}
+# binary
+memmott1999_binary <- 1*(memmott1999>0)
+visweb(memmott1999_binary)
+```
+
+```{r}
+visweb(memmott1999,prednames = F, prey.lablength = 10)
+```
+
+
+```{r}
+plotweb(memmott1999)
+```
+
+### Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?
+Can't really see in detail.
+
+### Problem 11. Try to browse through the options in plotweb and tweak the plot.
+
+```{r}
+plotweb(memmott1999,y.width.low=0.05, y.width.high=0.1, method="normal", 
+	add=TRUE, low.y=2.95, high.y=3.95, col.low="green", text.low.col="black", 
+	low.lab.dis=0, arrow="down", adj.low=c(0.5,1.1), low.lablength=4)
+
+```
+
+## 2.3 Importing data
+
+```{r}
+ural_data <- read.csv('data/Ural_valley_A_HP_048.csv')
+ural_data[1:4,1:4]
+```
+The first column is species names and the second is the number of hosts sampled, and the rest of the columns are the parasites. Columns 1 and 2 are not part of the network itself. So we will put the hosts as the row names and remove the number of hosts sampled. We also want the data as a matrix, rather than a data frame.
+```{r}
+rownames(ural_data) <- ural_data[,1] # Set row names
+num_hosts_sampled <- ural_data[,2] # save in a variable
+ural_data <- ural_data[,-2] # remove column
+dim(ural_data)
+ural_data <- ural_data[,-1] # remove column
+dim(ural_data)
+head(ural_data)
+
+# convert to matrix
+ural_data <- data.matrix(ural_data) # Transform to a matrix format
+head(ural_data)
+```
+
+### Problem 12. Try to plot the Ural Valley data!
+
+```{r}
+visweb(ural_data)
+plotweb(ural_data)
+```
+
+## 2.4 Metadata
+
+```{r}
+plant_species <- rownames(memmott1999)
+flower_visitor_species <- colnames(memmott1999)
+head(plant_species, 3)
+head(flower_visitor_species, 3)
+```
+
+## 3. Unipartite networks
+
+### Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.
+https://esapubs.org/archive/
+Can't locate the metadata file.
+
+```{r}
+otago_nodes <- read.csv('data/Otago_Data_Nodes.csv')
+otago_links <- read.csv('data/Otago_Data_Links.csv')
+head(otago_nodes)
+head(otago_links)
+```
+
+
+```{r}
+# import to igraph
+otago_web <- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
+
+names(edge.attributes(otago_web))
+unique(E(otago_web)$LinkType)
+names(vertex.attributes(otago_web))
+head(unique(V(otago_web)$name))
+```
+
+### Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.
+https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c
+```{r}
+
+Bahia_Falsa_metadata <- openxlsx::read.xlsx('data/Dunne2013PBioSupData.xlsx',sheet=3)
+head(Bahia_Falsa_metadata)
+
+```
+
+## 4. Plotting with igraph
+
+```{r}
+par(mar=c(0,0,0,0)) #Reduce margin size
+plot(otago_web)
+
+# tweaks
+plot(otago_web, vertex.size=3, edge.arrow.size=0.4, vertex.label=NA, layout=layout.circle)
+```
+
+Now, let’s try to both set link attributes and use them for plotting. We will color edges by the type of interactin they represent:
+
+```{r}
+E(otago_web)$color <- "grey" # First, we set a default color
+E(otago_web)[otago_links$LinkType == 'Predation']$color <- "black"
+E(otago_web)[otago_links$LinkType == 'Macroparasitism']$color <- "blue"
+E(otago_web)[otago_links$LinkType == 'Trophic Transmission']$color <- "red"
+# Now plot
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=2, edge.arrow.size=0.2, vertex.label=NA, layout=layout.circle)
+```
+
+In food webs, species can be divided into three main trophic groups: basal, intermediate and top predators. Let’s try to classify the species on the Otago food web.
+
+```{r}
+# Basal species (those that do not consume) -- do not have incoming links
+basal <- which(igraph::degree(otago_web, mode = 'in') == 0)
+# Top species do not have outgoing links
+top <- which(igraph::degree(otago_web, mode = 'out') == 0)
+# Intermediate are all the rest
+interm <- V(otago_web)[which(!V(otago_web) %in% c(basal,top))]
+# Are all the nodes included?
+all(c(basal,top,interm) %in% V(otago_web))
+
+all(V(otago_web) %in% c(basal,top,interm))
+```
+
+Now let’s try to re-plot the food web using these classifications. We will use our own layout, which is a matrix with coordinates.
+
+```{r}
+V(otago_web)$troph_pos <- rep(0,length(V(otago_web)))
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% basal)] <- 1
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% top)] <- 3
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% interm)] <- 2
+# create a matrix forthe layout coordinates.
+coords <- matrix(nrow=length(V(otago_web)), ncol=2) #
+# The x positions are randomly selected
+coords[,1] <- runif(length(V(otago_web)))
+# The y positions are the trophoc positions
+coords[,2] <- V(otago_web)$troph_pos
+par(mar=c(0,0,0,0))
+plot(otago_web,layout=coords,
+            vertex.color=V(otago_web)$troph_pos,
+            vertex.label=NA,
+            vertex.size=8,
+            edge.color='black',
+            edge.arrow.size=.3,
+            edge.width=.5)
+```
+
+### Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?
+
+```{r}
+Org_vec <- unique(otago_nodes$OrganismalGroup)
+
+
+Col_vec <- c(
+  "#5F7FC7", "orange", "#AD6F3B", "#673770", 
+  "#D14285", "#652926", "#C84248", "#8569D5", "#5E738F",
+  "#D1A33D", "#8A7C64", "#599861","#616163", "#FFCDB2",
+  "#6D9F71", "#242F40",
+   "#CCA43B", "#F92A82", "#ED7B84", "#7EB77F", 
+  "#DEC4A1", "#E5D1D0", '#0E8482', '#C9DAEA', '#337357', 
+  '#95C623', '#E55812', '#04471C', '#F2D7EE', '#D3BCC0', 
+  '#A5668B', '#69306D', '#0E103D', '#1A535C', '#4ECDC4', 
+  '#F7FFF7', '#FF6B6B', '#FFE66D', '#6699CC', '#FFF275', 
+  '#FF8C42', '#FF3C38', '#A23E48', '#000000', '#CF5C36', 
+  '#EEE5E9', '#7C7C7C', '#EFC88B', '#2E5266', '#6E8898', 
+  '#9FB1BC', '#D3D0CB', '#E2C044', '#5BC0EB', '#FDE74C', 
+  '#9BC53D', '#E55934', '#FA7921', "#CD9BCD", "#508578", "#DA5724")
+
+V(otago_web)$color <- "grey" # First, we set a default color
+# assign color to nodes
+for (i in 1:length(Org_vec)){
+  V(otago_web)[otago_nodes$OrganismalGroup == Org_vec[i]]$color <- Col_vec[i]
+}
+
+V(otago_web)$color # no grey -> so all of them are assigned with colors
+
+# Now plot
+plot(otago_web, vertex.size=3, edge.arrow.size=0.2, vertex.label=NA, layout=layout.circle)
+
+
+# Basal species (those that do not consume) -- do not have incoming links
+basal <- which(igraph::degree(otago_web, mode = 'in') == 0)
+# Top species do not have outgoing links
+top <- which(igraph::degree(otago_web, mode = 'out') == 0)
+# Intermediate are all the rest
+interm <- V(otago_web)[which(!V(otago_web) %in% c(basal,top))]
+
+V(otago_web)$troph_pos <- rep(0,length(V(otago_web)))
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% basal)] <- 1
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% top)] <- 3
+V(otago_web)$troph_pos[which(V(otago_web)$name %in% interm)] <- 2
+
+# create a matrix forthe layout coordinates.
+coords <- matrix(nrow=length(V(otago_web)), ncol=2) #
+# The x positions are randomly selected
+coords[,1] <- runif(length(V(otago_web)))
+# The y positions are the trophoc positions
+coords[,2] <- V(otago_web)$troph_pos
+
+## Now put in organism data
+V(otago_web)$organism <- rep(0,length(V(otago_web)))
+
+for (i in 1:length(Org_vec)){
+  V(otago_web)[otago_nodes$OrganismalGroup == Org_vec[i]]$organism <- Col_vec[i]
+}
+
+par(mar=c(0,0,0,0))
+plot(otago_web,layout=coords,
+            vertex.color=V(otago_web)$organism,
+            vertex.label=NA,
+            vertex.size=8,
+            edge.color='black',
+            edge.arrow.size=.3,
+            edge.width=.5)
+
+
+```
+
+Does the organismal group correspond to the trophic position?
+No, it does not seem to have correspondence.
+
+
+### Problem 16. Find 5 different repositories or data sources for ecological networks.
+(1) Web of Life: ecological networks database: http://www.web-of-life.es/
+(2) An Online Database for Informing Ecological Network Models: http://kelpforest.ucsc.edu
+(3) Mangal - Ecological interactions database: https://mangal.io/#/
+(4) Ecology Networks | Network Data Repository: http://networkrepository.com
+(5) Botanical Information and Ecology Network: https://bien.nceas.ucsb.edu/bien/
+
+### Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.
+
+(1) Plant Ant networks from Web of Life: ecological networks database: http://www.web-of-life.es/
+Network:M_PA_003
+Locality of study:Biological Dynamics of Forest Fragments ProjectCoord(Lat/Lon):-2.4 , -59.716667
+Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347.
+Source:http://www.jstor.org/stable/5880, Full Paper
+Species:39Ants (Columns):24Plants (Rows):15
+Interactions:45Connectance:0.125Components:4
+Description:Cell values indicate number of visits.
+
+```{r}
+plant_ant_df <- read.csv('data/M_PA_003.csv',header=T)
+head(plant_ant_df)
+
+plant_ant_matrix <- data.matrix(plant_ant_df)
+isSymmetric(plant_ant_matrix)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
