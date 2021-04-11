@@ -312,11 +312,11 @@ ural_data <- ural_data[,-2] # remove column
 dim(ural_data)
 ural_data <- ural_data[,-1] # remove column
 dim(ural_data)
-head(ural_data)
+# head(ural_data)
 
 # convert to matrix
 ural_data <- data.matrix(ural_data) # Transform to a matrix format
-head(ural_data)
+# head(ural_data)
 ```
 
 ## Problem 12. Try to plot the Ural Valley data!
@@ -331,8 +331,8 @@ plotweb(ural_data)
 ```{r}
 plant_species <- rownames(memmott1999)
 flower_visitor_species <- colnames(memmott1999)
-head(plant_species, 3)
-head(flower_visitor_species, 3)
+# head(plant_species, 3)
+# head(flower_visitor_species, 3)
 ```
 
 ## 3. Unipartite networks
@@ -344,8 +344,8 @@ Can't locate the metadata file.
 ```{r}
 otago_nodes <- read.csv('data/Otago_Data_Nodes.csv')
 otago_links <- read.csv('data/Otago_Data_Links.csv')
-head(otago_nodes)
-head(otago_links)
+# head(otago_nodes)
+# head(otago_links)
 ```
 
 
@@ -356,7 +356,7 @@ otago_web <- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
 names(edge.attributes(otago_web))
 unique(E(otago_web)$LinkType)
 names(vertex.attributes(otago_web))
-head(unique(V(otago_web)$name))
+# head(unique(V(otago_web)$name))
 ```
 
 ## Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.
@@ -364,7 +364,7 @@ https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c
 ```{r}
 
 Bahia_Falsa_metadata <- openxlsx::read.xlsx('data/Dunne2013PBioSupData.xlsx',sheet=3)
-head(Bahia_Falsa_metadata)
+# head(Bahia_Falsa_metadata)
 
 ```
 
@@ -529,13 +529,11 @@ Description:Cell values indicate number of visits.
 
 ```{r}
 plant_ant_df <- read.csv('data/M_PA_003.csv',header=T,)
-head(plant_ant_df)
+# head(plant_ant_df)
 
 plant_ant_df <- tibble::column_to_rownames(plant_ant_df,"X")
 plant_ant_matrix <- data.matrix(plant_ant_df)
 isSymmetric(plant_ant_matrix)
-
-plant_ant_matrix
 
 # import to igraph
 visweb(plant_ant_matrix)
@@ -551,7 +549,7 @@ DB source: http://www.ecologia.ib.usp.br/iwdb/resources.html
 ```{r}
 
 plant_hum_df <- openxlsx::read.xlsx("data/vizentin-bugoni_et_al_2016_complementary.xlsx")
-head(plant_hum_df)
+# head(plant_hum_df)
 class(plant_hum_df)
 
 rownames(plant_hum_df) <- plant_hum_df$X1
