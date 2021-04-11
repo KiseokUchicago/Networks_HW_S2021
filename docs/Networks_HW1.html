@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeccd227a70f588942f6f89be8f4915a1fe18fdbabtargetblankccd227aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/ccd227a70f588942f6f89be8f4915a1fe18fdbab" target="_blank">ccd227a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treee020904ff13016fd3c1d5fa78f8e87cfdeadfc84targetblanke020904a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/e020904ff13016fd3c1d5fa78f8e87cfdeadfc84" target="_blank">e020904</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeccd227a70f588942f6f89be8f4915a1fe18fdbabtargetblankccd227aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treee020904ff13016fd3c1d5fa78f8e87cfdeadfc84targetblanke020904a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/ccd227a70f588942f6f89be8f4915a1fe18fdbab" target="_blank">ccd227a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/e020904ff13016fd3c1d5fa78f8e87cfdeadfc84" target="_blank">e020904</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/e020904ff13016fd3c1d5fa78f8e87cfdeadfc84/analysis/Networks_HW1.Rmd" target="_blank">e020904</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-10
+</td>
+<td>
+resize
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/720f80dc9c5ce7ce445d11bd2d30634b83280f80/docs/Networks_HW1.html" target="_blank">720f80d</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -801,9 +835,9 @@ L_wd &lt;- data.frame(from=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
                 weight=round(rnorm(10, 1, 0.2),2))
 g &lt;- igraph::graph.data.frame(L_wd, directed = T)
 g</code></pre>
-<pre><code>IGRAPH 5cdb10e DNW- 5 10 -- 
+<pre><code>IGRAPH e95eb82 DNW- 5 10 -- 
 + attr: name (v/c), weight (e/n)
-+ edges from 5cdb10e (vertex names):
++ edges from e95eb82 (vertex names):
  [1] 1-&gt;2 1-&gt;3 2-&gt;1 2-&gt;4 2-&gt;5 3-&gt;1 3-&gt;5 4-&gt;2 5-&gt;1 5-&gt;2</code></pre>
 <pre class="r"><code>E(g)$weight</code></pre>
 <pre><code> [1] 1.12 0.86 1.19 1.04 1.10 0.83 1.25 0.84 1.22 0.79</code></pre>
@@ -1012,108 +1046,11 @@ dim(ural_data)</code></pre>
 <pre class="r"><code>ural_data &lt;- ural_data[,-1] # remove column
 dim(ural_data)</code></pre>
 <pre><code>[1] 12 14</code></pre>
-<pre class="r"><code>head(ural_data)</code></pre>
-<pre><code>                        Ctenophthalmus.wagneri Nosopsyllus.consimilis
-Clethrionomys glareolus                   1748                    337
-Apodemus uralensis                        1408                    893
-Microtus arvalis                           494                    193
-Sorex araneus                              237                      6
-Crocidura suaveolens                        39                     21
-Arvicola terrestris                         19                      0
-                        Megabothris.turbidus Amphipsylla.rossica
-Clethrionomys glareolus                  811                 144
-Apodemus uralensis                       414                  41
-Microtus arvalis                          97                 177
-Sorex araneus                             20                   4
-Crocidura suaveolens                       0                   0
-Arvicola terrestris                        3                   3
-                        Nosopsyllus.mokrzeckyi Leptopsylla.taschenbergi
-Clethrionomys glareolus                      7                        7
-Apodemus uralensis                         120                       96
-Microtus arvalis                             8                        0
-Sorex araneus                                0                        0
-Crocidura suaveolens                         0                        0
-Arvicola terrestris                          0                        0
-                        Amalaraeus.penicilliger Peromyscopsylla.bidentata
-Clethrionomys glareolus                      43                         0
-Apodemus uralensis                           25                        33
-Microtus arvalis                             11                        44
-Sorex araneus                                 3                         0
-Crocidura suaveolens                          0                         2
-Arvicola terrestris                           2                         0
-                        Ctenophthalmus.breviatus Palaeopsylla.soricis
-Clethrionomys glareolus                       13                    3
-Apodemus uralensis                            29                   17
-Microtus arvalis                              12                    2
-Sorex araneus                                  2                   25
-Crocidura suaveolens                           0                    0
-Arvicola terrestris                           10                    0
-                        Corrodopsylla.birulai Megabothris.walkeri
-Clethrionomys glareolus                     3                  23
-Apodemus uralensis                          0                   7
-Microtus arvalis                            0                   3
-Sorex araneus                              36                   2
-Crocidura suaveolens                        1                   0
-Arvicola terrestris                         0                   3
-                        Leptopsylla.segnis Hystrichopsylla.talpae
-Clethrionomys glareolus                  8                      2
-Apodemus uralensis                      17                      5
-Microtus arvalis                         6                     12
-Sorex araneus                            0                      6
-Crocidura suaveolens                     0                      0
-Arvicola terrestris                      0                      0</code></pre>
-<pre class="r"><code># convert to matrix
+<pre class="r"><code># head(ural_data)
+
+# convert to matrix
 ural_data &lt;- data.matrix(ural_data) # Transform to a matrix format
-head(ural_data)</code></pre>
-<pre><code>                        Ctenophthalmus.wagneri Nosopsyllus.consimilis
-Clethrionomys glareolus                   1748                    337
-Apodemus uralensis                        1408                    893
-Microtus arvalis                           494                    193
-Sorex araneus                              237                      6
-Crocidura suaveolens                        39                     21
-Arvicola terrestris                         19                      0
-                        Megabothris.turbidus Amphipsylla.rossica
-Clethrionomys glareolus                  811                 144
-Apodemus uralensis                       414                  41
-Microtus arvalis                          97                 177
-Sorex araneus                             20                   4
-Crocidura suaveolens                       0                   0
-Arvicola terrestris                        3                   3
-                        Nosopsyllus.mokrzeckyi Leptopsylla.taschenbergi
-Clethrionomys glareolus                      7                        7
-Apodemus uralensis                         120                       96
-Microtus arvalis                             8                        0
-Sorex araneus                                0                        0
-Crocidura suaveolens                         0                        0
-Arvicola terrestris                          0                        0
-                        Amalaraeus.penicilliger Peromyscopsylla.bidentata
-Clethrionomys glareolus                      43                         0
-Apodemus uralensis                           25                        33
-Microtus arvalis                             11                        44
-Sorex araneus                                 3                         0
-Crocidura suaveolens                          0                         2
-Arvicola terrestris                           2                         0
-                        Ctenophthalmus.breviatus Palaeopsylla.soricis
-Clethrionomys glareolus                       13                    3
-Apodemus uralensis                            29                   17
-Microtus arvalis                              12                    2
-Sorex araneus                                  2                   25
-Crocidura suaveolens                           0                    0
-Arvicola terrestris                           10                    0
-                        Corrodopsylla.birulai Megabothris.walkeri
-Clethrionomys glareolus                     3                  23
-Apodemus uralensis                          0                   7
-Microtus arvalis                            0                   3
-Sorex araneus                              36                   2
-Crocidura suaveolens                        1                   0
-Arvicola terrestris                         0                   3
-                        Leptopsylla.segnis Hystrichopsylla.talpae
-Clethrionomys glareolus                  8                      2
-Apodemus uralensis                      17                      5
-Microtus arvalis                         6                     12
-Sorex araneus                            0                      6
-Crocidura suaveolens                     0                      0
-Arvicola terrestris                      0                      0</code></pre>
+# head(ural_data)</code></pre>
 </div>
 <div id="problem-12.-try-to-plot-the-ural-valley-data" class="section level2">
 <h2>Problem 12. Try to plot the Ural Valley data!</h2>
@@ -1126,10 +1063,8 @@ Arvicola terrestris                      0                      0</code></pre>
 <h2>2.4 Metadata</h2>
 <pre class="r"><code>plant_species &lt;- rownames(memmott1999)
 flower_visitor_species &lt;- colnames(memmott1999)
-head(plant_species, 3)</code></pre>
-<pre><code>[1] &quot;Agrimonium.eupatorium&quot; &quot;Leontodon.autumnalis&quot;  &quot;Lotus.corniculatus&quot;   </code></pre>
-<pre class="r"><code>head(flower_visitor_species, 3)</code></pre>
-<pre><code>[1] &quot;Coleoptera.spec1&quot; &quot;Coleoptera.spec2&quot; &quot;Coleoptera.spec3&quot;</code></pre>
+# head(plant_species, 3)
+# head(flower_visitor_species, 3)</code></pre>
 </div>
 <div id="unipartite-networks" class="section level2">
 <h2>3. Unipartite networks</h2>
@@ -1139,92 +1074,8 @@ head(plant_species, 3)</code></pre>
 <p><a href="https://esapubs.org/archive/" class="uri">https://esapubs.org/archive/</a> Can’t locate the metadata file.</p>
 <pre class="r"><code>otago_nodes &lt;- read.csv(&#39;data/Otago_Data_Nodes.csv&#39;)
 otago_links &lt;- read.csv(&#39;data/Otago_Data_Links.csv&#39;)
-head(otago_nodes)</code></pre>
-<pre><code>  NodeID SpeciesID StageID Stage Species.StageID         WorkingName
-1      1         1       1 Adult             1.1       Phytoplankton
-2      2         2       1 Adult             2.1     Epipellic Flora
-3      3         3       1 Adult             3.1 Macroalgae/Seagrass
-4      4         4       1 Adult             4.1         Zooplankton
-5      5         5       1 Adult             5.1           Meiofauna
-6      6         6       1 Adult             6.1            Bacteria
-  OrganismalGroup    NodeType Resolution ResolutionNotes   Feeding
-1           Plant Common Name Assemblage              NA Autotroph
-2           Plant Common Name Assemblage              NA Autotroph
-3           Plant Common Name Assemblage              NA Autotroph
-4     Zooplankton Common Name Assemblage              NA   Feeding
-5       Meiofauna Common Name Assemblage              NA   Feeding
-6        Bacteria Common Name Assemblage              NA   Feeding
-  Lifestyle.stage. Lifestyle.species. ConsumerStrategy.stage. System
-1      Free-Living        Free-Living               Autotroph     NA
-2      Free-Living        Free-Living               Autotroph     NA
-3      Free-Living        Free-Living               Autotroph     NA
-4      Free-Living        Free-Living                Predator     NA
-5      Free-Living        Free-Living                Predator     NA
-6      Free-Living        Free-Living              Detrivtore     NA
-  HabitatAffiliation Mobility Residency NativeStatus BodySize.g.
-1                 NA      Low  Resident           NA          NA
-2                 NA      Low  Resident           NA          NA
-3                 NA      Low  Resident           NA          NA
-4                 NA      Low  Resident           NA          NA
-5                 NA      Low  Resident           NA          NA
-6                 NA      Low  Resident           NA          NA
-  BodySizeEstimation BodySizeNotes BodySizeN Biomass.kg.ha. BiomassEstimation
-1                 NA            NA        NA             NA                NA
-2                 NA            NA        NA             NA                NA
-3                 NA            NA        NA             NA                NA
-4                 NA            NA        NA             NA                NA
-5                 NA            NA        NA             NA                NA
-6                 NA            NA        NA             NA                NA
-  BiomassNotes  Kingdom Phylum Subphylum Superclass Class Subclass Order
-1           NA  Plantae               NA         NA             NA      
-2           NA  Plantae               NA         NA             NA      
-3           NA  Plantae               NA         NA             NA      
-4           NA Animalia               NA         NA             NA      
-5           NA Animalia               NA         NA             NA      
-6           NA Protista               NA         NA             NA      
-  Suborder Infraorder Superfamily Family Genus SpecificEpithet Subspecies
-1       NA         NA          NA                                      NA
-2       NA         NA          NA                                      NA
-3       NA         NA          NA                                      NA
-4       NA         NA          NA                                      NA
-5       NA         NA          NA                                      NA
-6       NA         NA          NA                                      NA
-  NodeNotes
-1        NA
-2        NA
-3        NA
-4        NA
-5        NA
-6        NA</code></pre>
-<pre class="r"><code>head(otago_links)</code></pre>
-<pre><code>  ConsumerNodeID ResourceNodeID ConsumerSpeciesID ResourceSpeciesID
-1              4              1                 4                 1
-2              4              4                 4                 4
-3              4              6                 4                 6
-4              5              1                 5                 1
-5              5              2                 5                 2
-6              5              3                 5                 3
-  ConsumerSpecies.StageID ResourceSpecies.StageID LinkTypeID  LinkType
-1                       1                       1          1 Predation
-2                       1                       1          1 Predation
-3                       1                       1          1 Predation
-4                       1                       1          1 Predation
-5                       1                       1          1 Predation
-6                       1                       1          1 Predation
-  LinkEvidence LinkEvidenceNotes LinkFrequency LinkN DietFraction
-1           NA                NA            NA    NA           NA
-2           NA                NA            NA    NA           NA
-3           NA                NA            NA    NA           NA
-4           NA                NA            NA    NA           NA
-5           NA                NA            NA    NA           NA
-6           NA                NA            NA    NA           NA
-  ConsumptionRate VectorFrom PreyFrom
-1              NA         NA       NA
-2              NA         NA       NA
-3              NA         NA       NA
-4              NA         NA       NA
-5              NA         NA       NA
-6              NA         NA       NA</code></pre>
+# head(otago_nodes)
+# head(otago_links)</code></pre>
 <pre class="r"><code># import to igraph
 otago_web &lt;- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
 
@@ -1269,21 +1120,13 @@ names(edge.attributes(otago_web))</code></pre>
 [37] &quot;Family&quot;                  &quot;Genus&quot;                  
 [39] &quot;SpecificEpithet&quot;         &quot;Subspecies&quot;             
 [41] &quot;NodeNotes&quot;              </code></pre>
-<pre class="r"><code>head(unique(V(otago_web)$name))</code></pre>
-<pre><code>[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot;</code></pre>
+<pre class="r"><code># head(unique(V(otago_web)$name))</code></pre>
 </div>
 <div id="problem-14.-try-to-load-a-new-food-web-the-bahia-falsa.-the-bahia-falsa-data-set-is-described-here." class="section level2">
 <h2>Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.</h2>
 <p><a href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c" class="uri">https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c</a></p>
 <pre class="r"><code>Bahia_Falsa_metadata &lt;- openxlsx::read.xlsx(&#39;data/Dunne2013PBioSupData.xlsx&#39;,sheet=3)
-head(Bahia_Falsa_metadata)</code></pre>
-<pre><code>  FalsFree.web X2 FalsPar.web X4 FalsParCon.web X6
-1           18  2          18  2             18  2
-2           18  5          18  5             18  5
-3           19  2          19  2             19  2
-4           19 10          19 10             19 10
-5           20  2          20  2             20  2
-6           20 10          20 10             20 10</code></pre>
+# head(Bahia_Falsa_metadata)</code></pre>
 </div>
 <div id="plotting-with-igraph" class="section level2">
 <h2>4. Plotting with igraph</h2>
@@ -1455,247 +1298,12 @@ Interactions:45Connectance:0.125Components:4<br />
 Description:Cell values indicate number of visits.</li>
 </ol>
 <pre class="r"><code>plant_ant_df &lt;- read.csv(&#39;data/M_PA_003.csv&#39;,header=T,)
-head(plant_ant_df)</code></pre>
-<pre><code>                           X Maieta.guianensis Hirtella.physophora
-1          Pheidole minutula                93                   0
-2 Allomerus octoarticulatus                  0                  70
-3        Azteca sp2 M_PA_001                 2                   0
-4      Pseudomyrmex concolor                 0                   0
-5     Allomerus sp1 M_PA_001                 0                   0
-6    Pseudomyrmex nigrescens                 0                   0
-  Tachigali.myrmecophila Cordia.nodosa Maieta.poeppiggi Duroia.saccifera
-1                      0             0               28                0
-2                      0             0                0               27
-3                      0            24                0                0
-4                     18             0                0                0
-5                      0             0                0                0
-6                     16             0                0                0
-  Tachigali.polyphylla Tococa.bullifera Pourouma.heterophylla
-1                    0                1                     0
-2                    0                0                     0
-3                    0               11                     0
-4                   16                0                     0
-5                    0                0                    23
-6                    7                0                     0
-  Cecropia.purpurascens Amaioua.guianensis Cecropia.ficifolia
-1                     0                  0                  0
-2                     0                  0                  0
-3                     0                  0                  0
-4                     0                  0                  0
-5                     0                  0                  0
-6                     0                  0                  0
-  Hirtella.myrmecophila Cecropia.concolor Cecropia.distachya
-1                     0                 0                  0
-2                     3                 0                  0
-3                     0                 0                  0
-4                     0                 0                  0
-5                     0                 0                  0
-6                     0                 0                  0</code></pre>
-<pre class="r"><code>plant_ant_df &lt;- tibble::column_to_rownames(plant_ant_df,&quot;X&quot;)
+# head(plant_ant_df)
+
+plant_ant_df &lt;- tibble::column_to_rownames(plant_ant_df,&quot;X&quot;)
 plant_ant_matrix &lt;- data.matrix(plant_ant_df)
 isSymmetric(plant_ant_matrix)</code></pre>
 <pre><code>[1] FALSE</code></pre>
-<pre class="r"><code>plant_ant_matrix</code></pre>
-<pre><code>                           Maieta.guianensis Hirtella.physophora
-Pheidole minutula                         93                   0
-Allomerus octoarticulatus                  0                  70
-Azteca sp2 M_PA_001                        2                   0
-Pseudomyrmex concolor                      0                   0
-Allomerus sp1 M_PA_001                     0                   0
-Pseudomyrmex nigrescens                    0                   0
-Crematogaster sp3 M_PA_001                 7                   1
-Camponotus balzanii                        0                   0
-Azteca isthmica                            0                   0
-Crematogaster sp4 M_PA_001                 0                   0
-Allomerus prancei                          0                   5
-Crematogaster sp2 M_PA_001                 0                   0
-Allomerus auripunctata                     0                   0
-Solenops sp1 M_PA_001                      0                   3
-Azteca schummani                           0                   0
-Azteca sp1 M_PA_001                        0                   0
-Azteca sp6 M_PA_001                        0                   0
-Crematogaster sp1 M_PA_001                 0                   0
-Azteca polymorpha                          0                   0
-Crematogaster sp5 M_PA_001                 0                   0
-Azteca alfari                              0                   0
-Azteca sp3 M_PA_001                        0                   0
-Azteca sp4 M_PA_001                        0                   0
-Azteca sp5 M_PA_001                        0                   0
-                           Tachigali.myrmecophila Cordia.nodosa
-Pheidole minutula                               0             0
-Allomerus octoarticulatus                       0             0
-Azteca sp2 M_PA_001                             0            24
-Pseudomyrmex concolor                          18             0
-Allomerus sp1 M_PA_001                          0             0
-Pseudomyrmex nigrescens                        16             0
-Crematogaster sp3 M_PA_001                      0             0
-Camponotus balzanii                             0             0
-Azteca isthmica                                 0             0
-Crematogaster sp4 M_PA_001                      0             0
-Allomerus prancei                               0             0
-Crematogaster sp2 M_PA_001                      0             3
-Allomerus auripunctata                          0             2
-Solenops sp1 M_PA_001                           0             0
-Azteca schummani                                1             0
-Azteca sp1 M_PA_001                             0             3
-Azteca sp6 M_PA_001                             0             0
-Crematogaster sp1 M_PA_001                      0             2
-Azteca polymorpha                               2             0
-Crematogaster sp5 M_PA_001                      1             1
-Azteca alfari                                   0             0
-Azteca sp3 M_PA_001                             0             1
-Azteca sp4 M_PA_001                             0             0
-Azteca sp5 M_PA_001                             1             0
-                           Maieta.poeppiggi Duroia.saccifera
-Pheidole minutula                        28                0
-Allomerus octoarticulatus                 0               27
-Azteca sp2 M_PA_001                       0                0
-Pseudomyrmex concolor                     0                0
-Allomerus sp1 M_PA_001                    0                0
-Pseudomyrmex nigrescens                   0                0
-Crematogaster sp3 M_PA_001                1                0
-Camponotus balzanii                       0                0
-Azteca isthmica                           0                0
-Crematogaster sp4 M_PA_001                3                0
-Allomerus prancei                         0                0
-Crematogaster sp2 M_PA_001                0                0
-Allomerus auripunctata                    0                2
-Solenops sp1 M_PA_001                     0                1
-Azteca schummani                          0                0
-Azteca sp1 M_PA_001                       0                0
-Azteca sp6 M_PA_001                       0                0
-Crematogaster sp1 M_PA_001                0                1
-Azteca polymorpha                         0                0
-Crematogaster sp5 M_PA_001                0                0
-Azteca alfari                             0                0
-Azteca sp3 M_PA_001                       0                0
-Azteca sp4 M_PA_001                       0                0
-Azteca sp5 M_PA_001                       0                0
-                           Tachigali.polyphylla Tococa.bullifera
-Pheidole minutula                             0                1
-Allomerus octoarticulatus                     0                0
-Azteca sp2 M_PA_001                           0               11
-Pseudomyrmex concolor                        16                0
-Allomerus sp1 M_PA_001                        0                0
-Pseudomyrmex nigrescens                       7                0
-Crematogaster sp3 M_PA_001                    0                7
-Camponotus balzanii                           0                0
-Azteca isthmica                               0                0
-Crematogaster sp4 M_PA_001                    0                3
-Allomerus prancei                             0                0
-Crematogaster sp2 M_PA_001                    0                2
-Allomerus auripunctata                        0                0
-Solenops sp1 M_PA_001                         0                0
-Azteca schummani                              2                0
-Azteca sp1 M_PA_001                           0                0
-Azteca sp6 M_PA_001                           0                0
-Crematogaster sp1 M_PA_001                    0                0
-Azteca polymorpha                             0                0
-Crematogaster sp5 M_PA_001                    0                0
-Azteca alfari                                 0                0
-Azteca sp3 M_PA_001                           0                0
-Azteca sp4 M_PA_001                           0                1
-Azteca sp5 M_PA_001                           0                0
-                           Pourouma.heterophylla Cecropia.purpurascens
-Pheidole minutula                              0                     0
-Allomerus octoarticulatus                      0                     0
-Azteca sp2 M_PA_001                            0                     0
-Pseudomyrmex concolor                          0                     0
-Allomerus sp1 M_PA_001                        23                     0
-Pseudomyrmex nigrescens                        0                     0
-Crematogaster sp3 M_PA_001                     0                     0
-Camponotus balzanii                            0                    11
-Azteca isthmica                                0                     2
-Crematogaster sp4 M_PA_001                     0                     0
-Allomerus prancei                              0                     0
-Crematogaster sp2 M_PA_001                     0                     0
-Allomerus auripunctata                         0                     0
-Solenops sp1 M_PA_001                          0                     0
-Azteca schummani                               0                     0
-Azteca sp1 M_PA_001                            0                     0
-Azteca sp6 M_PA_001                            0                     0
-Crematogaster sp1 M_PA_001                     0                     0
-Azteca polymorpha                              0                     0
-Crematogaster sp5 M_PA_001                     0                     0
-Azteca alfari                                  0                     1
-Azteca sp3 M_PA_001                            0                     0
-Azteca sp4 M_PA_001                            0                     0
-Azteca sp5 M_PA_001                            0                     0
-                           Amaioua.guianensis Cecropia.ficifolia
-Pheidole minutula                           0                  0
-Allomerus octoarticulatus                   0                  0
-Azteca sp2 M_PA_001                         0                  0
-Pseudomyrmex concolor                       0                  0
-Allomerus sp1 M_PA_001                      0                  0
-Pseudomyrmex nigrescens                     0                  0
-Crematogaster sp3 M_PA_001                  0                  0
-Camponotus balzanii                         0                  0
-Azteca isthmica                             0                  3
-Crematogaster sp4 M_PA_001                  0                  0
-Allomerus prancei                           0                  0
-Crematogaster sp2 M_PA_001                  0                  0
-Allomerus auripunctata                      0                  0
-Solenops sp1 M_PA_001                       0                  0
-Azteca schummani                            0                  0
-Azteca sp1 M_PA_001                         0                  0
-Azteca sp6 M_PA_001                         3                  0
-Crematogaster sp1 M_PA_001                  0                  0
-Azteca polymorpha                           0                  0
-Crematogaster sp5 M_PA_001                  0                  0
-Azteca alfari                               0                  0
-Azteca sp3 M_PA_001                         0                  0
-Azteca sp4 M_PA_001                         0                  0
-Azteca sp5 M_PA_001                         0                  0
-                           Hirtella.myrmecophila Cecropia.concolor
-Pheidole minutula                              0                 0
-Allomerus octoarticulatus                      3                 0
-Azteca sp2 M_PA_001                            0                 0
-Pseudomyrmex concolor                          0                 0
-Allomerus sp1 M_PA_001                         0                 0
-Pseudomyrmex nigrescens                        0                 0
-Crematogaster sp3 M_PA_001                     0                 0
-Camponotus balzanii                            0                 0
-Azteca isthmica                                0                 1
-Crematogaster sp4 M_PA_001                     0                 0
-Allomerus prancei                              0                 0
-Crematogaster sp2 M_PA_001                     0                 0
-Allomerus auripunctata                         0                 0
-Solenops sp1 M_PA_001                          0                 0
-Azteca schummani                               0                 0
-Azteca sp1 M_PA_001                            0                 0
-Azteca sp6 M_PA_001                            0                 0
-Crematogaster sp1 M_PA_001                     0                 0
-Azteca polymorpha                              0                 0
-Crematogaster sp5 M_PA_001                     0                 0
-Azteca alfari                                  0                 0
-Azteca sp3 M_PA_001                            0                 0
-Azteca sp4 M_PA_001                            0                 0
-Azteca sp5 M_PA_001                            0                 0
-                           Cecropia.distachya
-Pheidole minutula                           0
-Allomerus octoarticulatus                   0
-Azteca sp2 M_PA_001                         0
-Pseudomyrmex concolor                       0
-Allomerus sp1 M_PA_001                      0
-Pseudomyrmex nigrescens                     0
-Crematogaster sp3 M_PA_001                  0
-Camponotus balzanii                         0
-Azteca isthmica                             1
-Crematogaster sp4 M_PA_001                  0
-Allomerus prancei                           0
-Crematogaster sp2 M_PA_001                  0
-Allomerus auripunctata                      0
-Solenops sp1 M_PA_001                       0
-Azteca schummani                            0
-Azteca sp1 M_PA_001                         0
-Azteca sp6 M_PA_001                         0
-Crematogaster sp1 M_PA_001                  0
-Azteca polymorpha                           0
-Crematogaster sp5 M_PA_001                  0
-Azteca alfari                               0
-Azteca sp3 M_PA_001                         0
-Azteca sp4 M_PA_001                         0
-Azteca sp5 M_PA_001                         0</code></pre>
 <pre class="r"><code># import to igraph
 visweb(plant_ant_matrix)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-35-1.png" width="1056" style="display: block; margin: auto;" /></p>
@@ -1707,15 +1315,8 @@ Vizentin-Bugoni, J., P. K. Maruyama, V. J. Debastiani, L. S. Duarte, B. Dalsgaar
 DB source: <a href="http://www.ecologia.ib.usp.br/iwdb/resources.html" class="uri">http://www.ecologia.ib.usp.br/iwdb/resources.html</a></li>
 </ol>
 <pre class="r"><code>plant_hum_df &lt;- openxlsx::read.xlsx(&quot;data/vizentin-bugoni_et_al_2016_complementary.xlsx&quot;)
-head(plant_hum_df)</code></pre>
-<pre><code>       X1 Pe  Tg Cr Ff La Sl Av Lc Em
-1 Aec_dis 15  21  1  0  0  0  0  0  0
-2 Aec_gam 18  95  6  0  0  2  0  0  0
-3 Aec_nud  1   6 15  0  0  0  0  0  0
-4 Aec_org 12  24  0  0  0  0  0  0  0
-5 Aec_van 95 132  0  0  0  0  0  0  0
-6 Als_ino 30   0  0  0  2 18  0  0  0</code></pre>
-<pre class="r"><code>class(plant_hum_df)</code></pre>
+# head(plant_hum_df)
+class(plant_hum_df)</code></pre>
 <pre><code>[1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>rownames(plant_hum_df) &lt;- plant_hum_df$X1
 plant_hum_df &lt;- plant_hum_df %&gt;% select(-X1)
