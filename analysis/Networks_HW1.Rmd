@@ -21,6 +21,7 @@ Student: **Kiseok Lee**
 # libraries
 library('igraph')
 library('bipartite')
+library('dplyr')
 ```
 
 ## 1. Data structures
@@ -52,7 +53,7 @@ par(mar=c(0,0,0,0))
 plot(g)
 ```
 
-### Problem 1. Try to add a self-loop to one of the networks.
+## Problem 1. Try to add a self-loop to one of the networks.
 ```{r}
 A_d <- matrix(c(1,1,1,0,1, # An example input matrix
               1,0,0,1,1,
@@ -65,7 +66,7 @@ par(mar=c(0,0,0,0))
 plot(g)
 ```
 
-### Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).
+## Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).
 ```{r}
 A_d <- matrix(c(0,1,1,0,1, # An example input matrix
                 1,0,0,0,1,
@@ -99,7 +100,7 @@ plot(g, edge.width=E(g)$weight)
 
 ```
 
-### Problem 3. Try do follow the code above to create a directed weighted network.
+## Problem 3. Try do follow the code above to create a directed weighted network.
 ```{r}
 A_w <- matrix(c(0,1,1,0,0, # An example input matrix
                 1,0,0,1,1,
@@ -117,7 +118,7 @@ par(mar=c(0,0,0,0))
 plot(g, edge.width=E(g)$weight)
 ```
 
-### Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.
+## Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.
 
 1. Microbiome data: interaction strengths: either negative or positive correlation coefficient in co-occurrence networks
 2. General ecology data: manually curated metadata of weights
@@ -145,7 +146,7 @@ plot(g)
 
 ### 1.2.1. Unweighted
 
-### Problem 5. Try to add a self-loop to the edge list, using from and to as column names.
+## Problem 5. Try to add a self-loop to the edge list, using from and to as column names.
 ```{r}
 # undirected
 L_u <- data.frame(i=c(1,1,1,2,2),
@@ -184,7 +185,7 @@ plot(g, edge.width=log(E(g)$weight)*10, # possible to rescale edge weights when 
 
 ```
 
-### Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?
+## Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?
 Advantages: more direct and intuitive (only when having a small number of edges)
 Disadvantages: cannot use matrix operations. not good when there are many number of edges
 
@@ -201,7 +202,7 @@ A
 
 ```
 
-### Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.
+## Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.
 
 ```{r}
 matrix_to_edge_list <- function(A){
@@ -223,7 +224,7 @@ matrix_to_edge_list(A_u)
 
 ```
 
-### Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.
+## Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.
 
 ```{r}
 
@@ -254,7 +255,7 @@ class(memmott1999)
 memmott1999[1:4,1:4] # view first lines
 ```
 
-### Problem 9. Now try to load a different data set. Where can you find available ones?
+## Problem 9. Now try to load a different data set. Where can you find available ones?
 We can find other database information in bipartite package manual.
 https://cran.r-project.org/web/packages/bipartite/bipartite.pdf
 
@@ -285,10 +286,10 @@ visweb(memmott1999,prednames = F, prey.lablength = 10)
 plotweb(memmott1999)
 ```
 
-### Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?
+## Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?
 Can't really see in detail.
 
-### Problem 11. Try to browse through the options in plotweb and tweak the plot.
+## Problem 11. Try to browse through the options in plotweb and tweak the plot.
 
 ```{r}
 plotweb(memmott1999,y.width.low=0.05, y.width.high=0.1, method="normal", 
@@ -318,7 +319,7 @@ ural_data <- data.matrix(ural_data) # Transform to a matrix format
 head(ural_data)
 ```
 
-### Problem 12. Try to plot the Ural Valley data!
+## Problem 12. Try to plot the Ural Valley data!
 
 ```{r}
 visweb(ural_data)
@@ -336,7 +337,7 @@ head(flower_visitor_species, 3)
 
 ## 3. Unipartite networks
 
-### Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.
+## Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.
 https://esapubs.org/archive/
 Can't locate the metadata file.
 
@@ -358,7 +359,7 @@ names(vertex.attributes(otago_web))
 head(unique(V(otago_web)$name))
 ```
 
-### Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.
+## Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.
 https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c
 ```{r}
 
@@ -427,7 +428,7 @@ plot(otago_web,layout=coords,
             edge.width=.5)
 ```
 
-### Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?
+## Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?
 
 ```{r}
 Org_vec <- unique(otago_nodes$OrganismalGroup)
@@ -502,43 +503,66 @@ Does the organismal group correspond to the trophic position?
 No, it does not seem to have correspondence.
 
 
-### Problem 16. Find 5 different repositories or data sources for ecological networks.
+## Problem 16. Find 5 different repositories or data sources for ecological networks.
 (1) Web of Life: ecological networks database: http://www.web-of-life.es/
 (2) An Online Database for Informing Ecological Network Models: http://kelpforest.ucsc.edu
 (3) Mangal - Ecological interactions database: https://mangal.io/#/
 (4) Ecology Networks | Network Data Repository: http://networkrepository.com
 (5) Botanical Information and Ecology Network: https://bien.nceas.ucsb.edu/bien/
 
-### Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.
+Others\
+IWDB-interaction web database: http://www.ecologia.ib.usp.br/iwdb/resources.html/ \
+Globalweb database: https://www.globalwebdb.com/ \
+GLOBI database: https://www.globalbioticinteractions.org/ \
 
-(1) Plant Ant networks from Web of Life: ecological networks database: http://www.web-of-life.es/
-Network:M_PA_003
+
+## Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.
+
+(1) Plant Ant networks from Web of Life: ecological networks database: http://www.web-of-life.es/ \
+Network:M_PA_003 \
 Locality of study:Biological Dynamics of Forest Fragments ProjectCoord(Lat/Lon):-2.4 , -59.716667
-Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347.
-Source:http://www.jstor.org/stable/5880, Full Paper
-Species:39Ants (Columns):24Plants (Rows):15
-Interactions:45Connectance:0.125Components:4
+Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347. \
+Source:http://www.jstor.org/stable/5880, Full Paper \
+Species:39Ants (Columns):24Plants (Rows):15 \
+Interactions:45Connectance:0.125Components:4 \
 Description:Cell values indicate number of visits.
 
 ```{r}
-plant_ant_df <- read.csv('data/M_PA_003.csv',header=T)
+plant_ant_df <- read.csv('data/M_PA_003.csv',header=T,)
 head(plant_ant_df)
 
+plant_ant_df <- tibble::column_to_rownames(plant_ant_df,"X")
 plant_ant_matrix <- data.matrix(plant_ant_df)
 isSymmetric(plant_ant_matrix)
 
+plant_ant_matrix
+
+# import to igraph
+visweb(plant_ant_matrix)
+plotweb(plant_ant_matrix)
 
 ```
 
+(2) Neotropical plant-hummingbird network
+Vizentin-Bugoni et al. (2016) \
+Vizentin-Bugoni, J., P. K. Maruyama, V. J. Debastiani, L. S. Duarte, B. Dalsgaard & M. Sazima (2016). Influences of sampling effort on detected patterns and structuring processes of a Neotropical plant-hummingbird network. Journal of Animal Ecology 85: 262-272. \
+DB source: http://www.ecologia.ib.usp.br/iwdb/resources.html
 
+```{r}
 
+plant_hum_df <- openxlsx::read.xlsx("data/vizentin-bugoni_et_al_2016_complementary.xlsx")
+head(plant_hum_df)
+class(plant_hum_df)
 
+rownames(plant_hum_df) <- plant_hum_df$X1
+plant_hum_df <- plant_hum_df %>% select(-X1)
+plant_hum_matrix <- data.matrix(plant_hum_df)
 
+# import to igraph
+visweb(plant_hum_matrix)
+plotweb(plant_hum_matrix)
 
-
-
-
-
+```
 
 
 
