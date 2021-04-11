@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeacdc82b746cca949d8c3b4319423379d68a73165targetblankacdc82ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/acdc82b746cca949d8c3b4319423379d68a73165" target="_blank">acdc82b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeccd227a70f588942f6f89be8f4915a1fe18fdbabtargetblankccd227aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/ccd227a70f588942f6f89be8f4915a1fe18fdbab" target="_blank">ccd227a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeacdc82b746cca949d8c3b4319423379d68a73165targetblankacdc82ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeccd227a70f588942f6f89be8f4915a1fe18fdbabtargetblankccd227aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/acdc82b746cca949d8c3b4319423379d68a73165" target="_blank">acdc82b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/ccd227a70f588942f6f89be8f4915a1fe18fdbab" target="_blank">ccd227a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,6 +499,8 @@ Untracked files:
     Untracked:  data/Otago_Data_Links.csv
     Untracked:  data/Otago_Data_Nodes.csv
     Untracked:  data/Ural_valley_A_HP_048.csv
+    Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+    Untracked:  data/~$vizentin-bugoni_et_al_2016_complementary.xlsx
 
 </code></pre>
 <p>
@@ -537,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/ccd227a70f588942f6f89be8f4915a1fe18fdbab/analysis/Networks_HW1.Rmd" target="_blank">ccd227a</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-10
+</td>
+<td>
+HW1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/0020e210ca3852494b9c74a6076f093c25d823d1/docs/Networks_HW1.html" target="_blank">0020e21</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -604,7 +640,8 @@ HW1
 Student: <strong>Kiseok Lee</strong></p>
 <pre class="r"><code># libraries
 library(&#39;igraph&#39;)
-library(&#39;bipartite&#39;)</code></pre>
+library(&#39;bipartite&#39;)
+library(&#39;dplyr&#39;)</code></pre>
 </div>
 <div id="data-structures" class="section level2">
 <h2>1. Data structures</h2>
@@ -639,8 +676,9 @@ par(mar=c(0,0,0,0))
 plot(g)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="problem-1.-try-to-add-a-self-loop-to-one-of-the-networks." class="section level3">
-<h3>Problem 1. Try to add a self-loop to one of the networks.</h3>
+</div>
+<div id="problem-1.-try-to-add-a-self-loop-to-one-of-the-networks." class="section level2">
+<h2>Problem 1. Try to add a self-loop to one of the networks.</h2>
 <pre class="r"><code>A_d &lt;- matrix(c(1,1,1,0,1, # An example input matrix
               1,0,0,1,1,
               1,0,0,0,0,
@@ -653,8 +691,8 @@ par(mar=c(0,0,0,0))
 plot(g)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="problem-2.-try-to-create-a-directed-graph-in-which-there-is-a-singleton-a-node-without-any-interactions." class="section level3">
-<h3>Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).</h3>
+<div id="problem-2.-try-to-create-a-directed-graph-in-which-there-is-a-singleton-a-node-without-any-interactions." class="section level2">
+<h2>Problem 2. Try to create a directed graph in which there is a singleton (a node without any interactions).</h2>
 <pre class="r"><code>A_d &lt;- matrix(c(0,1,1,0,1, # An example input matrix
                 1,0,0,0,1,
                 1,0,0,0,0,
@@ -666,7 +704,6 @@ isSymmetric(A_d)</code></pre>
 par(mar=c(0,0,0,0))
 plot(g)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
-</div>
 <div id="weighted-networks" class="section level3">
 <h3>1.1.3. Weighted networks</h3>
 <pre class="r"><code>A_w &lt;- matrix(c(0,1,1,0,0, # An example input matrix
@@ -686,8 +723,9 @@ E(g)$weight</code></pre>
 plot(g, edge.width=E(g)$weight)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="problem-3.-try-do-follow-the-code-above-to-create-a-directed-weighted-network." class="section level3">
-<h3>Problem 3. Try do follow the code above to create a directed weighted network.</h3>
+</div>
+<div id="problem-3.-try-do-follow-the-code-above-to-create-a-directed-weighted-network." class="section level2">
+<h2>Problem 3. Try do follow the code above to create a directed weighted network.</h2>
 <pre class="r"><code>A_w &lt;- matrix(c(0,1,1,0,0, # An example input matrix
                 1,0,0,1,1,
                 0,0,0,0,1,
@@ -704,14 +742,13 @@ E(g)$weight</code></pre>
 plot(g, edge.width=E(g)$weight)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="problem-4.-what-can-edge-weights-be-in-ecological-networks-try-to-think-of-at-least-3-different-measures-for-an-ecological-interaction.-if-you-work-with-other-network-types-answer-the-question-according-to-your-domain-of-expertise." class="section level3">
-<h3>Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.</h3>
+<div id="problem-4.-what-can-edge-weights-be-in-ecological-networks-try-to-think-of-at-least-3-different-measures-for-an-ecological-interaction.-if-you-work-with-other-network-types-answer-the-question-according-to-your-domain-of-expertise." class="section level2">
+<h2>Problem 4. What can edge weights be in ecological networks? Try to think of at least 3 different measures for an ecological interaction. If you work with other network types, answer the question according to your domain of expertise.</h2>
 <ol style="list-style-type: decimal">
 <li>Microbiome data: interaction strengths: either negative or positive correlation coefficient in co-occurrence networks</li>
 <li>General ecology data: manually curated metadata of weights</li>
 <li>Protein network data: the weight is defined by the edge clustering coefficient and the gene expression correlation between the interacting proteins (<a href="https://pubmed.ncbi.nlm.nih.gov/27771556/" class="uri">https://pubmed.ncbi.nlm.nih.gov/27771556/</a>)</li>
 </ol>
-</div>
 </div>
 <div id="networks-as-edge-lists" class="section level2">
 <h2>1.2 Networks as edge lists</h2>
@@ -735,8 +772,9 @@ plot(g)</code></pre>
 <div id="unweighted-1" class="section level3">
 <h3>1.2.1. Unweighted</h3>
 </div>
-<div id="problem-5.-try-to-add-a-self-loop-to-the-edge-list-using-from-and-to-as-column-names." class="section level3">
-<h3>Problem 5. Try to add a self-loop to the edge list, using from and to as column names.</h3>
+</div>
+<div id="problem-5.-try-to-add-a-self-loop-to-the-edge-list-using-from-and-to-as-column-names." class="section level2">
+<h2>Problem 5. Try to add a self-loop to the edge list, using from and to as column names.</h2>
 <pre class="r"><code># undirected
 L_u &lt;- data.frame(i=c(1,1,1,2,2),
                 j=c(1,2,3,4,5))
@@ -744,7 +782,6 @@ g &lt;- igraph::graph.data.frame(L_u, directed = F)
 par(mar=c(0,0,0,0))
 plot(g)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
-</div>
 <div id="weighted" class="section level3">
 <h3>1.2.2. Weighted</h3>
 <pre class="r"><code># undirected
@@ -764,9 +801,9 @@ L_wd &lt;- data.frame(from=c(1, 1, 2, 2, 2, 3, 3, 4, 5, 5),
                 weight=round(rnorm(10, 1, 0.2),2))
 g &lt;- igraph::graph.data.frame(L_wd, directed = T)
 g</code></pre>
-<pre><code>IGRAPH 296cf01 DNW- 5 10 -- 
+<pre><code>IGRAPH 5cdb10e DNW- 5 10 -- 
 + attr: name (v/c), weight (e/n)
-+ edges from 296cf01 (vertex names):
++ edges from 5cdb10e (vertex names):
  [1] 1-&gt;2 1-&gt;3 2-&gt;1 2-&gt;4 2-&gt;5 3-&gt;1 3-&gt;5 4-&gt;2 5-&gt;1 5-&gt;2</code></pre>
 <pre class="r"><code>E(g)$weight</code></pre>
 <pre><code> [1] 1.12 0.86 1.19 1.04 1.10 0.83 1.25 0.84 1.22 0.79</code></pre>
@@ -777,10 +814,10 @@ plot(g, edge.width=log(E(g)$weight)*10, # possible to rescale edge weights when 
      edge.color=&#39;black&#39;)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-12-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="problem-6.-what-are-the-advantagesdisadvantages-of-edge-lists-compared-to-matrices" class="section level3">
-<h3>Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?</h3>
-<p>Advantages: more direct and intuitive (only when having a small number of edges) Disadvantages: cannot use matrix operations. not good when there are many number of edges</p>
 </div>
+<div id="problem-6.-what-are-the-advantagesdisadvantages-of-edge-lists-compared-to-matrices" class="section level2">
+<h2>Problem 6. What are the advantages/disadvantages of edge lists compared to matrices?</h2>
+<p>Advantages: more direct and intuitive (only when having a small number of edges) Disadvantages: cannot use matrix operations. not good when there are many number of edges</p>
 </div>
 <div id="converting-between-matrices-and-edge-lists" class="section level2">
 <h2>1.3 Converting between matrices and edge lists</h2>
@@ -814,8 +851,9 @@ A</code></pre>
 3 0.83 0.00 0.00 0.00 1.25
 4 0.00 0.84 0.00 0.00 0.00
 5 1.22 0.79 0.00 0.00 0.00</code></pre>
-<div id="problem-7.-try-programming-a-function-that-takes-a-matrix-and-returns-an-edge-list.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level3">
-<h3>Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.</h3>
+</div>
+<div id="problem-7.-try-programming-a-function-that-takes-a-matrix-and-returns-an-edge-list.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level2">
+<h2>Problem 7. Try programming a function that takes a matrix and returns an edge list. Note that it may be important if the matrix is directed or weighted.</h2>
 <pre class="r"><code>matrix_to_edge_list &lt;- function(A){
   # is it symmetric?
   if (isSymmetric(A)){
@@ -858,8 +896,8 @@ matrix_to_edge_list(A_w)</code></pre>
 3    2  4      1
 4    2  5      1</code></pre>
 </div>
-<div id="problem-8.-try-programming-a-function-that-takes-an-edge-list-and-returns-a-matrix.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level3">
-<h3>Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.</h3>
+<div id="problem-8.-try-programming-a-function-that-takes-an-edge-list-and-returns-a-matrix.-note-that-it-may-be-important-if-the-matrix-is-directed-or-weighted." class="section level2">
+<h2>Problem 8. Try programming a function that takes an edge list and returns a matrix. Note that it may be important if the matrix is directed or weighted.</h2>
 <pre class="r"><code>edge_list_to_matrix_list &lt;- function(L_w){
   g &lt;- igraph::graph.data.frame(L_w, directed = T)
   A &lt;- igraph::as_adjacency_matrix(g, attr = &#39;weight&#39;, sparse=F)
@@ -888,7 +926,6 @@ edge_list_to_matrix_list(L_w)</code></pre>
 4 0.00 0.84 0.00 0.00 0.00
 5 1.22 0.79 0.00 0.00 0.00</code></pre>
 </div>
-</div>
 <div id="bipartite-networks" class="section level2">
 <h2>2. Bipartite networks</h2>
 </div>
@@ -908,8 +945,9 @@ Agrimonium.eupatorium                0
 Leontodon.autumnalis                 0
 Lotus.corniculatus                   0
 Medicago.lupulina                    0</code></pre>
-<div id="problem-9.-now-try-to-load-a-different-data-set.-where-can-you-find-available-ones" class="section level3">
-<h3>Problem 9. Now try to load a different data set. Where can you find available ones?</h3>
+</div>
+<div id="problem-9.-now-try-to-load-a-different-data-set.-where-can-you-find-available-ones" class="section level2">
+<h2>Problem 9. Now try to load a different data set. Where can you find available ones?</h2>
 <p>We can find other database information in bipartite package manual. <a href="https://cran.r-project.org/web/packages/bipartite/bipartite.pdf" class="uri">https://cran.r-project.org/web/packages/bipartite/bipartite.pdf</a></p>
 <p>For example,</p>
 <pre class="r"><code>data(&quot;elberling1999&quot;)
@@ -927,7 +965,6 @@ Astragalus.alpinus                 0
 Bartsia.alpina                     0
 Cassiope.hypniodes                 0</code></pre>
 </div>
-</div>
 <div id="visualizaing-data" class="section level2">
 <h2>2.2 Visualizaing data</h2>
 <pre class="r"><code>visweb(memmott1999)</code></pre>
@@ -940,17 +977,17 @@ visweb(memmott1999_binary)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plotweb(memmott1999)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<div id="problem-10.-can-you-say-something-about-the-network-using-this-representation-what-does-it-reveal-just-by-looking" class="section level3">
-<h3>Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?</h3>
+</div>
+<div id="problem-10.-can-you-say-something-about-the-network-using-this-representation-what-does-it-reveal-just-by-looking" class="section level2">
+<h2>Problem 10. Can you say something about the network using this representation? What does it reveal just by looking?</h2>
 <p>Can’t really see in detail.</p>
 </div>
-<div id="problem-11.-try-to-browse-through-the-options-in-plotweb-and-tweak-the-plot." class="section level3">
-<h3>Problem 11. Try to browse through the options in plotweb and tweak the plot.</h3>
+<div id="problem-11.-try-to-browse-through-the-options-in-plotweb-and-tweak-the-plot." class="section level2">
+<h2>Problem 11. Try to browse through the options in plotweb and tweak the plot.</h2>
 <pre class="r"><code>plotweb(memmott1999,y.width.low=0.05, y.width.high=0.1, method=&quot;normal&quot;, 
     add=TRUE, low.y=2.95, high.y=3.95, col.low=&quot;green&quot;, text.low.col=&quot;black&quot;, 
     low.lab.dis=0, arrow=&quot;down&quot;, adj.low=c(0.5,1.1), low.lablength=4)</code></pre>
 <pre><code>Error in strheight(colnames(web)[1], cex = 0.6): plot.new has not been called yet</code></pre>
-</div>
 </div>
 <div id="importing-data" class="section level2">
 <h2>2.3 Importing data</h2>
@@ -1077,13 +1114,13 @@ Microtus arvalis                         6                     12
 Sorex araneus                            0                      6
 Crocidura suaveolens                     0                      0
 Arvicola terrestris                      0                      0</code></pre>
-<div id="problem-12.-try-to-plot-the-ural-valley-data" class="section level3">
-<h3>Problem 12. Try to plot the Ural Valley data!</h3>
+</div>
+<div id="problem-12.-try-to-plot-the-ural-valley-data" class="section level2">
+<h2>Problem 12. Try to plot the Ural Valley data!</h2>
 <pre class="r"><code>visweb(ural_data)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-25-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plotweb(ural_data)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-25-2.png" width="1056" style="display: block; margin: auto;" /></p>
-</div>
 </div>
 <div id="metadata" class="section level2">
 <h2>2.4 Metadata</h2>
@@ -1096,8 +1133,9 @@ head(plant_species, 3)</code></pre>
 </div>
 <div id="unipartite-networks" class="section level2">
 <h2>3. Unipartite networks</h2>
-<div id="problem-13.-browse-through-the-metadata-and-particularly-the-data-set-structural-descriptors." class="section level3">
-<h3>Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.</h3>
+</div>
+<div id="problem-13.-browse-through-the-metadata-and-particularly-the-data-set-structural-descriptors." class="section level2">
+<h2>Problem 13. Browse through the metadata and particularly the “Data Set Structural Descriptors”.</h2>
 <p><a href="https://esapubs.org/archive/" class="uri">https://esapubs.org/archive/</a> Can’t locate the metadata file.</p>
 <pre class="r"><code>otago_nodes &lt;- read.csv(&#39;data/Otago_Data_Nodes.csv&#39;)
 otago_links &lt;- read.csv(&#39;data/Otago_Data_Links.csv&#39;)
@@ -1234,8 +1272,8 @@ names(edge.attributes(otago_web))</code></pre>
 <pre class="r"><code>head(unique(V(otago_web)$name))</code></pre>
 <pre><code>[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot;</code></pre>
 </div>
-<div id="problem-14.-try-to-load-a-new-food-web-the-bahia-falsa.-the-bahia-falsa-data-set-is-described-here." class="section level3">
-<h3>Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.</h3>
+<div id="problem-14.-try-to-load-a-new-food-web-the-bahia-falsa.-the-bahia-falsa-data-set-is-described-here." class="section level2">
+<h2>Problem 14. Try to load a new food web, the Bahia Falsa. The Bahia Falsa data set is described here.</h2>
 <p><a href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c" class="uri">https://datadryad.org/stash/dataset/doi:10.5061/dryad.b8r5c</a></p>
 <pre class="r"><code>Bahia_Falsa_metadata &lt;- openxlsx::read.xlsx(&#39;data/Dunne2013PBioSupData.xlsx&#39;,sheet=3)
 head(Bahia_Falsa_metadata)</code></pre>
@@ -1246,7 +1284,6 @@ head(Bahia_Falsa_metadata)</code></pre>
 4           19 10          19 10             19 10
 5           20  2          20  2             20  2
 6           20 10          20 10             20 10</code></pre>
-</div>
 </div>
 <div id="plotting-with-igraph" class="section level2">
 <h2>4. Plotting with igraph</h2>
@@ -1297,8 +1334,9 @@ plot(otago_web,layout=coords,
             edge.arrow.size=.3,
             edge.width=.5)</code></pre>
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<div id="problem-15.-try-to-set-other-node-and-edge-attributes-based-on-otago_nodes-and-otago_links.-for-example-try-to-color-nodes-by-organismalgroup-and-plot.-does-the-organismal-group-correspond-to-the-trophic-position" class="section level3">
-<h3>Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?</h3>
+</div>
+<div id="problem-15.-try-to-set-other-node-and-edge-attributes-based-on-otago_nodes-and-otago_links.-for-example-try-to-color-nodes-by-organismalgroup-and-plot.-does-the-organismal-group-correspond-to-the-trophic-position" class="section level2">
+<h2>Problem 15. Try to set other node and edge attributes based on otago_nodes and otago_links. For example, try to color nodes by OrganismalGroup and plot. Does the organismal group correspond to the trophic position?</h2>
 <pre class="r"><code>Org_vec &lt;- unique(otago_nodes$OrganismalGroup)
 
 
@@ -1390,8 +1428,8 @@ plot(otago_web,layout=coords,
 <p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-34-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <p>Does the organismal group correspond to the trophic position? No, it does not seem to have correspondence.</p>
 </div>
-<div id="problem-16.-find-5-different-repositories-or-data-sources-for-ecological-networks." class="section level3">
-<h3>Problem 16. Find 5 different repositories or data sources for ecological networks.</h3>
+<div id="problem-16.-find-5-different-repositories-or-data-sources-for-ecological-networks." class="section level2">
+<h2>Problem 16. Find 5 different repositories or data sources for ecological networks.</h2>
 <ol style="list-style-type: decimal">
 <li>Web of Life: ecological networks database: <a href="http://www.web-of-life.es/" class="uri">http://www.web-of-life.es/</a></li>
 <li>An Online Database for Informing Ecological Network Models: <a href="http://kelpforest.ucsc.edu" class="uri">http://kelpforest.ucsc.edu</a></li>
@@ -1399,13 +1437,24 @@ plot(otago_web,layout=coords,
 <li>Ecology Networks | Network Data Repository: <a href="http://networkrepository.com" class="uri">http://networkrepository.com</a></li>
 <li>Botanical Information and Ecology Network: <a href="https://bien.nceas.ucsb.edu/bien/" class="uri">https://bien.nceas.ucsb.edu/bien/</a></li>
 </ol>
+<p>Others<br />
+IWDB-interaction web database: <a href="http://www.ecologia.ib.usp.br/iwdb/resources.html/" class="uri">http://www.ecologia.ib.usp.br/iwdb/resources.html/</a><br />
+Globalweb database: <a href="https://www.globalwebdb.com/" class="uri">https://www.globalwebdb.com/</a><br />
+GLOBI database: <a href="https://www.globalbioticinteractions.org/" class="uri">https://www.globalbioticinteractions.org/</a><br />
+</p>
 </div>
-<div id="problem-17.-try-to-obtain-2-data-sets-from-2-different-repositories-load-them-and-plot-them." class="section level3">
-<h3>Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.</h3>
+<div id="problem-17.-try-to-obtain-2-data-sets-from-2-different-repositories-load-them-and-plot-them." class="section level2">
+<h2>Problem 17. Try to obtain 2 data sets from 2 different repositories, load them and plot them.</h2>
 <ol style="list-style-type: decimal">
-<li>Plant Ant networks from Web of Life: ecological networks database: <a href="http://www.web-of-life.es/" class="uri">http://www.web-of-life.es/</a> Network:M_PA_003 Locality of study:Biological Dynamics of Forest Fragments ProjectCoord(Lat/Lon):-2.4 , -59.716667 Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347. Source:<a href="http://www.jstor.org/stable/5880" class="uri">http://www.jstor.org/stable/5880</a>, Full Paper Species:39Ants (Columns):24Plants (Rows):15 Interactions:45Connectance:0.125Components:4 Description:Cell values indicate number of visits.</li>
+<li>Plant Ant networks from Web of Life: ecological networks database: <a href="http://www.web-of-life.es/" class="uri">http://www.web-of-life.es/</a><br />
+Network:M_PA_003<br />
+Locality of study:Biological Dynamics of Forest Fragments ProjectCoord(Lat/Lon):-2.4 , -59.716667 Reference:Fonseca, C.R., and G. Ganade. 1996. Asymmetries, compartments and null interactions in an Amazonian ant-plant community. Journal of Animal Ecology 66: 339-347.<br />
+Source:<a href="http://www.jstor.org/stable/5880" class="uri">http://www.jstor.org/stable/5880</a>, Full Paper<br />
+Species:39Ants (Columns):24Plants (Rows):15<br />
+Interactions:45Connectance:0.125Components:4<br />
+Description:Cell values indicate number of visits.</li>
 </ol>
-<pre class="r"><code>plant_ant_df &lt;- read.csv(&#39;data/M_PA_003.csv&#39;,header=T)
+<pre class="r"><code>plant_ant_df &lt;- read.csv(&#39;data/M_PA_003.csv&#39;,header=T,)
 head(plant_ant_df)</code></pre>
 <pre><code>                           X Maieta.guianensis Hirtella.physophora
 1          Pheidole minutula                93                   0
@@ -1442,9 +1491,241 @@ head(plant_ant_df)</code></pre>
 4                     0                 0                  0
 5                     0                 0                  0
 6                     0                 0                  0</code></pre>
-<pre class="r"><code>plant_ant_matrix &lt;- data.matrix(plant_ant_df)
+<pre class="r"><code>plant_ant_df &lt;- tibble::column_to_rownames(plant_ant_df,&quot;X&quot;)
+plant_ant_matrix &lt;- data.matrix(plant_ant_df)
 isSymmetric(plant_ant_matrix)</code></pre>
 <pre><code>[1] FALSE</code></pre>
+<pre class="r"><code>plant_ant_matrix</code></pre>
+<pre><code>                           Maieta.guianensis Hirtella.physophora
+Pheidole minutula                         93                   0
+Allomerus octoarticulatus                  0                  70
+Azteca sp2 M_PA_001                        2                   0
+Pseudomyrmex concolor                      0                   0
+Allomerus sp1 M_PA_001                     0                   0
+Pseudomyrmex nigrescens                    0                   0
+Crematogaster sp3 M_PA_001                 7                   1
+Camponotus balzanii                        0                   0
+Azteca isthmica                            0                   0
+Crematogaster sp4 M_PA_001                 0                   0
+Allomerus prancei                          0                   5
+Crematogaster sp2 M_PA_001                 0                   0
+Allomerus auripunctata                     0                   0
+Solenops sp1 M_PA_001                      0                   3
+Azteca schummani                           0                   0
+Azteca sp1 M_PA_001                        0                   0
+Azteca sp6 M_PA_001                        0                   0
+Crematogaster sp1 M_PA_001                 0                   0
+Azteca polymorpha                          0                   0
+Crematogaster sp5 M_PA_001                 0                   0
+Azteca alfari                              0                   0
+Azteca sp3 M_PA_001                        0                   0
+Azteca sp4 M_PA_001                        0                   0
+Azteca sp5 M_PA_001                        0                   0
+                           Tachigali.myrmecophila Cordia.nodosa
+Pheidole minutula                               0             0
+Allomerus octoarticulatus                       0             0
+Azteca sp2 M_PA_001                             0            24
+Pseudomyrmex concolor                          18             0
+Allomerus sp1 M_PA_001                          0             0
+Pseudomyrmex nigrescens                        16             0
+Crematogaster sp3 M_PA_001                      0             0
+Camponotus balzanii                             0             0
+Azteca isthmica                                 0             0
+Crematogaster sp4 M_PA_001                      0             0
+Allomerus prancei                               0             0
+Crematogaster sp2 M_PA_001                      0             3
+Allomerus auripunctata                          0             2
+Solenops sp1 M_PA_001                           0             0
+Azteca schummani                                1             0
+Azteca sp1 M_PA_001                             0             3
+Azteca sp6 M_PA_001                             0             0
+Crematogaster sp1 M_PA_001                      0             2
+Azteca polymorpha                               2             0
+Crematogaster sp5 M_PA_001                      1             1
+Azteca alfari                                   0             0
+Azteca sp3 M_PA_001                             0             1
+Azteca sp4 M_PA_001                             0             0
+Azteca sp5 M_PA_001                             1             0
+                           Maieta.poeppiggi Duroia.saccifera
+Pheidole minutula                        28                0
+Allomerus octoarticulatus                 0               27
+Azteca sp2 M_PA_001                       0                0
+Pseudomyrmex concolor                     0                0
+Allomerus sp1 M_PA_001                    0                0
+Pseudomyrmex nigrescens                   0                0
+Crematogaster sp3 M_PA_001                1                0
+Camponotus balzanii                       0                0
+Azteca isthmica                           0                0
+Crematogaster sp4 M_PA_001                3                0
+Allomerus prancei                         0                0
+Crematogaster sp2 M_PA_001                0                0
+Allomerus auripunctata                    0                2
+Solenops sp1 M_PA_001                     0                1
+Azteca schummani                          0                0
+Azteca sp1 M_PA_001                       0                0
+Azteca sp6 M_PA_001                       0                0
+Crematogaster sp1 M_PA_001                0                1
+Azteca polymorpha                         0                0
+Crematogaster sp5 M_PA_001                0                0
+Azteca alfari                             0                0
+Azteca sp3 M_PA_001                       0                0
+Azteca sp4 M_PA_001                       0                0
+Azteca sp5 M_PA_001                       0                0
+                           Tachigali.polyphylla Tococa.bullifera
+Pheidole minutula                             0                1
+Allomerus octoarticulatus                     0                0
+Azteca sp2 M_PA_001                           0               11
+Pseudomyrmex concolor                        16                0
+Allomerus sp1 M_PA_001                        0                0
+Pseudomyrmex nigrescens                       7                0
+Crematogaster sp3 M_PA_001                    0                7
+Camponotus balzanii                           0                0
+Azteca isthmica                               0                0
+Crematogaster sp4 M_PA_001                    0                3
+Allomerus prancei                             0                0
+Crematogaster sp2 M_PA_001                    0                2
+Allomerus auripunctata                        0                0
+Solenops sp1 M_PA_001                         0                0
+Azteca schummani                              2                0
+Azteca sp1 M_PA_001                           0                0
+Azteca sp6 M_PA_001                           0                0
+Crematogaster sp1 M_PA_001                    0                0
+Azteca polymorpha                             0                0
+Crematogaster sp5 M_PA_001                    0                0
+Azteca alfari                                 0                0
+Azteca sp3 M_PA_001                           0                0
+Azteca sp4 M_PA_001                           0                1
+Azteca sp5 M_PA_001                           0                0
+                           Pourouma.heterophylla Cecropia.purpurascens
+Pheidole minutula                              0                     0
+Allomerus octoarticulatus                      0                     0
+Azteca sp2 M_PA_001                            0                     0
+Pseudomyrmex concolor                          0                     0
+Allomerus sp1 M_PA_001                        23                     0
+Pseudomyrmex nigrescens                        0                     0
+Crematogaster sp3 M_PA_001                     0                     0
+Camponotus balzanii                            0                    11
+Azteca isthmica                                0                     2
+Crematogaster sp4 M_PA_001                     0                     0
+Allomerus prancei                              0                     0
+Crematogaster sp2 M_PA_001                     0                     0
+Allomerus auripunctata                         0                     0
+Solenops sp1 M_PA_001                          0                     0
+Azteca schummani                               0                     0
+Azteca sp1 M_PA_001                            0                     0
+Azteca sp6 M_PA_001                            0                     0
+Crematogaster sp1 M_PA_001                     0                     0
+Azteca polymorpha                              0                     0
+Crematogaster sp5 M_PA_001                     0                     0
+Azteca alfari                                  0                     1
+Azteca sp3 M_PA_001                            0                     0
+Azteca sp4 M_PA_001                            0                     0
+Azteca sp5 M_PA_001                            0                     0
+                           Amaioua.guianensis Cecropia.ficifolia
+Pheidole minutula                           0                  0
+Allomerus octoarticulatus                   0                  0
+Azteca sp2 M_PA_001                         0                  0
+Pseudomyrmex concolor                       0                  0
+Allomerus sp1 M_PA_001                      0                  0
+Pseudomyrmex nigrescens                     0                  0
+Crematogaster sp3 M_PA_001                  0                  0
+Camponotus balzanii                         0                  0
+Azteca isthmica                             0                  3
+Crematogaster sp4 M_PA_001                  0                  0
+Allomerus prancei                           0                  0
+Crematogaster sp2 M_PA_001                  0                  0
+Allomerus auripunctata                      0                  0
+Solenops sp1 M_PA_001                       0                  0
+Azteca schummani                            0                  0
+Azteca sp1 M_PA_001                         0                  0
+Azteca sp6 M_PA_001                         3                  0
+Crematogaster sp1 M_PA_001                  0                  0
+Azteca polymorpha                           0                  0
+Crematogaster sp5 M_PA_001                  0                  0
+Azteca alfari                               0                  0
+Azteca sp3 M_PA_001                         0                  0
+Azteca sp4 M_PA_001                         0                  0
+Azteca sp5 M_PA_001                         0                  0
+                           Hirtella.myrmecophila Cecropia.concolor
+Pheidole minutula                              0                 0
+Allomerus octoarticulatus                      3                 0
+Azteca sp2 M_PA_001                            0                 0
+Pseudomyrmex concolor                          0                 0
+Allomerus sp1 M_PA_001                         0                 0
+Pseudomyrmex nigrescens                        0                 0
+Crematogaster sp3 M_PA_001                     0                 0
+Camponotus balzanii                            0                 0
+Azteca isthmica                                0                 1
+Crematogaster sp4 M_PA_001                     0                 0
+Allomerus prancei                              0                 0
+Crematogaster sp2 M_PA_001                     0                 0
+Allomerus auripunctata                         0                 0
+Solenops sp1 M_PA_001                          0                 0
+Azteca schummani                               0                 0
+Azteca sp1 M_PA_001                            0                 0
+Azteca sp6 M_PA_001                            0                 0
+Crematogaster sp1 M_PA_001                     0                 0
+Azteca polymorpha                              0                 0
+Crematogaster sp5 M_PA_001                     0                 0
+Azteca alfari                                  0                 0
+Azteca sp3 M_PA_001                            0                 0
+Azteca sp4 M_PA_001                            0                 0
+Azteca sp5 M_PA_001                            0                 0
+                           Cecropia.distachya
+Pheidole minutula                           0
+Allomerus octoarticulatus                   0
+Azteca sp2 M_PA_001                         0
+Pseudomyrmex concolor                       0
+Allomerus sp1 M_PA_001                      0
+Pseudomyrmex nigrescens                     0
+Crematogaster sp3 M_PA_001                  0
+Camponotus balzanii                         0
+Azteca isthmica                             1
+Crematogaster sp4 M_PA_001                  0
+Allomerus prancei                           0
+Crematogaster sp2 M_PA_001                  0
+Allomerus auripunctata                      0
+Solenops sp1 M_PA_001                       0
+Azteca schummani                            0
+Azteca sp1 M_PA_001                         0
+Azteca sp6 M_PA_001                         0
+Crematogaster sp1 M_PA_001                  0
+Azteca polymorpha                           0
+Crematogaster sp5 M_PA_001                  0
+Azteca alfari                               0
+Azteca sp3 M_PA_001                         0
+Azteca sp4 M_PA_001                         0
+Azteca sp5 M_PA_001                         0</code></pre>
+<pre class="r"><code># import to igraph
+visweb(plant_ant_matrix)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-35-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotweb(plant_ant_matrix)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-35-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Neotropical plant-hummingbird network Vizentin-Bugoni et al. (2016)<br />
+Vizentin-Bugoni, J., P. K. Maruyama, V. J. Debastiani, L. S. Duarte, B. Dalsgaard &amp; M. Sazima (2016). Influences of sampling effort on detected patterns and structuring processes of a Neotropical plant-hummingbird network. Journal of Animal Ecology 85: 262-272.<br />
+DB source: <a href="http://www.ecologia.ib.usp.br/iwdb/resources.html" class="uri">http://www.ecologia.ib.usp.br/iwdb/resources.html</a></li>
+</ol>
+<pre class="r"><code>plant_hum_df &lt;- openxlsx::read.xlsx(&quot;data/vizentin-bugoni_et_al_2016_complementary.xlsx&quot;)
+head(plant_hum_df)</code></pre>
+<pre><code>       X1 Pe  Tg Cr Ff La Sl Av Lc Em
+1 Aec_dis 15  21  1  0  0  0  0  0  0
+2 Aec_gam 18  95  6  0  0  2  0  0  0
+3 Aec_nud  1   6 15  0  0  0  0  0  0
+4 Aec_org 12  24  0  0  0  0  0  0  0
+5 Aec_van 95 132  0  0  0  0  0  0  0
+6 Als_ino 30   0  0  0  2 18  0  0  0</code></pre>
+<pre class="r"><code>class(plant_hum_df)</code></pre>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>rownames(plant_hum_df) &lt;- plant_hum_df$X1
+plant_hum_df &lt;- plant_hum_df %&gt;% select(-X1)
+plant_hum_matrix &lt;- data.matrix(plant_hum_df)
+
+# import to igraph
+visweb(plant_hum_matrix)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-36-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plotweb(plant_hum_matrix)</code></pre>
+<p><img src="figure/Networks_HW1.Rmd/unnamed-chunk-36-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1470,26 +1751,27 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] bipartite_2.16       sna_2.6              network_1.16.1      
-[4] statnet.common_4.4.1 vegan_2.5-7          lattice_0.20-41     
-[7] permute_0.9-5        igraph_1.2.6         workflowr_1.6.2     
+ [1] dplyr_1.0.4          bipartite_2.16       sna_2.6             
+ [4] network_1.16.1       statnet.common_4.4.1 vegan_2.5-7         
+ [7] lattice_0.20-41      permute_0.9-5        igraph_1.2.6        
+[10] workflowr_1.6.2     
 
 loaded via a namespace (and not attached):
- [1] spam_2.6-0        xfun_0.20         bslib_0.2.4       splines_4.0.3    
- [5] rle_0.9.2         vctrs_0.3.6       htmltools_0.5.1.1 yaml_2.2.1       
- [9] mgcv_1.8-33       utf8_1.1.4        rlang_0.4.10      jquerylib_0.1.3  
-[13] later_1.1.0.1     pillar_1.5.1      glue_1.4.2        lifecycle_1.0.0  
-[17] stringr_1.4.0     fields_11.6       dotCall64_1.0-1   zip_2.1.1        
-[21] coda_0.19-4       evaluate_0.14     knitr_1.31        httpuv_1.5.4     
-[25] parallel_4.0.3    fansi_0.4.2       highr_0.8         Rcpp_1.0.5       
-[29] promises_1.1.1    jsonlite_1.7.2    fs_1.5.0          digest_0.6.27    
-[33] openxlsx_4.2.3    stringi_1.5.3     grid_4.0.3        rprojroot_2.0.2  
-[37] tools_4.0.3       magrittr_2.0.1    sass_0.3.1        maps_3.3.0       
-[41] tibble_3.0.4      cluster_2.1.0     crayon_1.4.1      whisker_0.4      
-[45] pkgconfig_2.0.3   ellipsis_0.3.1    MASS_7.3-53       Matrix_1.2-18    
-[49] rmarkdown_2.7     R6_2.5.0          nlme_3.1-149      git2r_0.28.0     
-[53] compiler_4.0.3   </code></pre>
-</div>
+ [1] spam_2.6-0        tidyselect_1.1.0  xfun_0.20         bslib_0.2.4      
+ [5] purrr_0.3.4       splines_4.0.3     rle_0.9.2         generics_0.1.0   
+ [9] vctrs_0.3.6       htmltools_0.5.1.1 yaml_2.2.1        mgcv_1.8-33      
+[13] utf8_1.1.4        rlang_0.4.10      jquerylib_0.1.3   later_1.1.0.1    
+[17] pillar_1.5.1      DBI_1.1.1         glue_1.4.2        lifecycle_1.0.0  
+[21] stringr_1.4.0     fields_11.6       dotCall64_1.0-1   zip_2.1.1        
+[25] coda_0.19-4       evaluate_0.14     knitr_1.31        httpuv_1.5.4     
+[29] parallel_4.0.3    fansi_0.4.2       highr_0.8         Rcpp_1.0.5       
+[33] promises_1.1.1    jsonlite_1.7.2    fs_1.5.0          digest_0.6.27    
+[37] openxlsx_4.2.3    stringi_1.5.3     grid_4.0.3        rprojroot_2.0.2  
+[41] tools_4.0.3       magrittr_2.0.1    sass_0.3.1        maps_3.3.0       
+[45] tibble_3.0.4      cluster_2.1.0     crayon_1.4.1      whisker_0.4      
+[49] pkgconfig_2.0.3   ellipsis_0.3.1    MASS_7.3-53       Matrix_1.2-18    
+[53] assertthat_0.2.1  rmarkdown_2.7     R6_2.5.0          nlme_3.1-149     
+[57] git2r_0.28.0      compiler_4.0.3   </code></pre>
 </div>
 </div>
 
