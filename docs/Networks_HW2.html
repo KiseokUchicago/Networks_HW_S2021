@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="KiseokUchicago" />
+
+<meta name="date" content="2021-04-11" />
+
+<title>Networks_HW2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Networks_HW_S2021</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/KiseokUchicago/Networks_HW_S2021">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Networks_HW2</h1>
+<h4 class="author">KiseokUchicago</h4>
+<h4 class="date">2021-04-11</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-04-12
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Networks_HW_S2021/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210409code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210409)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210409code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210409)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree1d7c1af6e1e7b96671442cfd1dcfd63880891297targetblank1d7c1afa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/1d7c1af6e1e7b96671442cfd1dcfd63880891297" target="_blank">1d7c1af</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree1d7c1af6e1e7b96671442cfd1dcfd63880891297targetblank1d7c1afa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/1d7c1af6e1e7b96671442cfd1dcfd63880891297" target="_blank">1d7c1af</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/Chesapeake_bay_links.csv
+    Untracked:  data/Chesapeake_bay_nodes.csv
+    Untracked:  data/Dunne2013PBioSupData.xlsx
+    Untracked:  data/M_PA_003.csv
+    Untracked:  data/Otago_Data_Links.csv
+    Untracked:  data/Otago_Data_Nodes.csv
+    Untracked:  data/Ural_valley_A_HP_048.csv
+    Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/Networks_HW2.Rmd</code>) and HTML (<code>docs/Networks_HW2.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/1d7c1af6e1e7b96671442cfd1dcfd63880891297/analysis/Networks_HW2.Rmd" target="_blank">1d7c1af</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-12
+</td>
+<td>
+HW2
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="homework2-basic-structural-metrics" class="section level2">
+<h2>Homework2 (Basic structural metrics)</h2>
+</div>
+<div id="coding-assignment-for-ecev-44500-networks-in-ecology-and-evolution" class="section level2">
+<h2>Coding assignment for ECEV 44500 Networks in Ecology and Evolution</h2>
+<p>Professor: <strong>Mercedes Pascual</strong>, <strong>Sergio A. Alcala Corona</strong><br />
+Student: <strong>Kiseok Lee</strong></p>
+<pre class="r"><code># libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)</code></pre>
+</div>
+<div id="introduction" class="section level2">
+<h2>1. Introduction</h2>
+<p>There is an endless number of metrics for network structure in the general network science, and several more developed particularly for ecological networks. We will naturally focus on the most relevant and popular ones. It is very useful however to have a reference for the most popular ones. In the context of ecology, two papers are particularly useful:<br />
+</p>
+<p>Dormann CF, Fründ J, Blüthgen N, Gruber B. Indices, graphs and null models: analyzing bipartite ecological networks. The Open Ecology Journal. 2009;2: 7–24.<br />
+</p>
+<p>Delmas E, Besson M, Brice M-H, Burkle LA, Dalla Riva GV, Fortin M-J, et al. Analysing ecological networks of species interactions: Analyzing ecological networks. Biol Rev. 2019;94: 16–36.<br />
+</p>
+</div>
+<div id="unipartite-networks-metrics" class="section level2">
+<h2>2. Unipartite networks metrics</h2>
+<pre class="r"><code># load data
+# First, load the data 
+otago_nodes &lt;- read.csv(&#39;data/Otago_Data_Nodes.csv&#39;)
+otago_links &lt;- read.csv(&#39;data/Otago_Data_Links.csv&#39;)
+otago_web &lt;- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
+
+# food web
+chesapeake_nodes &lt;- read.csv(&#39;data/Chesapeake_bay_nodes.csv&#39;, header=F)
+names(chesapeake_nodes) &lt;- c(&#39;nodeId&#39;,&#39;species_name&#39;)
+
+chesapeake_links &lt;- read.csv(&#39;data/Chesapeake_bay_links.csv&#39;, header=F)
+names(chesapeake_links) &lt;- c(&#39;from&#39;,&#39;to&#39;,&#39;weight&#39;)
+
+ches_web &lt;- graph.data.frame(chesapeake_links, vertices = chesapeake_nodes, directed = T)
+
+plot(ches_web, edge.width=log(E(ches_web)$weight)/2, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-2-1.png" width="1056" style="display: block; margin: auto;" /> Otago web: Mouritsen KN, Poulin R, McLaughlin JP, Thieltges DW. Food web including metazoan parasites for an intertidal ecosystem in New Zealand. Ecology. Wiley Online Library; 2011;92: 2006–2006., with a description here.<br />
+</p>
+<p>Chesapeake bay: Baird D, Ulanowicz RE. The Seasonal Dynamics of The Chesapeake Bay Ecosystem. Ecol Monogr. Ecological Society of America; 1989;59: 329–364. Data set is from here</p>
+</div>
+<div id="degree-and-strength" class="section level2">
+<h2>2.1 Degree and strength</h2>
+<div id="unweighted-degree" class="section level3">
+<h3>2.1.1. Unweighted degree</h3>
+<pre class="r"><code>deg_dist_out &lt;- igraph::degree(otago_web, mode = &#39;out&#39;)  # igraph calculates the out-degree distribution
+deg_dist_in &lt;- igraph::degree(otago_web, mode = &#39;in&#39;) # and also the in-degree distribution
+
+# Now we use a dataframe to make the plot.
+df &lt;- data.frame(deg=c(deg_dist_out,deg_dist_in), direction=c(rep(&#39;out&#39;,length(deg_dist_in)),rep(&#39;in&#39;,length(deg_dist_in))))
+ggplot(df, aes(deg, fill=direction)) + geom_histogram(alpha=0.3)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="problem-1.-transform-the-otago-web-to-an-adjacency-matrix-based-on-the-previous-lab-and-then-calculate-node-in-degree-and-out-degree-using-the-matrix-i.e.-write-a-short-code." class="section level2">
+<h2>Problem 1. Transform the Otago web to an adjacency matrix (based on the previous lab), and then calculate node in-degree and out-degree using the matrix (i.e. write a short code).</h2>
+<pre class="r"><code># make adjacency matrix
+A_ota &lt;- as_adjacency_matrix(otago_web)
+class(A_ota)</code></pre>
+<pre><code>[1] &quot;dgCMatrix&quot;
+attr(,&quot;package&quot;)
+[1] &quot;Matrix&quot;</code></pre>
+<pre class="r"><code>dim(A_ota)</code></pre>
+<pre><code>[1] 180 180</code></pre>
+<pre class="r"><code># in-degree
+in_degree &lt;- rep(0,dim(A_ota)[1])
+for (i in 1:dim(A_ota)[1]){
+  in_degree[i] &lt;- sum(A_ota[i,])
+}
+in_degree</code></pre>
+<pre><code>  [1]  0  0  0 13 48  0 48 17 19 19  4  2  2  1  4  2  4  4 24  2  2 31  2  2  2
+ [26]  2  2  2  2  2  2  5 14 14 14  4  3 18  2 21 46 66 66  2  3  3  2 17  2  2
+ [51]  3  2  2  2  2 16 13 13 13 19  3  4  4  4  4  4 31  4 31 31 24 30  3 31 30
+ [76]  2  2  2  4  4  2  2  2  2  2  2  2  1 18 18 67  2  2 17 17 16  5  1  2 55
+[101]  1 55  7  7 21 27 48 53 15 49 45 20  4 71  6 48 20 15 27  2 16 17 17 10  1
+[126]  0 12  7  1  0  4  7  1  0  8  7  5  0  3  6  1  0  2  7  7  0  6  6  2  0
+[151]  1  6  6  0  1  6  1  0  1  3  1  0  3  5  4  7  4  7  4  7  4  1  1  1  0
+[176]  7  1  0  3  5</code></pre>
+<pre class="r"><code># out-degree
+out_degree &lt;- rep(0,dim(A_ota)[2])
+for (j in 1:dim(A_ota)[2]){
+  out_degree[j] &lt;- sum(A_ota[,j])
+}
+out_degree</code></pre>
+<pre><code>  [1] 21 70 23  6 38 62  0  0  0  0  9 15 15  7 12 14  9  9 12 17 17 18 10  6  6
+ [26]  6  2  9  6 16 16 10 26 26 26 25 27 14  1  4 24 24 24  4 17 17  4 10 12 13
+ [51] 14 26 13 13  0  0  0  0  0  0 12 13  9  7  8 11 11  8  4  3 12  4 17 12 16
+ [76]  7 11  7  9  9  9 18 19 18 18 29 22 20 12 12 19  4  8  8  8  7  0  4  2 11
+[101] 13 10  1  1  1  1  9 10  2 12 12  7  2  7  2  3  3  5  3  1  0  6  6  0 12
+[126]  5 42  0 12 36 19  0 12  5 35  1 10  5 11  0 12  6 18  0  9  5 13  0  7  6
+[151] 18  0 10  6 18  0 12  5 18 11 15  5  0  7 18  0 18  1 18  4 17 11  0 18  5
+[176]  0  5  3 11  9</code></pre>
+<pre class="r"><code># Now we use a dataframe to make the plot.
+df_A &lt;- data.frame(deg=c(out_degree,in_degree), direction=c(rep(&#39;out&#39;,length(out_degree)),rep(&#39;in&#39;,length(in_degree))))
+ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<div id="weighted-strength" class="section level3">
+<h3>2.1.2. Weighted strength</h3>
+<pre class="r"><code># degree
+deg_dist_out &lt;- igraph::degree(ches_web, mode = &#39;out&#39;)
+deg_dist_in &lt;- igraph::degree(ches_web, mode = &#39;in&#39;)
+
+df &lt;- data.frame(deg=c(deg_dist_out,deg_dist_in), direction=c(rep(&#39;out&#39;,length(deg_dist_in)),rep(&#39;in&#39;,length(deg_dist_in))))
+ggplot(df, aes(deg, fill=direction))+geom_histogram(alpha=0.3,binwidth=1)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Strength</p>
+<pre class="r"><code>s_dist_out &lt;- igraph::strength(ches_web, mode = &#39;out&#39;)
+s_dist_in &lt;- igraph::strength(ches_web, mode = &#39;in&#39;)
+
+df &lt;- data.frame(s=c(s_dist_out,s_dist_in),direction=c(rep(&#39;out&#39;,length(s_dist_in)),rep(&#39;in&#39;,length(s_dist_in))))
+ggplot(df, aes(s, fill=direction))+geom_histogram(alpha=0.3)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="problem-2.-can-discrepancies-in-in-degree-and-out-degree-or-strength-give-us-some-ecological-insight" class="section level2">
+<h2>Problem 2. Can discrepancies in in-degree and out-degree (or strength) give us some ecological insight?</h2>
+<p>Yes. The out-degree indicates that the node’s degree in higher if the node is consumed by a larger number of predators, whereas in-degree indicates that the node’s degree is higher if the node in consuming a larger number of preys. Therefore, larger out-degree means that the node is a widely consumed prey and larger in-degree means that the node is more of a generalist predator. The discrepancy simply means that consuming behavior of predators show different tendency compared to resource’s consumption range.<br />
+However, for strength, there is lesser discrepancy. This means that when the interaction is weighted the discrepancy disappears.</p>
+</div>
+<div id="clustering-coefficient" class="section level2">
+<h2>2.2 Clustering coefficient</h2>
+<pre class="r"><code># The ratio of the triangles connected to the vertex and the triples centered on the vertex.
+transitivity(otago_web, type = &#39;local&#39;) </code></pre>
+<pre><code>  [1] 0.20952381 0.09068323 0.21739130 0.28654971 0.16169631 0.09360127
+  [7] 0.10195035 0.20588235 0.26315789 0.26315789 0.10256410 0.30882353
+ [13] 0.30882353 0.00000000 0.13333333 0.38333333 0.20512821 0.20512821
+ [19] 0.38412698 0.58479532 0.58479532 0.23894558 0.43939394 0.21428571
+ [25] 0.21428571 0.21428571 0.00000000 0.38181818 0.21428571 0.34640523
+ [31] 0.34640523 0.17142857 0.29743590 0.29743590 0.29743590 0.30049261
+ [37] 0.30344828 0.28225806 0.00000000 0.27000000 0.17308489 0.12359551
+ [43] 0.12359551 0.40000000 0.42105263 0.51052632 0.20000000 0.39886040
+ [49] 0.38461538 0.33333333 0.24264706 0.46825397 0.33333333 0.33333333
+ [55] 0.00000000 0.22500000 0.00000000 0.00000000 0.00000000 0.26315789
+ [61] 0.31428571 0.11764706 0.10256410 0.20000000 0.24242424 0.15238095
+ [67] 0.21718931 0.24242424 0.30924370 0.27807487 0.38412698 0.24242424
+ [73] 0.60000000 0.22480620 0.22318841 0.50000000 0.39743590 0.13888889
+ [79] 0.17948718 0.17948718 0.20000000 0.48421053 0.40000000 0.21052632
+ [85] 0.21052632 0.42365591 0.31159420 0.17142857 0.24367816 0.24367816
+ [91] 0.12667579 0.73333333 0.35555556 0.42666667 0.42666667 0.45059289
+ [97] 0.40000000 0.40000000 0.00000000 0.12121212 0.32967033 0.13269231
+[103] 0.28571429 0.28571429 0.28138528 0.26984127 0.13909774 0.10803891
+[109] 0.24264706 0.12896175 0.10776942 0.17094017 0.20000000 0.06926407
+[115] 0.25000000 0.10039216 0.15019763 0.04736842 0.10114943 0.33333333
+[121] 0.00000000 0.19762846 0.19762846 0.00000000 0.60256410 0.70000000
+[127] 0.24178896 0.00000000 0.60256410 0.22539683 0.30039526 0.00000000
+[133] 0.60256410 0.70000000 0.30011074 0.00000000 0.70476190 0.70000000
+[139] 0.27472527 0.00000000 0.60256410 0.46666667 0.44736842 0.00000000
+[145] 0.69166667 0.70000000 0.34502924 0.00000000 0.80555556 0.46666667
+[151] 0.48538012 0.00000000 0.69166667 0.46666667 0.48538012 0.00000000
+[157] 0.39743590 0.70000000 0.48538012 0.27472527 0.50000000 0.70000000
+[163] 0.00000000 0.09090909 0.29437229 0.00000000 0.32900433 0.00000000
+[169] 0.32900433 0.12727273 0.35238095 0.31818182        NaN 0.48538012
+[175] 0.70000000 0.00000000 0.80000000 0.66666667 0.27472527 0.16483516</code></pre>
+<pre class="r"><code>histogram(transitivity(otago_web, type = &#39;local&#39;))</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># The ratio of the triangles and the connected triples in the whole graph
+transitivity(otago_web, type = &#39;global&#39;) </code></pre>
+<pre><code>[1] 0.2203512</code></pre>
+</div>
+<div id="problem-3.-what-can-a-high-local-clustering-coefficient-indicate-in-a-food-web" class="section level2">
+<h2>Problem 3. What can a high local clustering coefficient indicate in a food web?</h2>
+<p>I could mean that the local interactions are denser and more interconnected.</p>
+</div>
+<div id="geodesics" class="section level2">
+<h2>2.3 Geodesics</h2>
+<p>Geodesics (shortest paths) are at the basis of many metrics, including some centralities. We can obtain a distance table matrix (between pairs of nodes).</p>
+<pre class="r"><code>geodesics &lt;- distances(otago_web, mode = &#39;all&#39;) # Assume an undirected graph.Because this is also an unweighted network, the matrix values indicate how many _hops_ it would take to arrive from one node to another in the shortest way.
+#geodesics
+geodesics[1:5,1:5]  # just visualize a sample of the Shortest-paths table of the whole network</code></pre>
+<pre><code>  1 2 3 4 5
+1 0 2 2 1 1
+2 2 0 2 2 1
+3 2 2 0 2 1
+4 1 2 2 0 1
+5 1 1 1 1 0</code></pre>
+</div>
+<div id="node-centralities" class="section level2">
+<h2>2.4 Node centralities</h2>
+<p>There are many centrality metrics, each with dozens of variations. Let’s take a look at the few common ones. Note that it is common to normalize the centrality measures. This is particularly helpful when comparing across networks. Read more about that normalization in the help and in Delmas et al (2018).</p>
+<pre class="r"><code># Assume undirected networks
+CC &lt;- igraph::closeness(otago_web, mode = &#39;all&#39;, normalized = T) 
+BC &lt;- igraph::betweenness(otago_web, directed = F, normalized = T)
+EC &lt;- igraph::eigen_centrality(otago_web, directed = F, scale = T)
+EC &lt;- EC$vector
+
+# Ploting the web, re-sizing nodes by centrality (e.g. the betweenness centrality). Try to do the same by using other centralities.
+V(otago_web)$BC &lt;- BC
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=BC*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Use CC
+V(otago_web)$CC &lt;- CC
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=CC*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-9-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Use EC
+V(otago_web)$EC &lt;- EC
+plot(otago_web, vertex.size=EC*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-9-3.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-4.-try-to-calculate-the-centrality-measures-for-directed-food-webs." class="section level2">
+<h2>Problem 4. Try to calculate the centrality measures for directed food webs.</h2>
+<pre class="r"><code># Directed
+# Assume directed networks
+CCd &lt;- igraph::closeness(otago_web, mode = c(&#39;out&#39;), normalized = T) 
+BCd &lt;- igraph::betweenness(otago_web, directed = T, normalized = T)
+ECd &lt;- igraph::eigen_centrality(otago_web, directed = T, scale = T)
+ECd &lt;- ECd$vector
+
+# Use BCd
+V(otago_web)$BCd &lt;- BCd
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=BCd*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Use CCd
+V(otago_web)$CCd &lt;- CCd
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=CCd*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-10-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Use EC
+V(otago_web)$ECd &lt;- ECd
+plot(otago_web, vertex.size=ECd*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-10-3.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-5.-can-you-think-of-an-ecological-interpretation-for-each-of-these-measures-some-intuition-is-given-in-the-references-by-martín-gonzález-et-al.-2010-and-delmas-et-al.-2019." class="section level2">
+<h2>Problem 5. Can you think of an ecological interpretation for each of these measures? Some intuition is given in the references by Martín-González et al. (2010) and Delmas et al. (2019).</h2>
+<p>(All citing from Delmas et al. (2019) and Martín-González et al. (2010)) - Closeness centrality: It is a global measure in that, although defined at the species level, it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network. - Betweenness centrality: This measure is ideal to study the influence of species loss on fragmentation processes, for example nodes with high CB values are considered as module connectors in modular networks. - Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species’ score than the same interaction with a low‐scoring species (Allesina &amp; Pascual, 2009). - Therefore, it could be said that each measures has it’s own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)</p>
+</div>
+<div id="problem-6.-what-do-you-think-would-be-the-correlation-beween-these-measures-test-it" class="section level2">
+<h2>Problem 6. What do you think would be the correlation beween these measures? Test it!</h2>
+<pre class="r"><code>library(&quot;ggpubr&quot;)
+# use undirected centralities
+df_cen &lt;- data.frame(BC=BC,CC=CC,EC=EC)
+
+# histograms
+histogram(df_cen$BC, breaks=20, main=&quot;Betweenness&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>histogram(df_cen$CC, breaks=20, main=&quot;Closeness&quot;) # close to normal distribution</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>histogram(df_cen$EC, breaks=20, main=&quot;Eigenvector&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Shapiro-Wilk normality test
+shapiro.test(df_cen$BC) # W = 0.49555, p-value &lt; 2.2e-16 (not normally distributed alpha 0.05)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df_cen$BC
+W = 0.49555, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>shapiro.test(df_cen$CC) # W = 0.98342, p-value = 0.03119 (not normally distributed alpha 0.05)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df_cen$CC
+W = 0.98342, p-value = 0.03119</code></pre>
+<pre class="r"><code>shapiro.test(df_cen$EC) # W = 0.89281, p-value = 4.269e-10 (not normally distributed alpha 0.05)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  df_cen$EC
+W = 0.89281, p-value = 4.269e-10</code></pre>
+<pre class="r"><code># qqplots
+ggqqplot(df_cen$BC, ylab = &quot;Betweenness&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggqqplot(df_cen$CC, ylab = &quot;Closeness&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-5.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggqqplot(df_cen$EC, ylab = &quot;Eigenvector&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># since the centrality measures are not normally distributed, let&#39;s use  Kendall rank correlation coefficient
+res1 &lt;-cor.test(df_cen$BC, df_cen$CC,  method = &quot;kendall&quot;)
+res1</code></pre>
+<pre><code>
+    Kendall&#39;s rank correlation tau
+
+data:  df_cen$BC and df_cen$CC
+z = 10.592, p-value &lt; 2.2e-16
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.5357445 </code></pre>
+<pre class="r"><code>res2 &lt;-cor.test(df_cen$BC, df_cen$EC,  method = &quot;kendall&quot;)
+res2</code></pre>
+<pre><code>
+    Kendall&#39;s rank correlation tau
+
+data:  df_cen$BC and df_cen$EC
+z = 10.622, p-value &lt; 2.2e-16
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.5343096 </code></pre>
+<pre class="r"><code>res3 &lt;-cor.test(df_cen$CC, df_cen$EC,  method = &quot;kendall&quot;)
+res3</code></pre>
+<pre><code>
+    Kendall&#39;s rank correlation tau
+
+data:  df_cen$CC and df_cen$EC
+z = 13.687, p-value &lt; 2.2e-16
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.6908704 </code></pre>
+<pre class="r"><code># BC and CC
+ggscatter(df_cen, x = &quot;BC&quot;, y = &quot;CC&quot;, 
+          add = &quot;reg.line&quot;, conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = &quot;kendall&quot;,
+          xlab = &quot;Betweenness&quot;, ylab = &quot;Closeness&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-7.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># BC and EC
+ggscatter(df_cen, x = &quot;BC&quot;, y = &quot;EC&quot;, 
+          add = &quot;reg.line&quot;, conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = &quot;kendall&quot;,
+          xlab = &quot;Betweenness&quot;, ylab = &quot;Eigenvector&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-8.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># CC and EC
+ggscatter(df_cen, x = &quot;CC&quot;, y = &quot;EC&quot;, 
+          add = &quot;reg.line&quot;, conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = &quot;kendall&quot;,
+          xlab = &quot;Closeness&quot;, ylab = &quot;Eigenvector&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-11-9.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>CC and EC shows higher correlation than between BC-CC, BC-EC.</p>
+</div>
+<div id="problem-7.-which-are-the-most-central-species-in-the-network-do-they-have-anything-in-common" class="section level2">
+<h2>Problem 7. Which are the most central species in the network? Do they have anything in common?</h2>
+<p>To know which nodes have the highest centrality, we will use all 3 measures. According to the graph below, 5, 43, 100, 114, 2, 127, 102, 110 nodes are high candidates.<br />
+The common thing is that they all have high Eigenvector centrality. This makes sense because Eigenvector centrality is contingent upon the importance (centrality) of each other.</p>
+<pre class="r"><code># install.packages(&quot;scatterplot3d&quot;)
+library(&quot;scatterplot3d&quot;)
+scatterplot3d(df_cen, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+
+s3d &lt;- scatterplot3d(df_cen, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+text(s3d$xyz.convert(df_cen), labels = rownames(df_cen),
+     cex= 0.8, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-12-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="n-node-sub-graphs-aka-motifs" class="section level2">
+<h2>2.4 n-node sub-graphs (aka motifs)</h2>
+<p>These are sub-structural patterns composing a network, typically only meaningful in directed networks. There are 16 kinds of 3-node subgraphs. See them by calling help: ?triad.census. Let’s plot them.</p>
+<pre class="r"><code>par(mfrow=c(4,4), mar=c(.75,.75,.75,.75))
+for (i in 0:15){ # note that counting starts at 0
+  plot(graph_from_isomorphism_class(size = 3, number = i),
+       edge.arrow.size = 0.4,
+       edge.color=&#39;black&#39;,
+       main = i + 1)
+  box(col=&#39;red&#39;)
+}</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-13-1.png" width="1056" style="display: block; margin: auto;" /> Each of these different classes of subgraphs can have an ecological meaning. For example, #3 means that two prey share a predator and #5 is a trophic chain. It is therefore insightful to quantify how many of each kind are in the food web.</p>
+<pre class="r"><code>motifs(otago_web) #absolute numbers</code></pre>
+<pre><code> [1]    NA    NA 12506    NA 10956   491 22120  3434   533  2287   117    18
+[13]    57   376   100    49</code></pre>
+<pre class="r"><code>motifs(otago_web)/count_motifs(otago_web) # Proportion</code></pre>
+<pre><code> [1]           NA           NA 0.2357665334           NA 0.2065455094
+ [6] 0.0092564663 0.4170122917 0.0647387075 0.0100482618 0.0431151497
+[11] 0.0022057160 0.0003393409 0.0010745796 0.0070884549 0.0018852274
+[16] 0.0009237614</code></pre>
+</div>
+<div id="problem-8.-what-is-the-dominant-sub-graph-in-the-otago-food-web-what-is-its-ecological-meaning" class="section level2">
+<h2>Problem 8. What is the dominant sub-graph in the Otago food web? What is its ecological meaning?</h2>
+<pre class="r"><code>df_motif &lt;- data.frame(relative_abun=motifs(otago_web)/count_motifs(otago_web))
+df_motif &lt;- tibble::rownames_to_column(df_motif, var=&#39;motif_n&#39;)
+ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
+  geom_bar(stat=&quot;identity&quot;) + theme_minimal()</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-15-1.png" width="1056" style="display: block; margin: auto;" /> 7 is the most abundant. The center node is consumed by 2 predators. This is exploitative competition. (kind of indirect effect, interaction chain)</p>
+</div>
+<div id="problem-9.-calculate-the-proportion-of-sub-graphs-for-the-bahia-falsa-food-web.-are-their-relative-frequencies-in-this-food-web-different-from-those-for-the-otago-food-web" class="section level2">
+<h2>Problem 9. Calculate the proportion of sub-graphs for the Bahia Falsa food web. Are their relative frequencies in this food web different from those for the Otago food web?</h2>
+</div>
+<div id="network-projections" class="section level2">
+<h2>3. Network projections</h2>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19042)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scatterplot3d_0.3-41 ggpubr_0.4.0         ggplot2_3.3.3       
+ [4] dplyr_1.0.4          bipartite_2.16       sna_2.6             
+ [7] network_1.16.1       statnet.common_4.4.1 vegan_2.5-7         
+[10] lattice_0.20-41      permute_0.9-5        igraph_1.2.6        
+[13] workflowr_1.6.2     
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-149      fs_1.5.0          rprojroot_2.0.2   tools_4.0.3      
+ [5] backports_1.2.1   bslib_0.2.4       utf8_1.1.4        R6_2.5.0         
+ [9] DBI_1.1.1         mgcv_1.8-33       colorspace_2.0-0  withr_2.4.1      
+[13] tidyselect_1.1.0  curl_4.3          compiler_4.0.3    git2r_0.28.0     
+[17] labeling_0.4.2    sass_0.3.1        scales_1.1.1      stringr_1.4.0    
+[21] digest_0.6.27     foreign_0.8-80    rmarkdown_2.7     rio_0.5.26       
+[25] pkgconfig_2.0.3   htmltools_0.5.1.1 highr_0.8         maps_3.3.0       
+[29] rlang_0.4.10      readxl_1.3.1      jquerylib_0.1.3   farver_2.1.0     
+[33] generics_0.1.0    jsonlite_1.7.2    zip_2.1.1         car_3.0-10       
+[37] magrittr_2.0.1    dotCall64_1.0-1   Matrix_1.2-18     Rcpp_1.0.5       
+[41] munsell_0.5.0     fansi_0.4.2       abind_1.4-5       lifecycle_1.0.0  
+[45] stringi_1.5.3     whisker_0.4       yaml_2.2.1        carData_3.0-4    
+[49] MASS_7.3-53       grid_4.0.3        parallel_4.0.3    promises_1.1.1   
+[53] forcats_0.5.1     crayon_1.4.1      haven_2.3.1       splines_4.0.3    
+[57] hms_1.0.0         knitr_1.31        pillar_1.5.1      ggsignif_0.6.1   
+[61] rle_0.9.2         glue_1.4.2        evaluate_0.14     data.table_1.14.0
+[65] vctrs_0.3.6       spam_2.6-0        httpuv_1.5.4      cellranger_1.1.0 
+[69] gtable_0.3.0      purrr_0.3.4       tidyr_1.1.2       assertthat_0.2.1 
+[73] xfun_0.20         openxlsx_4.2.3    broom_0.7.5       coda_0.19-4      
+[77] rstatix_0.7.0     later_1.1.0.1     tibble_3.0.4      fields_11.6      
+[81] cluster_2.1.0     ellipsis_0.3.1   </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
