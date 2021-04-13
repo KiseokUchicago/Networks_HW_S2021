@@ -196,10 +196,10 @@ plot(otago_web, vertex.size=ECd*10, vertex.label=NA, edge.arrow.width=0.5, edge.
 
 ## Problem 5. Can you think of an ecological interpretation for each of these measures? Some intuition is given in the references by Martín-González et al. (2010) and Delmas et al. (2019).
 (All citing from Delmas et al. (2019) and Martín-González et al. (2010))
-- Closeness centrality:  It is a global measure  in  that,  although  defined  at  the  species  level,  it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network.
-- Betweenness centrality: This measure is ideal to study the influence of species loss  on  fragmentation  processes,  for  example nodes with high CB values are considered as module connectors in modular networks.
-- Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species' score than the same interaction with a low‐scoring species (Allesina & Pascual, 2009).
-- Therefore, it could be said that each measures has it's own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)
+- Closeness centrality:  It is a global measure  in  that,  although  defined  at  the  species  level,  it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network.\
+- Betweenness centrality: This measure is ideal to study the influence of species loss  on  fragmentation  processes,  for  example nodes with high CB values are considered as module connectors in modular networks.\
+- Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species' score than the same interaction with a low‐scoring species (Allesina & Pascual, 2009).\
+- Therefore, it could be said that each measures has it's own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)\
 
 ## Problem 6. What do you think would be the correlation beween these measures? Test it!
 ```{r}
