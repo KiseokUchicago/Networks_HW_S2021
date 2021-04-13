@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree1d7c1af6e1e7b96671442cfd1dcfd63880891297targetblank1d7c1afa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/1d7c1af6e1e7b96671442cfd1dcfd63880891297" target="_blank">1d7c1af</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree64a8b31053fa085d543139359685bf8105de938dtargetblank64a8b31a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/64a8b31053fa085d543139359685bf8105de938d" target="_blank">64a8b31</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree1d7c1af6e1e7b96671442cfd1dcfd63880891297targetblank1d7c1afa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree64a8b31053fa085d543139359685bf8105de938dtargetblank64a8b31a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/1d7c1af6e1e7b96671442cfd1dcfd63880891297" target="_blank">1d7c1af</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/64a8b31053fa085d543139359685bf8105de938d" target="_blank">64a8b31</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -541,6 +541,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/64a8b31053fa085d543139359685bf8105de938d/analysis/Networks_HW2.Rmd" target="_blank">64a8b31</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-12
+</td>
+<td>
+HW2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/4518d0ca575028fbdbfe8231905e6c12b43c7d3e/docs/Networks_HW2.html" target="_blank">4518d0c</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -794,7 +828,11 @@ plot(otago_web, vertex.size=ECd*10, vertex.label=NA, edge.arrow.width=0.5, edge.
 </div>
 <div id="problem-5.-can-you-think-of-an-ecological-interpretation-for-each-of-these-measures-some-intuition-is-given-in-the-references-by-martín-gonzález-et-al.-2010-and-delmas-et-al.-2019." class="section level2">
 <h2>Problem 5. Can you think of an ecological interpretation for each of these measures? Some intuition is given in the references by Martín-González et al. (2010) and Delmas et al. (2019).</h2>
-<p>(All citing from Delmas et al. (2019) and Martín-González et al. (2010)) - Closeness centrality: It is a global measure in that, although defined at the species level, it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network. - Betweenness centrality: This measure is ideal to study the influence of species loss on fragmentation processes, for example nodes with high CB values are considered as module connectors in modular networks. - Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species’ score than the same interaction with a low‐scoring species (Allesina &amp; Pascual, 2009). - Therefore, it could be said that each measures has it’s own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)</p>
+<p>(All citing from Delmas et al. (2019) and Martín-González et al. (2010)) - Closeness centrality: It is a global measure in that, although defined at the species level, it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network.<br />
+- Betweenness centrality: This measure is ideal to study the influence of species loss on fragmentation processes, for example nodes with high CB values are considered as module connectors in modular networks.<br />
+- Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species’ score than the same interaction with a low‐scoring species (Allesina &amp; Pascual, 2009).<br />
+- Therefore, it could be said that each measures has it’s own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)<br />
+</p>
 </div>
 <div id="problem-6.-what-do-you-think-would-be-the-correlation-beween-these-measures-test-it" class="section level2">
 <h2>Problem 6. What do you think would be the correlation beween these measures? Test it!</h2>
