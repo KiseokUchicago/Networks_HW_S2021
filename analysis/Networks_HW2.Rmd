@@ -1,0 +1,305 @@
+---
+title: "Networks_HW2"
+author: "KiseokUchicago"
+date: "2021-04-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Homework2 (Basic structural metrics)
+## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
+Student: **Kiseok Lee** 
+
+```{r}
+# libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+```
+
+## 1. Introduction
+
+There is an endless number of metrics for network structure in the general network science, and several more developed particularly for ecological networks. We will naturally focus on the most relevant and popular ones. It is very useful however to have a reference for the most popular ones. In the context of ecology, two papers are particularly useful: \
+
+Dormann CF, Fründ J, Blüthgen N, Gruber B. Indices, graphs and null models: analyzing bipartite ecological networks.
+The Open Ecology Journal. 2009;2: 7–24.\
+
+Delmas E, Besson M, Brice M-H, Burkle LA, Dalla Riva GV, Fortin M-J, et al. Analysing ecological networks of species interactions: Analyzing ecological networks.
+Biol Rev. 2019;94: 16–36.\
+
+## 2. Unipartite networks metrics
+
+```{r}
+# load data
+# First, load the data 
+otago_nodes <- read.csv('data/Otago_Data_Nodes.csv')
+otago_links <- read.csv('data/Otago_Data_Links.csv')
+otago_web <- graph.data.frame(otago_links, vertices = otago_nodes, directed = T)
+
+# food web
+chesapeake_nodes <- read.csv('data/Chesapeake_bay_nodes.csv', header=F)
+names(chesapeake_nodes) <- c('nodeId','species_name')
+
+chesapeake_links <- read.csv('data/Chesapeake_bay_links.csv', header=F)
+names(chesapeake_links) <- c('from','to','weight')
+
+ches_web <- graph.data.frame(chesapeake_links, vertices = chesapeake_nodes, directed = T)
+
+plot(ches_web, edge.width=log(E(ches_web)$weight)/2, layout=layout.circle)
+```
+Otago web: Mouritsen KN, Poulin R, McLaughlin JP, Thieltges DW. Food web including metazoan parasites for an intertidal ecosystem in New Zealand. Ecology. Wiley Online Library; 2011;92: 2006–2006., with a description here.\
+
+Chesapeake bay: Baird D, Ulanowicz RE. The Seasonal Dynamics of The Chesapeake Bay Ecosystem. Ecol Monogr. Ecological Society of America; 1989;59: 329–364. Data set is from here
+
+## 2.1 Degree and strength
+
+### 2.1.1. Unweighted degree
+```{r}
+deg_dist_out <- igraph::degree(otago_web, mode = 'out')  # igraph calculates the out-degree distribution
+deg_dist_in <- igraph::degree(otago_web, mode = 'in') # and also the in-degree distribution
+
+# Now we use a dataframe to make the plot.
+df <- data.frame(deg=c(deg_dist_out,deg_dist_in), direction=c(rep('out',length(deg_dist_in)),rep('in',length(deg_dist_in))))
+ggplot(df, aes(deg, fill=direction)) + geom_histogram(alpha=0.3)
+```
+
+## Problem 1. Transform the Otago web to an adjacency matrix (based on the previous lab), and then calculate node in-degree and out-degree using the matrix (i.e. write a short code).
+
+```{r}
+# make adjacency matrix
+A_ota <- as_adjacency_matrix(otago_web)
+class(A_ota)
+dim(A_ota)
+
+# in-degree
+in_degree <- rep(0,dim(A_ota)[1])
+for (i in 1:dim(A_ota)[1]){
+  in_degree[i] <- sum(A_ota[i,])
+}
+in_degree
+
+# out-degree
+out_degree <- rep(0,dim(A_ota)[2])
+for (j in 1:dim(A_ota)[2]){
+  out_degree[j] <- sum(A_ota[,j])
+}
+out_degree
+
+# Now we use a dataframe to make the plot.
+df_A <- data.frame(deg=c(out_degree,in_degree), direction=c(rep('out',length(out_degree)),rep('in',length(in_degree))))
+ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)
+
+```
+
+### 2.1.2. Weighted strength
+```{r}
+# degree
+deg_dist_out <- igraph::degree(ches_web, mode = 'out')
+deg_dist_in <- igraph::degree(ches_web, mode = 'in')
+
+df <- data.frame(deg=c(deg_dist_out,deg_dist_in), direction=c(rep('out',length(deg_dist_in)),rep('in',length(deg_dist_in))))
+ggplot(df, aes(deg, fill=direction))+geom_histogram(alpha=0.3,binwidth=1)
+```
+
+Strength
+```{r}
+s_dist_out <- igraph::strength(ches_web, mode = 'out')
+s_dist_in <- igraph::strength(ches_web, mode = 'in')
+
+df <- data.frame(s=c(s_dist_out,s_dist_in),direction=c(rep('out',length(s_dist_in)),rep('in',length(s_dist_in))))
+ggplot(df, aes(s, fill=direction))+geom_histogram(alpha=0.3)
+```
+
+## Problem 2. Can discrepancies in in-degree and out-degree (or strength) give us some ecological insight?
+Yes. The out-degree indicates that the node's degree in higher if the node is consumed by a larger number of predators, whereas in-degree indicates that the node's degree is higher if the node in consuming a larger number of preys. Therefore, larger out-degree means that the node is a widely consumed prey and larger in-degree means that the node is more of a generalist predator. The discrepancy simply means that consuming behavior of predators show different tendency compared to resource's consumption range. \
+However, for strength, there is lesser discrepancy. This means that when the interaction is weighted the discrepancy disappears.
+
+## 2.2 Clustering coefficient
+```{r}
+# The ratio of the triangles connected to the vertex and the triples centered on the vertex.
+transitivity(otago_web, type = 'local') 
+histogram(transitivity(otago_web, type = 'local'))
+
+# The ratio of the triangles and the connected triples in the whole graph
+transitivity(otago_web, type = 'global') 
+
+```
+
+## Problem 3. What can a high local clustering coefficient indicate in a food web?
+I could mean that the local interactions are denser and more interconnected.
+
+## 2.3 Geodesics
+Geodesics (shortest paths) are at the basis of many metrics, including some centralities. We can obtain a distance table matrix (between pairs of nodes).
+```{r}
+geodesics <- distances(otago_web, mode = 'all') # Assume an undirected graph.Because this is also an unweighted network, the matrix values indicate how many _hops_ it would take to arrive from one node to another in the shortest way.
+#geodesics
+geodesics[1:5,1:5]  # just visualize a sample of the Shortest-paths table of the whole network
+```
+
+## 2.4 Node centralities
+There are many centrality metrics, each with dozens of variations. Let’s take a look at the few common ones. Note that it is common to normalize the centrality measures. This is particularly helpful when comparing across networks. Read more about that normalization in the help and in Delmas et al (2018).
+```{r}
+# Assume undirected networks
+CC <- igraph::closeness(otago_web, mode = 'all', normalized = T) 
+BC <- igraph::betweenness(otago_web, directed = F, normalized = T)
+EC <- igraph::eigen_centrality(otago_web, directed = F, scale = T)
+EC <- EC$vector
+
+# Ploting the web, re-sizing nodes by centrality (e.g. the betweenness centrality). Try to do the same by using other centralities.
+V(otago_web)$BC <- BC
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=BC*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+
+# Use CC
+V(otago_web)$CC <- CC
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=CC*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+
+# Use EC
+V(otago_web)$EC <- EC
+plot(otago_web, vertex.size=EC*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+
+```
+
+## Problem 4. Try to calculate the centrality measures for directed food webs.
+
+```{r}
+# Directed
+# Assume directed networks
+CCd <- igraph::closeness(otago_web, mode = c('out'), normalized = T) 
+BCd <- igraph::betweenness(otago_web, directed = T, normalized = T)
+ECd <- igraph::eigen_centrality(otago_web, directed = T, scale = T)
+ECd <- ECd$vector
+
+# Use BCd
+V(otago_web)$BCd <- BCd
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=BCd*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+
+# Use CCd
+V(otago_web)$CCd <- CCd
+par(mar=c(0,0,0,0))
+plot(otago_web, vertex.size=CCd*100, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+
+# Use EC
+V(otago_web)$ECd <- ECd
+plot(otago_web, vertex.size=ECd*10, vertex.label=NA, edge.arrow.width=0.5, edge.arrow.size=0.5, edge.curved=0.5, layout=layout.circle)
+```
+
+## Problem 5. Can you think of an ecological interpretation for each of these measures? Some intuition is given in the references by Martín-González et al. (2010) and Delmas et al. (2019).
+(All citing from Delmas et al. (2019) and Martín-González et al. (2010))
+- Closeness centrality:  It is a global measure  in  that,  although  defined  at  the  species  level,  it accounts for the structure of the entire network. It is based on the shortest path length between pairs of species and thus indicates how rapidly/efficiently a node is likely to influence the overall network.
+- Betweenness centrality: This measure is ideal to study the influence of species loss  on  fragmentation  processes,  for  example nodes with high CB values are considered as module connectors in modular networks.
+- Eigenvector centrality: This centrality is akin to a simulation of flow across interactions, in which each species influences all of its partners simultaneously. It then measures the relative importance of species by assigning them a score on the basis that an interaction with more influential species contributes more to a species' score than the same interaction with a low‐scoring species (Allesina & Pascual, 2009).
+- Therefore, it could be said that each measures has it's own strength: closeness (reflects shortest path), betweenness (reflect fragmentation process/modular role), eigenvector (reflects how much the node is connected to influential species)
+
+## Problem 6. What do you think would be the correlation beween these measures? Test it!
+```{r}
+library("ggpubr")
+# use undirected centralities
+df_cen <- data.frame(BC=BC,CC=CC,EC=EC)
+
+# histograms
+histogram(df_cen$BC, breaks=20, main="Betweenness")
+histogram(df_cen$CC, breaks=20, main="Closeness") # close to normal distribution
+histogram(df_cen$EC, breaks=20, main="Eigenvector")
+
+# Shapiro-Wilk normality test
+shapiro.test(df_cen$BC) # W = 0.49555, p-value < 2.2e-16 (not normally distributed alpha 0.05)
+shapiro.test(df_cen$CC) # W = 0.98342, p-value = 0.03119 (not normally distributed alpha 0.05)
+shapiro.test(df_cen$EC) # W = 0.89281, p-value = 4.269e-10 (not normally distributed alpha 0.05)
+
+# qqplots
+ggqqplot(df_cen$BC, ylab = "Betweenness")
+ggqqplot(df_cen$CC, ylab = "Closeness")
+ggqqplot(df_cen$EC, ylab = "Eigenvector")
+
+# since the centrality measures are not normally distributed, let's use  Kendall rank correlation coefficient
+res1 <-cor.test(df_cen$BC, df_cen$CC,  method = "kendall")
+res1
+res2 <-cor.test(df_cen$BC, df_cen$EC,  method = "kendall")
+res2
+res3 <-cor.test(df_cen$CC, df_cen$EC,  method = "kendall")
+res3
+
+# BC and CC
+ggscatter(df_cen, x = "BC", y = "CC", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "kendall",
+          xlab = "Betweenness", ylab = "Closeness")
+# BC and EC
+ggscatter(df_cen, x = "BC", y = "EC", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "kendall",
+          xlab = "Betweenness", ylab = "Eigenvector")
+# CC and EC
+ggscatter(df_cen, x = "CC", y = "EC", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "kendall",
+          xlab = "Closeness", ylab = "Eigenvector")
+```
+
+CC and EC shows higher correlation than between BC-CC, BC-EC.
+
+## Problem 7. Which are the most central species in the network? Do they have anything in common?
+To know which nodes have the highest centrality, we will use all 3 measures.
+According to the graph below, 5, 43, 100, 114, 2, 127, 102, 110 nodes are high candidates.\
+The common thing is that they all have high Eigenvector centrality. This makes sense because Eigenvector centrality is contingent upon the importance (centrality) of each other.
+```{r}
+# install.packages("scatterplot3d")
+library("scatterplot3d")
+scatterplot3d(df_cen, pch = 16, color="steelblue", angle = 29, type="h")
+
+s3d <- scatterplot3d(df_cen, pch = 16, color="steelblue", angle = 29, type="h")
+text(s3d$xyz.convert(df_cen), labels = rownames(df_cen),
+     cex= 0.8, col = "red")
+```
+
+## 2.4 n-node sub-graphs (aka motifs)
+These are sub-structural patterns composing a network, typically only meaningful in directed networks. There are 16 kinds of 3-node subgraphs. See them by calling help: ?triad.census. Let’s plot them.
+```{r}
+par(mfrow=c(4,4), mar=c(.75,.75,.75,.75))
+for (i in 0:15){ # note that counting starts at 0
+  plot(graph_from_isomorphism_class(size = 3, number = i),
+       edge.arrow.size = 0.4,
+       edge.color='black',
+       main = i + 1)
+  box(col='red')
+}
+```
+Each of these different classes of subgraphs can have an ecological meaning. For example, #3 means that two prey share a predator and #5 is a trophic chain. It is therefore insightful to quantify how many of each kind are in the food web.
+
+```{r}
+motifs(otago_web) #absolute numbers
+motifs(otago_web)/count_motifs(otago_web) # Proportion
+```
+
+## Problem 8. What is the dominant sub-graph in the Otago food web? What is its ecological meaning?
+```{r}
+df_motif <- data.frame(relative_abun=motifs(otago_web)/count_motifs(otago_web))
+df_motif <- tibble::rownames_to_column(df_motif, var='motif_n')
+ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
+  geom_bar(stat="identity") + theme_minimal()
+```
+7 is the most abundant. The center node is consumed by 2 predators. This is exploitative competition. (kind of indirect effect, interaction chain)
+
+## Problem 9. Calculate the proportion of sub-graphs for the Bahia Falsa food web. Are their relative frequencies in this food web different from those for the Otago food web?
+
+
+
+
+
+## 3. Network projections
+
+
+
+
+
