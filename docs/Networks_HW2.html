@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-14
+<strong>Last updated:</strong> 2021-04-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea62bd87dba375a62853e39455bbdd7c284271918targetblanka62bd87a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a62bd87dba375a62853e39455bbdd7c284271918" target="_blank">a62bd87</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree72c2816f200f253417ff7e511587efa329d5999ftargetblank72c2816a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/72c2816f200f253417ff7e511587efa329d5999f" target="_blank">72c2816</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea62bd87dba375a62853e39455bbdd7c284271918targetblanka62bd87a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree72c2816f200f253417ff7e511587efa329d5999ftargetblank72c2816a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a62bd87dba375a62853e39455bbdd7c284271918" target="_blank">a62bd87</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/72c2816f200f253417ff7e511587efa329d5999f" target="_blank">72c2816</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/72c2816f200f253417ff7e511587efa329d5999f/analysis/Networks_HW2.Rmd" target="_blank">72c2816</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-15
+</td>
+<td>
+HW2 complete
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/889de1a16dff0eba500d07438469dd07c401706d/docs/Networks_HW2.html" target="_blank">889de1a</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1050,6 +1084,9 @@ m2</code></pre>
 <h2>3. Network projections</h2>
 <p>As described below, we can create a one-mode projection from the two-mode bipartite graph with a simple step from linear algebra, namely matrix multiplication. There are two possible one-mode projections, one onto the groups and the other onto the nodes, depending on the order of the matrix product.<br />
 We can project the incidence matrix by multiplying it with its transpose.</p>
+</div>
+<div id="one-way-of-projection" class="section level2">
+<h2>3.1. One way of projection</h2>
 <pre class="r"><code># Original
 networklevel(memmott1999, index=&#39;connectance&#39;)</code></pre>
 <pre><code>connectance 
@@ -1064,7 +1101,7 @@ g &lt;- graph.adjacency(plants_projected, mode = &#39;undirected&#39;, weighted 
 par(mar=c(0,0,0,0))
 plot(g)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot(g, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle)</code></pre>
+<pre class="r"><code>plot(g, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle, main=&quot;Unipartite_plant&quot;)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(E(g)$weight)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-3.png" width="1056" style="display: block; margin: auto;" /></p>
@@ -1081,7 +1118,7 @@ g2 &lt;- graph.adjacency(pollinators_projected, mode = &#39;undirected&#39;, wei
 par(mar=c(0,0,0,0))
 plot(g2)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot(g2, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle)</code></pre>
+<pre class="r"><code>plot(g2, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle, main=&quot;Unipartite_pollinator&quot;)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>qplot(E(g2)$weight)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-3.png" width="1056" style="display: block; margin: auto;" /></p>
@@ -1119,6 +1156,197 @@ out_degree</code></pre>
 df_A &lt;- data.frame(deg=c(out_degree,in_degree), direction=c(rep(&#39;out&#39;,length(out_degree)),rep(&#39;in&#39;,length(in_degree))))
 ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-4.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="another-projection-method" class="section level2">
+<h2>3.2. Another projection method</h2>
+<p>bi-adjacency matrix of a bipartite graph. This is a symmetric (and somewhat redundant) matrix with 0s between species of the same trophic level.</p>
+<pre class="r"><code>plants_projected &lt;- as.one.mode(memmott1999, project = &#39;full&#39;)
+dim(plants_projected)</code></pre>
+<pre><code>[1] 104 104</code></pre>
+<pre class="r"><code># lower = g x g matrix for g plants / higher = n x n matrix for n pollinators
+plants_projected &lt;- as.one.mode(memmott1999, project = &#39;lower&#39;)
+dim(plants_projected)</code></pre>
+<pre><code>[1] 25 25</code></pre>
+<pre class="r"><code>g3 &lt;- graph.adjacency(plants_projected, mode = &#39;undirected&#39;, weighted = T)
+plot(g3,layout=layout.circle, main=&#39;Unipartite_plant&#39;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-19-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>qplot(E(g3)$weight)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-19-2.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-11.-what-information-do-we-lose-when-projecting" class="section level2">
+<h2>Problem 11. What information do we lose when projecting?</h2>
+<p>We lose the information of which plant interacts with which pollinator (if we are projecting on to the plants) and vice versa for the projection to the pollinators.</p>
+</div>
+<div id="problem-12.-what-can-you-say-about-the-density-of-the-projected-networks" class="section level2">
+<h2>Problem 12. What can you say about the density of the projected networks?</h2>
+<pre class="r"><code>par(mfrow=c(1,2))
+
+plot(g, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle, main=&quot;Unipartite_plant&quot;)
+
+plot(g2, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle, main=&quot;Unipartite_pollinator&quot;)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /> By comparing these two graphs of unipartite projections of plants and pollinators, we can see that the density of the projected networs depends on the direction(partition, species) of projection. Pollinator’s unipartite graph appears to be much more “dense” compared to that of plant’s, because the links are concentrated on small portion of the pollinator species.</p>
+</div>
+<div id="problem-13.-what-is-the-ecological-interpretation-of-the-projections-of-a-host-parasite-network" class="section level2">
+<h2>Problem 13. What is the ecological interpretation of the projections of a host-parasite network?</h2>
+<p>If we project and create a network of the host, the node with the higher degree(or centrality) means that it could be the good vector for transmitting parasites. So, it could be called a bridge species of paracites. Higher centrality could also mean that the node could be interacting more and coming to contact more often with other hosts.</p>
+</div>
+<div id="bipartite-networks" class="section level2">
+<h2>4. Bipartite networks</h2>
+</div>
+<div id="some-basic-network-metrics" class="section level2">
+<h2>4.1 Some basic network metrics</h2>
+<p>Going further, Dormann et al. (2009, The Open Ecology Journal) classified bipartite network metrics into:<br />
+</p>
+<p>Metrics based on unweighted links  Metrics based on weighted links </p>
+<p>Here are a few examples (see comments in code to learn what these are)</p>
+<pre class="r"><code># Connectance
+data(olesen2002flores) # Check out the help for information on this data set!
+olesen2002flores_binary &lt;- 1 * (olesen2002flores &gt; 0) # Make the data binary (unweighted)
+I &lt;- nrow(olesen2002flores_binary) # Number of lower level species (e.g., hosts, plants)
+J &lt;- ncol(olesen2002flores_binary) # Number of higher level species (e.g., parasites, pollinators)
+S &lt;- I + J # Total number of species, aka: Network size
+L &lt;- sum(olesen2002flores_binary &gt; 0) # Number of edges in the network
+A_i &lt;- rowSums(olesen2002flores_binary) # The degree of hosts
+A_j &lt;- colSums(olesen2002flores_binary) # The degree of parasites
+C &lt;- L / (I * J) # Connectance</code></pre>
+<p>Notice that the following clustering coeffcients are defined at the local level, that is, for each species.</p>
+<pre class="r"><code>cc_high &lt;- colSums(olesen2002flores_binary) / nrow(olesen2002flores_binary) # Clustering coefficient higher level (the number of realized links divided by the number of possible links for each species)
+cc_low &lt;- rowSums(olesen2002flores_binary) / ncol(olesen2002flores_binary) # Clustering coefficient lower level (the number of realized links divided by the number of possible links for each species)</code></pre>
+<p>In a weighted network we can use strength instead of degree:</p>
+<pre class="r"><code>S_i &lt;- rowSums(olesen2002flores) # Node strength of hosts
+S_j &lt;- colSums(olesen2002flores) # Node strength of parasites</code></pre>
+</div>
+<div id="problem-14.-try-to-calculate-these-metrics-for-the-memmott1999-data." class="section level2">
+<h2>Problem 14. Try to calculate these metrics for the memmott1999 data.</h2>
+<pre class="r"><code># Connectance
+data(memmott1999) # Check out the help for information on this data set!
+memmott1999_binary &lt;- 1 * (memmott1999 &gt; 0) # Make the data binary (unweighted)
+I &lt;- nrow(memmott1999_binary) # Number of lower level species (e.g., hosts, plants)
+J &lt;- ncol(memmott1999_binary) # Number of higher level species (e.g., parasites, pollinators)
+S &lt;- I + J # Total number of species, aka: Network size
+L &lt;- sum(memmott1999_binary &gt; 0) # Number of edges in the network
+A_i &lt;- rowSums(memmott1999_binary) # The degree of hosts
+A_j &lt;- colSums(memmott1999_binary) # The degree of parasites
+C &lt;- L / (I * J) # Connectance
+C</code></pre>
+<pre><code>[1] 0.1513924</code></pre>
+<pre class="r"><code>cc_high &lt;- colSums(memmott1999_binary) / nrow(memmott1999_binary) # Clustering coefficient higher level (the number of realized links divided by the number of possible links for each species)
+# cc_high
+cc_low &lt;- rowSums(memmott1999_binary) / ncol(memmott1999_binary) # Clustering coefficient lower level (the number of realized links divided by the number of possible links for each species)
+# cc_low
+S_i &lt;- rowSums(memmott1999) # Node strength of hosts
+S_j &lt;- colSums(memmott1999) # Node strength of parasites</code></pre>
+</div>
+<div id="problem-15.-can-you-plot-the-degree-and-strength-distributions" class="section level2">
+<h2>Problem 15. Can you plot the degree and strength distributions?</h2>
+<pre class="r"><code># Degree of hosts
+histogram(A_i, breaks = 30, main = &quot;Degree of hosts&quot; )</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-25-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Degree of parasites
+histogram(A_j, breaks = 30, main = &quot;Degree of parasites&quot; )</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-25-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Node strength of hosts
+histogram(S_i, breaks = 30, main = &quot;Strength of hosts&quot; )</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-25-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Node strength of parasites
+histogram(S_j, breaks = 30, main = &quot;Strength of parasites&quot; )</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-25-4.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="built-in-metrics-in-bipartite" class="section level2">
+<h2>4.2 Built-in metrics in bipartite</h2>
+<pre class="r"><code># Network level
+nl_metrics &lt;- networklevel(olesen2002flores)
+nl_metrics</code></pre>
+<pre><code>                      connectance                     web asymmetry 
+                       0.25000000                        0.09090909 
+                links per species            number of compartments 
+                       1.36363636                        1.00000000 
+            compartment diversity               cluster coefficient 
+                               NA                        0.25000000 
+                       nestedness                              NODF 
+                      26.73800218                       35.96096096 
+              weighted nestedness                     weighted NODF 
+                       0.41482111                       23.27327327 
+   interaction strength asymmetry          specialisation asymmetry 
+                       0.06921118                       -0.03946187 
+                  linkage density              weighted connectance 
+                       3.08343699                        0.14015623 
+                     Fisher alpha                 Shannon diversity 
+                       5.64808587                        2.99270826 
+             interaction evenness      Alatalo interaction evenness 
+                       0.62510985                        0.76748398 
+                               H2              number.of.species.HL 
+                       0.53335441                       12.00000000 
+             number.of.species.LL mean.number.of.shared.partners.HL 
+                      10.00000000                        0.71212121 
+mean.number.of.shared.partners.LL            cluster.coefficient.HL 
+                       0.82222222                        0.38586479 
+           cluster.coefficient.LL   weighted.cluster.coefficient.HL 
+                       0.37152473                        0.27012517 
+  weighted.cluster.coefficient.LL                  niche.overlap.HL 
+                       0.21485594                        0.22887547 
+                 niche.overlap.LL                   togetherness.HL 
+                       0.22052649                        0.14962121 
+                  togetherness.LL                        C.score.HL 
+                       0.15347222                        0.53114478 
+                       C.score.LL                        V.ratio.HL 
+                       0.54552469                        1.47457627 
+                       V.ratio.LL                    discrepancy.HL 
+                       1.73469388                       14.00000000 
+                   discrepancy.LL               extinction.slope.HL 
+                      14.00000000                        2.61620630 
+              extinction.slope.LL                     robustness.HL 
+                       2.18719834                        0.72029940 
+                    robustness.LL     functional.complementarity.HL 
+                       0.67479868                      900.42713645 
+    functional.complementarity.LL              partner.diversity.HL 
+                     854.64456938                        0.93256402 
+             partner.diversity.LL                     generality.HL 
+                       1.10133819                        2.75051685 
+                 vulnerability.LL 
+                       3.41635714 </code></pre>
+<pre class="r"><code># group level -&gt; problem 16
+
+# Species level -&gt; problem 17</code></pre>
+</div>
+<div id="problem-16.-try-to-calculate-and-access-metrics-at-the-species-level.-use-help-to-understand-which-metrics-bipartite-has-implemented." class="section level2">
+<h2>Problem 16. Try to calculate and access metrics at the species level. Use help to understand which metrics bipartite has implemented.</h2>
+<pre class="r"><code>sl_metrics</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;sl_metrics&#39; not found</code></pre>
+<pre class="r"><code># help(specieslevel)</code></pre>
+</div>
+<div id="problem-17.-try-to-calculate-and-access-metrics-at-the-group-level.-use-help-to-understand-which-metrics-bipartite-has-implemented." class="section level2">
+<h2>Problem 17. Try to calculate and access metrics at the group level. Use help to understand which metrics bipartite has implemented.</h2>
+<pre class="r"><code>gl_metrics</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;gl_metrics&#39; not found</code></pre>
+<pre class="r"><code># help(grouplevel)</code></pre>
+</div>
+<div id="problem-18.-choose-a-couple-of-interesting-metrics-we-have-not-discussed-and-briefly-explain-what-they-are-and-what-is-their-meaning-in-a-particular-context-ecology-social-sciences-etc." class="section level2">
+<h2>Problem 18. Choose a couple of interesting metrics we have not discussed and briefly explain what they are and what is their meaning in a particular context (ecology, social sciences etc).</h2>
+<ol style="list-style-type: decimal">
+<li><p>togetherness: Network integration refers to a process of building links between two networks so that they dissolve into a single unified network. Togetherness measures the proximity of these two networks as they integrate; this notion is fundamental to social networks as it is relevant to important concepts such as trust, coherence and solidarity.<br />
+Source: Moskvina, A., &amp; Liu, J. (2016, August). Togetherness: an algorithmic approach to network integration. In 2016 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining (ASONAM) (pp. 223-230). IEEE.</p></li>
+<li><p>discrepancy: the number of links one would have to move to achieve perfect nestedness (Brualdi &amp; Sanderson, 1999)</p></li>
+<li><p>robustness: the area under the extinction curve (Burgos et al., 2007)</p></li>
+<li><p>niche overlap: with options for distance metrics (Pielou, 1972; Hurlbert, 1978)</p></li>
+<li><p>generality: for the higher trophic level</p></li>
+<li><p>vulnerability: for the lower level (Bersier et al., 2002)</p></li>
+<li><p>partner diversity: simply the mean Shannon diversity of interactions of each species in a level;</p></li>
+<li><p>fd (or alternatively functional diversity), which is similar to niche overlap but computed as branch length of a cluster diagram of dissimilarity of resource use (Devoto et al.,2012).</p></li>
+<li><p>C score: C score, or ‘checkerboardness’, which averages the number of instances of 01/10-patterns (i.e. exclusive occurrences) for all pairwise species combinations (Stone &amp; Roberts, 1990)</p></li>
+<li><p>V ratio: the variance ratio of species numbers to interaction numbers within species of a level (Schluter, 1984)</p></li>
+</ol>
+<p>To close, one very cool implementation in bipartite allows one to examine the degree distributions. It tries to fit the distributions to examine if they are close to a power law. The function is ‘degreedistr’. We will leave this for later because it includes issues concerning fitting the cumulative distributions and comparing the fits. But if you are curious, go ahead and explore …</p>
+</div>
+<div id="suggested-reading" class="section level2">
+<h2>5. Suggested reading</h2>
+<p>Some papers which develop or explain specific metrics:</p>
+<p>Bersier L-F, Banašek-Richter C, Cattin M-F. Quantitative Descriptors of Food-Web Matrices. Ecology. Ecological Society of America; 2002; 83:2394–2407.<br />
+Blüthgen N, Menzel F, Blüthgen N. Measuring specialization in species interaction networks. BMC Ecol. 2006;6: 9.<br />
+Martín González AM, Dalsgaard B, Olesen JM. Centrality measures and the importance of generalist species in pollination networks. Ecol Complex. 2010; 7:36–43.<br />
+Poisot T, Canard E, Mouquet N, Hochberg ME. A comparative study of ecological specialization estimators. Methods Ecol Evol. 2012; 3:537–544.<br />
+For more details on projections you can see Mark Newman’s book: Networks an introduction (Section 6.6).<br />
+</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
