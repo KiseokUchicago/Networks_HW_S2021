@@ -325,6 +325,7 @@ Bahia Falsa distribution of motif's relative abundance are similar to Otago's fo
 As described below, we can create a one-mode projection from the two-mode bipartite graph with a simple step from linear algebra, namely matrix multiplication. There are two possible one-mode projections, one onto the groups and the other onto the nodes, depending on the order of the matrix product.\
 We can project the incidence matrix by multiplying it with its transpose. 
 
+## 3.1. One way of projection
 ```{r}
 # Original
 networklevel(memmott1999, index='connectance')
@@ -338,7 +339,7 @@ diag(plants_projected) <- 0
 g <- graph.adjacency(plants_projected, mode = 'undirected', weighted = T)
 par(mar=c(0,0,0,0))
 plot(g)
-plot(g, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle)
+plot(g, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle, main="Unipartite_plant")
 
 qplot(E(g)$weight)
 ```
@@ -355,7 +356,7 @@ diag(pollinators_projected) <- 0
 g2 <- graph.adjacency(pollinators_projected, mode = 'undirected', weighted = T)
 par(mar=c(0,0,0,0))
 plot(g2)
-plot(g2, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle)
+plot(g2, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle, main="Unipartite_pollinator")
 
 qplot(E(g2)$weight)
 
@@ -383,10 +384,175 @@ out_degree
 # Now we use a dataframe to make the plot.
 df_A <- data.frame(deg=c(out_degree,in_degree), direction=c(rep('out',length(out_degree)),rep('in',length(in_degree))))
 ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)
-
-
-
 ```
+
+## 3.2. Another projection method
+bi-adjacency matrix of a bipartite graph. This is a symmetric (and somewhat redundant) matrix with 0s between species of the same trophic level.
+
+```{r}
+plants_projected <- as.one.mode(memmott1999, project = 'full')
+dim(plants_projected)
+
+# lower = g x g matrix for g plants / higher = n x n matrix for n pollinators
+plants_projected <- as.one.mode(memmott1999, project = 'lower')
+dim(plants_projected)
+g3 <- graph.adjacency(plants_projected, mode = 'undirected', weighted = T)
+plot(g3,layout=layout.circle, main='Unipartite_plant')
+qplot(E(g3)$weight)
+```
+
+## Problem 11. What information do we lose when projecting?
+We lose the information of which plant interacts with which pollinator (if we are projecting on to the plants) and vice versa for the projection to the pollinators.
+
+## Problem 12. What can you say about the density of the projected networks?
+```{r}
+par(mfrow=c(1,2))
+
+plot(g, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle, main="Unipartite_plant")
+
+plot(g2, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle, main="Unipartite_pollinator")
+```
+By comparing these two graphs of unipartite projections of plants and pollinators, we can see that the density of the projected networs depends on the direction(partition, species) of projection. Pollinator's unipartite graph appears to be much more "dense" compared to that of plant's, because the links are concentrated on small portion of the pollinator species.
+
+## Problem 13. What is the ecological interpretation of the projections of a host-parasite network?
+If we project and create a network of the host, the node with the higher degree(or centrality) means that it could be the good vector for transmitting parasites. So, it could be called a bridge species of paracites. Higher centrality could also mean that the node could be interacting more and coming to contact more often with other hosts.
+
+## 4. Bipartite networks
+
+## 4.1 Some basic network metrics
+Going further, Dormann et al. (2009, The Open Ecology Journal) classified bipartite network metrics into: \
+
+Metrics based on unweighted links\ 
+Metrics based on weighted links\ 
+
+Here are a few examples (see comments in code to learn what these are)
+
+```{r}
+# Connectance
+data(olesen2002flores) # Check out the help for information on this data set!
+olesen2002flores_binary <- 1 * (olesen2002flores > 0) # Make the data binary (unweighted)
+I <- nrow(olesen2002flores_binary) # Number of lower level species (e.g., hosts, plants)
+J <- ncol(olesen2002flores_binary) # Number of higher level species (e.g., parasites, pollinators)
+S <- I + J # Total number of species, aka: Network size
+L <- sum(olesen2002flores_binary > 0) # Number of edges in the network
+A_i <- rowSums(olesen2002flores_binary) # The degree of hosts
+A_j <- colSums(olesen2002flores_binary) # The degree of parasites
+C <- L / (I * J) # Connectance
+```
+
+Notice that the following clustering coeffcients are defined at the local level, that is, for each species.
+```{r}
+cc_high <- colSums(olesen2002flores_binary) / nrow(olesen2002flores_binary) # Clustering coefficient higher level (the number of realized links divided by the number of possible links for each species)
+cc_low <- rowSums(olesen2002flores_binary) / ncol(olesen2002flores_binary) # Clustering coefficient lower level (the number of realized links divided by the number of possible links for each species)
+```
+
+In a weighted network we can use strength instead of degree:
+```{r}
+S_i <- rowSums(olesen2002flores) # Node strength of hosts
+S_j <- colSums(olesen2002flores) # Node strength of parasites
+```
+
+## Problem 14. Try to calculate these metrics for the memmott1999 data.
+```{r}
+# Connectance
+data(memmott1999) # Check out the help for information on this data set!
+memmott1999_binary <- 1 * (memmott1999 > 0) # Make the data binary (unweighted)
+I <- nrow(memmott1999_binary) # Number of lower level species (e.g., hosts, plants)
+J <- ncol(memmott1999_binary) # Number of higher level species (e.g., parasites, pollinators)
+S <- I + J # Total number of species, aka: Network size
+L <- sum(memmott1999_binary > 0) # Number of edges in the network
+A_i <- rowSums(memmott1999_binary) # The degree of hosts
+A_j <- colSums(memmott1999_binary) # The degree of parasites
+C <- L / (I * J) # Connectance
+C
+
+cc_high <- colSums(memmott1999_binary) / nrow(memmott1999_binary) # Clustering coefficient higher level (the number of realized links divided by the number of possible links for each species)
+# cc_high
+cc_low <- rowSums(memmott1999_binary) / ncol(memmott1999_binary) # Clustering coefficient lower level (the number of realized links divided by the number of possible links for each species)
+# cc_low
+S_i <- rowSums(memmott1999) # Node strength of hosts
+S_j <- colSums(memmott1999) # Node strength of parasites
+```
+
+## Problem 15. Can you plot the degree and strength distributions?
+```{r}
+# Degree of hosts
+histogram(A_i, breaks = 30, main = "Degree of hosts" )
+
+# Degree of parasites
+histogram(A_j, breaks = 30, main = "Degree of parasites" )
+
+# Node strength of hosts
+histogram(S_i, breaks = 30, main = "Strength of hosts" )
+
+# Node strength of parasites
+histogram(S_j, breaks = 30, main = "Strength of parasites" )
+```
+
+## 4.2 Built-in metrics in bipartite
+
+```{r}
+# Network level
+nl_metrics <- networklevel(olesen2002flores)
+nl_metrics
+
+# group level -> problem 16
+
+# Species level -> problem 17
+```
+
+## Problem 16. Try to calculate and access metrics at the species level. Use help to understand which metrics bipartite has implemented.
+```{r}
+sl_metrics
+# help(specieslevel)
+```
+
+## Problem 17. Try to calculate and access metrics at the group level. Use help to understand which metrics bipartite has implemented.
+```{r}
+gl_metrics
+# help(grouplevel)
+```
+
+## Problem 18. Choose a couple of interesting metrics we have not discussed and briefly explain what they are and what is their meaning in a particular context (ecology, social sciences etc).
+(1) togetherness: Network integration refers to a process of building links between two networks so that they dissolve into a single unified network. Togetherness measures the proximity of these two networks as they integrate; this notion is fundamental to social networks as it is relevant to important concepts such as trust, coherence and solidarity.\
+Source: Moskvina, A., & Liu, J. (2016, August). Togetherness: an algorithmic approach to network integration. In 2016 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining (ASONAM) (pp. 223-230). IEEE.
+
+(2) discrepancy: the number of links one would have to move to achieve perfect nestedness
+(Brualdi & Sanderson, 1999)
+
+(3) robustness: the area under the extinction curve (Burgos et al., 2007)
+
+(4) niche overlap: with options for distance metrics (Pielou, 1972; Hurlbert, 1978)
+
+(5) generality: for the higher trophic level 
+(6) vulnerability: for the lower level (Bersier et al., 2002)
+
+(7) partner diversity: simply the mean Shannon diversity of interactions of each species in
+a level;
+
+(8) fd (or alternatively functional diversity), which is similar to niche overlap but computed as branch length of a cluster diagram of dissimilarity of resource use (Devoto et al.,2012).
+
+(9) C score: C score, or ‘checkerboardness’, which averages the number of instances of 01/10-patterns
+(i.e. exclusive occurrences) for all pairwise species combinations (Stone & Roberts, 1990)
+
+(10) V ratio: the variance ratio of species numbers to interaction numbers within species of a
+level (Schluter, 1984)
+
+To close, one very cool implementation in bipartite allows one to examine the degree distributions. It tries to fit the distributions to examine if they are close to a power law. The function is ‘degreedistr’. We will leave this for later because it includes issues concerning fitting the cumulative distributions and comparing the fits. But if you are curious, go ahead and explore …
+
+## 5. Suggested reading
+Some papers which develop or explain specific metrics:
+
+Bersier L-F, Banašek-Richter C, Cattin M-F. Quantitative Descriptors of Food-Web Matrices. Ecology. Ecological Society of America; 2002; 83:2394–2407.\
+Blüthgen N, Menzel F, Blüthgen N. Measuring specialization in species interaction networks. BMC Ecol. 2006;6: 9.\
+Martín González AM, Dalsgaard B, Olesen JM. Centrality measures and the importance of generalist species in pollination networks. Ecol Complex. 2010; 7:36–43.\
+Poisot T, Canard E, Mouquet N, Hochberg ME. A comparative study of ecological specialization estimators. Methods Ecol Evol. 2012; 3:537–544.\
+For more details on projections you can see Mark Newman’s book: Networks an introduction (Section 6.6).\
+
+
+
+
+
 
 
 
