@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree72c2816f200f253417ff7e511587efa329d5999ftargetblank72c2816a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/72c2816f200f253417ff7e511587efa329d5999f" target="_blank">72c2816</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree21a29f2377cae249a0a127543d5314bc771a3b09targetblank21a29f2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/21a29f2377cae249a0a127543d5314bc771a3b09" target="_blank">21a29f2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree72c2816f200f253417ff7e511587efa329d5999ftargetblank72c2816a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree21a29f2377cae249a0a127543d5314bc771a3b09targetblank21a29f2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/72c2816f200f253417ff7e511587efa329d5999f" target="_blank">72c2816</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/21a29f2377cae249a0a127543d5314bc771a3b09" target="_blank">21a29f2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/21a29f2377cae249a0a127543d5314bc771a3b09/analysis/Networks_HW2.Rmd" target="_blank">21a29f2</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-15
+</td>
+<td>
+HW2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/c3a0cc522ea0c57bf8abb2a2099b863881be3307/docs/Networks_HW2.html" target="_blank">c3a0cc5</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1311,14 +1345,215 @@ mean.number.of.shared.partners.LL            cluster.coefficient.HL
 </div>
 <div id="problem-16.-try-to-calculate-and-access-metrics-at-the-species-level.-use-help-to-understand-which-metrics-bipartite-has-implemented." class="section level2">
 <h2>Problem 16. Try to calculate and access metrics at the species level. Use help to understand which metrics bipartite has implemented.</h2>
-<pre class="r"><code>sl_metrics</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;sl_metrics&#39; not found</code></pre>
+<pre class="r"><code>sl_metrics &lt;- specieslevel(olesen2002flores)
+sl_metrics</code></pre>
+<pre><code>$`higher level`
+                     degree normalised.degree species.strength
+Halictus.sp.              6               0.6       2.23718734
+Sepsis.thoracica          4               0.4       2.28218964
+Agrotis.ipsilon           1               0.1       0.13496933
+Bombus.ruderatus          3               0.3       1.11600610
+Colias.crocea             3               0.3       0.82182203
+Musca.domestica           4               0.4       1.70307430
+Apis.mellifera            3               0.3       0.83739983
+Lucilia.sericata          2               0.2       0.40429752
+Lasius.niger              1               0.1       0.11246201
+Anothomyia.pluvialis      1               0.1       0.26744186
+Calliphora.vemitoria      1               0.1       0.03951368
+Eristalix.tenax           1               0.1       0.04363636
+                     interaction.push.pull nestedrank       PDI resource.range
+Halictus.sp.                    0.20619789 0.00000000 0.8833727      0.4444444
+Sepsis.thoracica                0.32054741 0.18181818 0.8863346      0.6666667
+Agrotis.ipsilon                -0.86503067 0.81818182 1.0000000      1.0000000
+Bombus.ruderatus                0.03866870 0.36363636 0.9527187      0.7777778
+Colias.crocea                  -0.05939266 0.45454545 0.8888889      0.7777778
+Musca.domestica                 0.17576857 0.09090909 0.8387800      0.6666667
+Apis.mellifera                 -0.05420006 0.27272727 0.9775281      0.7777778
+Lucilia.sericata               -0.29785124 0.54545455 0.9904421      0.8888889
+Lasius.niger                   -0.88753799 0.63636364 1.0000000      1.0000000
+Anothomyia.pluvialis           -0.73255814 0.72727273 1.0000000      1.0000000
+Calliphora.vemitoria           -0.96048632 0.90909091 1.0000000      1.0000000
+Eristalix.tenax                -0.95636364 1.00000000 1.0000000      1.0000000
+                     species.specificity.index        PSI
+Halictus.sp.                         0.5393301 0.56976832
+Sepsis.thoracica                     0.5369043 0.38496441
+Agrotis.ipsilon                      1.0000000 0.13496933
+Bombus.ruderatus                     0.6968904 0.51037883
+Colias.crocea                        0.5553288 0.29129388
+Musca.domestica                      0.4869132 0.53261564
+Apis.mellifera                       0.8205693 0.27269099
+Lucilia.sericata                     0.9153821 0.31663203
+Lasius.niger                         1.0000000 0.11246201
+Anothomyia.pluvialis                 1.0000000 0.26744186
+Calliphora.vemitoria                 1.0000000 0.03951368
+Eristalix.tenax                      1.0000000 0.04363636
+                     node.specialisation.index.NSI betweenness
+Halictus.sp.                              1.090909  0.50555556
+Sepsis.thoracica                          1.181818  0.16111111
+Agrotis.ipsilon                           2.000000  0.00000000
+Bombus.ruderatus                          1.363636  0.00000000
+Colias.crocea                             1.363636  0.00000000
+Musca.domestica                           1.090909  0.31111111
+Apis.mellifera                            1.363636  0.00000000
+Lucilia.sericata                          1.636364  0.02222222
+Lasius.niger                              1.363636  0.00000000
+Anothomyia.pluvialis                      1.818182  0.00000000
+Calliphora.vemitoria                      1.363636  0.00000000
+Eristalix.tenax                           1.818182  0.00000000
+                     weighted.betweenness  closeness weighted.closeness
+Halictus.sp.                   0.40404040 0.10227273         0.13550656
+Sepsis.thoracica               0.05050505 0.09740260         0.09830016
+Agrotis.ipsilon                0.00000000 0.05681818         0.02974680
+Bombus.ruderatus               0.00000000 0.08766234         0.05519627
+Colias.crocea                  0.00000000 0.08766234         0.03727449
+Musca.domestica                0.36363636 0.10227273         0.12549756
+Apis.mellifera                 0.18181818 0.08766234         0.11231280
+Lucilia.sericata               0.00000000 0.07305195         0.08048268
+Lasius.niger                   0.00000000 0.08766234         0.05443804
+Anothomyia.pluvialis           0.00000000 0.06331169         0.03341418
+Calliphora.vemitoria           0.00000000 0.08766234         0.02101503
+Eristalix.tenax                0.00000000 0.06655844         0.01807306
+                     Fisher.alpha partner.diversity effective.partners
+Halictus.sp.                   NA         1.2463160           3.477508
+Sepsis.thoracica               NA         1.1492990           3.155980
+Agrotis.ipsilon                NA         0.0000000           1.000000
+Bombus.ruderatus               NA         0.8150089           2.259196
+Colias.crocea                  NA         1.0346012           2.813984
+Musca.domestica                NA         1.2510230           3.493915
+Apis.mellifera                 NA         0.5696636           1.767672
+Lucilia.sericata               NA         0.2768306           1.318943
+Lasius.niger                   NA         0.0000000           1.000000
+Anothomyia.pluvialis           NA         0.0000000           1.000000
+Calliphora.vemitoria           NA         0.0000000           1.000000
+Eristalix.tenax                NA         0.0000000           1.000000
+                     proportional.generality proportional.similarity         d
+Halictus.sp.                       0.5246342              0.58446522 0.4617062
+Sepsis.thoracica                   0.4761268              0.56979807 0.3868099
+Agrotis.ipsilon                    0.1508650              0.14310799 0.4868530
+Bombus.ruderatus                   0.3408335              0.22212467 0.6638100
+Colias.crocea                      0.4245316              0.30208203 0.5115852
+Musca.domestica                    0.5271094              0.51517823 0.4509054
+Apis.mellifera                     0.2666798              0.37401229 0.4352316
+Lucilia.sericata                   0.1989823              0.32064778 0.4989352
+Lasius.niger                       0.1508650              0.28884987 0.3599874
+Anothomyia.pluvialis               0.1508650              0.07550483 0.6584783
+Calliphora.vemitoria               0.1508650              0.28884987 0.2656520
+Eristalix.tenax                    0.1508650              0.24143986 0.2995274
+
+$`lower level`
+                      degree normalised.degree species.strength
+Azorina:vidalii            8        0.66666667       3.90126285
+Crithmum:maritimum         4        0.33333333       2.74711026
+Solidago:sempervivens      2        0.16666667       1.48788927
+Beta:vulgaris              1        0.08333333       0.04545455
+Daucus:carota              3        0.25000000       0.52527020
+Silene:vulgaris            2        0.16666667       0.19467600
+Chamomilla:suaveolens      3        0.25000000       1.24066436
+Lotus:corniculatus         3        0.25000000       1.28560469
+Freesia:refracta           2        0.16666667       0.44989339
+Reseda:luteola             2        0.16666667       0.12217443
+                      interaction.push.pull nestedrank       PDI
+Azorina:vidalii                  0.36265786  0.0000000 0.7857143
+Crithmum:maritimum               0.43677757  0.1111111 0.8220919
+Solidago:sempervivens            0.24394464  0.5555556 0.9858156
+Beta:vulgaris                   -0.95454545  1.0000000 1.0000000
+Daucus:carota                   -0.15824327  0.2222222 0.9830660
+Silene:vulgaris                 -0.40266200  0.6666667 0.9787879
+Chamomilla:suaveolens            0.08022145  0.3333333 0.9047619
+Lotus:corniculatus               0.09520156  0.4444444 0.9419729
+Freesia:refracta                -0.27505330  0.7777778 0.9166667
+Reseda:luteola                  -0.43891278  0.8888889 0.9256198
+                      species.specificity.index resource.range PSI
+Azorina:vidalii                       0.3666009      0.3636364   1
+Crithmum:maritimum                    0.4944616      0.7272727   1
+Solidago:sempervivens                 0.8632885      0.9090909   1
+Beta:vulgaris                         1.0000000      1.0000000   1
+Daucus:carota                         0.8355137      0.8181818   1
+Silene:vulgaris                       0.8156693      0.9090909   1
+Chamomilla:suaveolens                 0.5588878      0.8181818   1
+Lotus:corniculatus                    0.6415470      0.8181818   1
+Freesia:refracta                      0.6749641      0.9090909   1
+Reseda:luteola                        0.6782330      0.9090909   1
+                      node.specialisation.index.NSI betweenness
+Azorina:vidalii                            1.000000  0.66666667
+Crithmum:maritimum                         1.444444  0.03508772
+Solidago:sempervivens                      1.444444  0.00000000
+Beta:vulgaris                              1.666667  0.00000000
+Daucus:carota                              1.333333  0.02631579
+Silene:vulgaris                            1.222222  0.11403509
+Chamomilla:suaveolens                      1.333333  0.02631579
+Lotus:corniculatus                         1.666667  0.02631579
+Freesia:refracta                           1.777778  0.00000000
+Reseda:luteola                             1.333333  0.10526316
+                      weighted.betweenness  closeness weighted.closeness
+Azorina:vidalii                 0.80645161 0.12676056         0.15165121
+Crithmum:maritimum              0.04838710 0.09859155         0.13411650
+Solidago:sempervivens           0.00000000 0.09859155         0.12682460
+Beta:vulgaris                   0.00000000 0.08450704         0.01344438
+Daucus:carota                   0.01612903 0.10563380         0.10843382
+Silene:vulgaris                 0.00000000 0.11267606         0.04970068
+Chamomilla:suaveolens           0.00000000 0.10563380         0.07070199
+Lotus:corniculatus              0.12903226 0.08450704         0.08382797
+Freesia:refracta                0.00000000 0.07746479         0.03447734
+Reseda:luteola                  0.00000000 0.10563380         0.02903924
+                      Fisher.alpha partner.diversity effective.partners
+Azorina:vidalii                 NA         1.7597256           5.810843
+Crithmum:maritimum              NA         1.2289587           3.417669
+Solidago:sempervivens           NA         0.3957252           1.485461
+Beta:vulgaris                   NA         0.0000000           1.000000
+Daucus:carota                   NA         0.5415789           1.718718
+Silene:vulgaris                 NA         0.4850451           1.624248
+Chamomilla:suaveolens           NA         1.0469815           2.849038
+Lotus:corniculatus              NA         0.9065726           2.475822
+Freesia:refracta                NA         0.6922017           1.998110
+Reseda:luteola                  NA         0.6881388           1.990008
+                      proportional.similarity proportional.generality         d
+Azorina:vidalii                    0.67071312               0.7405082 0.3332718
+Crithmum:maritimum                 0.47322212               0.4355326 0.5892981
+Solidago:sempervivens              0.27304653               0.1893006 0.6806040
+Beta:vulgaris                      0.15452151               0.1274356 0.3537831
+Daucus:carota                      0.37651557               0.2190259 0.4552274
+Silene:vulgaris                    0.34371070               0.2069870 0.3718044
+Chamomilla:suaveolens              0.48386998               0.3630689 0.4147415
+Lotus:corniculatus                 0.18964004               0.3155079 0.7417628
+Freesia:refracta                   0.09569798               0.2546303 0.6060358
+Reseda:luteola                     0.34767340               0.2535979 0.2678001</code></pre>
 <pre class="r"><code># help(specieslevel)</code></pre>
 </div>
 <div id="problem-17.-try-to-calculate-and-access-metrics-at-the-group-level.-use-help-to-understand-which-metrics-bipartite-has-implemented." class="section level2">
 <h2>Problem 17. Try to calculate and access metrics at the group level. Use help to understand which metrics bipartite has implemented.</h2>
-<pre class="r"><code>gl_metrics</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;gl_metrics&#39; not found</code></pre>
+<pre class="r"><code>gl_metrics &lt;- grouplevel(olesen2002flores)
+gl_metrics</code></pre>
+<pre><code>             number.of.species.HL              number.of.species.LL 
+                       12.0000000                        10.0000000 
+          mean.number.of.links.HL           mean.number.of.links.LL 
+                        3.8586479                         4.4582968 
+mean.number.of.shared.partners.HL mean.number.of.shared.partners.LL 
+                        0.7121212                         0.8222222 
+           cluster.coefficient.HL            cluster.coefficient.LL 
+                        0.3858648                         0.3715247 
+  weighted.cluster.coefficient.HL   weighted.cluster.coefficient.LL 
+                        0.2701252                         0.2148559 
+                 niche.overlap.HL                  niche.overlap.LL 
+                        0.2288755                         0.2205265 
+                  togetherness.HL                   togetherness.LL 
+                        0.1496212                         0.1534722 
+                       C.score.HL                        C.score.LL 
+                        0.5311448                         0.5455247 
+                       V.ratio.HL                        V.ratio.LL 
+                        1.4745763                         1.7346939 
+                   discrepancy.HL                    discrepancy.LL 
+                       14.0000000                        14.0000000 
+              extinction.slope.HL               extinction.slope.LL 
+                        2.7492572                         2.0673090 
+                    robustness.HL                     robustness.LL 
+                        0.7296217                         0.6690529 
+    functional.complementarity.HL     functional.complementarity.LL 
+                      900.4271365                       854.6445694 
+             partner.diversity.HL              partner.diversity.LL 
+                        0.9325640                         1.1013382 
+                    generality.HL                  vulnerability.LL 
+                        2.7505169                         3.4163571 </code></pre>
 <pre class="r"><code># help(grouplevel)</code></pre>
 </div>
 <div id="problem-18.-choose-a-couple-of-interesting-metrics-we-have-not-discussed-and-briefly-explain-what-they-are-and-what-is-their-meaning-in-a-particular-context-ecology-social-sciences-etc." class="section level2">
