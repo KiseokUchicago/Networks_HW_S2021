@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-12
+<strong>Last updated:</strong> 2021-04-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree64a8b31053fa085d543139359685bf8105de938dtargetblank64a8b31a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/64a8b31053fa085d543139359685bf8105de938d" target="_blank">64a8b31</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea62bd87dba375a62853e39455bbdd7c284271918targetblanka62bd87a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a62bd87dba375a62853e39455bbdd7c284271918" target="_blank">a62bd87</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree64a8b31053fa085d543139359685bf8105de938dtargetblank64a8b31a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea62bd87dba375a62853e39455bbdd7c284271918targetblanka62bd87a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/64a8b31053fa085d543139359685bf8105de938d" target="_blank">64a8b31</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a62bd87dba375a62853e39455bbdd7c284271918" target="_blank">a62bd87</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -500,9 +500,7 @@ Untracked files:
     Untracked:  data/Otago_Data_Nodes.csv
     Untracked:  data/Ural_valley_A_HP_048.csv
     Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
-
-Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Untracked:  data/~$Dunne2013PBioSupData.xlsx
 
 </code></pre>
 <p>
@@ -541,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/a62bd87dba375a62853e39455bbdd7c284271918/analysis/Networks_HW2.Rmd" target="_blank">a62bd87</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-14
+</td>
+<td>
+HW2 update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/7a768195d7afb5fcac77d183c1b01aadf0ee6db8/docs/Networks_HW2.html" target="_blank">7a76819</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -965,15 +997,128 @@ for (i in 0:15){ # note that counting starts at 0
 <h2>Problem 8. What is the dominant sub-graph in the Otago food web? What is its ecological meaning?</h2>
 <pre class="r"><code>df_motif &lt;- data.frame(relative_abun=motifs(otago_web)/count_motifs(otago_web))
 df_motif &lt;- tibble::rownames_to_column(df_motif, var=&#39;motif_n&#39;)
-ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
-  geom_bar(stat=&quot;identity&quot;) + theme_minimal()</code></pre>
+m1 &lt;- ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) + geom_bar(stat=&quot;identity&quot;) + theme_minimal() + ggtitle(&quot;Otago Motif relative abundance \n&quot;)
+m1</code></pre>
 <p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-15-1.png" width="1056" style="display: block; margin: auto;" /> 7 is the most abundant. The center node is consumed by 2 predators. This is exploitative competition. (kind of indirect effect, interaction chain)</p>
 </div>
 <div id="problem-9.-calculate-the-proportion-of-sub-graphs-for-the-bahia-falsa-food-web.-are-their-relative-frequencies-in-this-food-web-different-from-those-for-the-otago-food-web" class="section level2">
 <h2>Problem 9. Calculate the proportion of sub-graphs for the Bahia Falsa food web. Are their relative frequencies in this food web different from those for the Otago food web?</h2>
+<pre class="r"><code># Bahia Falsa food web
+Bahia_Falsa_metadata &lt;- openxlsx::read.xlsx(&#39;data/Dunne2013PBioSupData.xlsx&#39;,sheet=3)
+
+# We&#39;ll use free living species only (the first two columns)
+edge_bahia &lt;- Bahia_Falsa_metadata[,c(1,2)] 
+colnames(edge_bahia) &lt;- c(&quot;Consumer&quot;,&quot;Resource&quot;)
+dim(edge_bahia)</code></pre>
+<pre><code>[1] 3720    2</code></pre>
+<pre class="r"><code>edge_bahia2 &lt;- edge_bahia %&gt;% filter(!is.na(Consumer)) %&gt;% filter(!is.na(Resource))
+head(edge_bahia2)</code></pre>
+<pre><code>  Consumer Resource
+1       18        2
+2       18        5
+3       19        2
+4       19       10
+5       20        2
+6       20       10</code></pre>
+<pre class="r"><code>tail(edge_bahia2)</code></pre>
+<pre><code>     Consumer Resource
+1072      118       63
+1073      118       64
+1074      118       66
+1075      118       74
+1076      118       76
+1077      119        2</code></pre>
+<pre class="r"><code>dim(edge_bahia2)</code></pre>
+<pre><code>[1] 1077    2</code></pre>
+<pre class="r"><code>bahia_web &lt;- graph.data.frame(edge_bahia2, vertices = NULL, directed = T)
+
+motifs(bahia_web) #absolute numbers</code></pre>
+<pre><code> [1]   NA   NA 6973   NA 6307   16 9591 1941   54  630   25   50    0   38    0
+[16]    1</code></pre>
+<pre class="r"><code>motifs(bahia_web)/count_motifs(bahia_web) # Proportion</code></pre>
+<pre><code> [1]           NA           NA 2.721065e-01           NA 2.461172e-01
+ [6] 6.243659e-04 3.742683e-01 7.574339e-02 2.107235e-03 2.458441e-02
+[11] 9.755717e-04 1.951143e-03 0.000000e+00 1.482869e-03 0.000000e+00
+[16] 3.902287e-05</code></pre>
+<pre class="r"><code>df_motif_b &lt;- data.frame(relative_abun=motifs(bahia_web)/count_motifs(bahia_web))
+df_motif_b &lt;- tibble::rownames_to_column(df_motif_b, var=&#39;motif_n&#39;)
+m2 &lt;- ggplot(data=df_motif_b, aes(x=motif_n, y=relative_abun)) + geom_bar(stat=&quot;identity&quot;) + theme_minimal() + ggtitle(&quot;Bahia Falsa Motif relative abundance \n&quot;)
+m2</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-16-1.png" width="1056" style="display: block; margin: auto;" /> Bahia Falsa distribution of motif’s relative abundance are similar to Otago’s food web.</p>
 </div>
 <div id="network-projections" class="section level2">
 <h2>3. Network projections</h2>
+<p>As described below, we can create a one-mode projection from the two-mode bipartite graph with a simple step from linear algebra, namely matrix multiplication. There are two possible one-mode projections, one onto the groups and the other onto the nodes, depending on the order of the matrix product.<br />
+We can project the incidence matrix by multiplying it with its transpose.</p>
+<pre class="r"><code># Original
+networklevel(memmott1999, index=&#39;connectance&#39;)</code></pre>
+<pre><code>connectance 
+  0.1513924 </code></pre>
+<pre class="r"><code># Project plants
+# Recall that the logical step &#39;&gt; 0&#39; converts the original matrix into a binary one. Then &#39;tcrossprod&#39; performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+plants_projected &lt;- tcrossprod(memmott1999&gt;0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(plants_projected) &lt;- 0
+
+g &lt;- graph.adjacency(plants_projected, mode = &#39;undirected&#39;, weighted = T)
+par(mar=c(0,0,0,0))
+plot(g)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(g, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>qplot(E(g)$weight)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-17-3.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="problem-10.-try-to-project-the-pollinators-and-plot-the-degree-distribution-of-this-projection-use-your-code-for-question-1." class="section level2">
+<h2>Problem 10. Try to project the pollinators and plot the degree distribution of this projection (use your code for question 1).</h2>
+<pre class="r"><code># Project pollinators
+# Recall that the logical step &#39;&gt; 0&#39; converts the original matrix into a binary one. Then &#39;tcrossprod&#39; performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+pollinators_projected &lt;- tcrossprod(t(memmott1999)&gt;0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(pollinators_projected) &lt;- 0
+
+g2 &lt;- graph.adjacency(pollinators_projected, mode = &#39;undirected&#39;, weighted = T)
+par(mar=c(0,0,0,0))
+plot(g2)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(g2, vertex.size=6, vertex.label=NA, edge.color=&#39;black&#39;, edge.width=log(E(g)$weight), layout=layout.circle)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>qplot(E(g2)$weight)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Degree distribution
+
+# make adjacency matrix
+A_pol &lt;- as_adjacency_matrix(g2)
+class(A_pol)</code></pre>
+<pre><code>[1] &quot;dgCMatrix&quot;
+attr(,&quot;package&quot;)
+[1] &quot;Matrix&quot;</code></pre>
+<pre class="r"><code>dim(A_pol)</code></pre>
+<pre><code>[1] 79 79</code></pre>
+<pre class="r"><code># in-degree
+in_degree &lt;- rep(0,dim(A_pol)[1])
+for (i in 1:dim(A_pol)[1]){
+  in_degree[i] &lt;- sum(A_pol[i,])
+}
+in_degree</code></pre>
+<pre><code> [1] 44 33 36 33 33 28 35 63 16 45 22 57 57 35 62 51 62 73 58 58 58 45 75 45  8
+[26] 51 19 37 33 45 76 45 61 78 38 22  8 45 45 65 45 70 76 60 74 53 22 54 66 51
+[51] 49 57 46 45 62 22 76 76 45 51 45 61 26 34 30 30 19 68 24 68 43 71 26 38 17
+[76] 57 53 16 48</code></pre>
+<pre class="r"><code># out-degree
+out_degree &lt;- rep(0,dim(A_pol)[2])
+for (j in 1:dim(A_pol)[2]){
+  out_degree[j] &lt;- sum(A_pol[,j])
+}
+out_degree</code></pre>
+<pre><code> [1] 44 33 36 33 33 28 35 63 16 45 22 57 57 35 62 51 62 73 58 58 58 45 75 45  8
+[26] 51 19 37 33 45 76 45 61 78 38 22  8 45 45 65 45 70 76 60 74 53 22 54 66 51
+[51] 49 57 46 45 62 22 76 76 45 51 45 61 26 34 30 30 19 68 24 68 43 71 26 38 17
+[76] 57 53 16 48</code></pre>
+<pre class="r"><code># Now we use a dataframe to make the plot.
+df_A &lt;- data.frame(deg=c(out_degree,in_degree), direction=c(rep(&#39;out&#39;,length(out_degree)),rep(&#39;in&#39;,length(in_degree))))
+ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)</code></pre>
+<p><img src="figure/Networks_HW2.Rmd/unnamed-chunk-18-4.png" width="1056" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
