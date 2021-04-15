@@ -503,12 +503,14 @@ nl_metrics
 
 ## Problem 16. Try to calculate and access metrics at the species level. Use help to understand which metrics bipartite has implemented.
 ```{r}
+sl_metrics <- specieslevel(olesen2002flores)
 sl_metrics
 # help(specieslevel)
 ```
 
 ## Problem 17. Try to calculate and access metrics at the group level. Use help to understand which metrics bipartite has implemented.
 ```{r}
+gl_metrics <- grouplevel(olesen2002flores)
 gl_metrics
 # help(grouplevel)
 ```
