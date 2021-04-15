@@ -286,18 +286,111 @@ motifs(otago_web)/count_motifs(otago_web) # Proportion
 ```{r}
 df_motif <- data.frame(relative_abun=motifs(otago_web)/count_motifs(otago_web))
 df_motif <- tibble::rownames_to_column(df_motif, var='motif_n')
-ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
-  geom_bar(stat="identity") + theme_minimal()
+m1 <- ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) + geom_bar(stat="identity") + theme_minimal() + ggtitle("Otago Motif relative abundance \n")
+m1
 ```
 7 is the most abundant. The center node is consumed by 2 predators. This is exploitative competition. (kind of indirect effect, interaction chain)
 
 ## Problem 9. Calculate the proportion of sub-graphs for the Bahia Falsa food web. Are their relative frequencies in this food web different from those for the Otago food web?
 
+```{r}
+# Bahia Falsa food web
+Bahia_Falsa_metadata <- openxlsx::read.xlsx('data/Dunne2013PBioSupData.xlsx',sheet=3)
+
+# We'll use free living species only (the first two columns)
+edge_bahia <- Bahia_Falsa_metadata[,c(1,2)] 
+colnames(edge_bahia) <- c("Consumer","Resource")
+dim(edge_bahia)
+edge_bahia2 <- edge_bahia %>% filter(!is.na(Consumer)) %>% filter(!is.na(Resource))
+head(edge_bahia2)
+tail(edge_bahia2)
+dim(edge_bahia2)
+
+bahia_web <- graph.data.frame(edge_bahia2, vertices = NULL, directed = T)
+
+motifs(bahia_web) #absolute numbers
+motifs(bahia_web)/count_motifs(bahia_web) # Proportion
+
+df_motif_b <- data.frame(relative_abun=motifs(bahia_web)/count_motifs(bahia_web))
+df_motif_b <- tibble::rownames_to_column(df_motif_b, var='motif_n')
+m2 <- ggplot(data=df_motif_b, aes(x=motif_n, y=relative_abun)) + geom_bar(stat="identity") + theme_minimal() + ggtitle("Bahia Falsa Motif relative abundance \n")
+m2
 
 
+```
+Bahia Falsa distribution of motif's relative abundance are similar to Otago's food web.
 
 
 ## 3. Network projections
+As described below, we can create a one-mode projection from the two-mode bipartite graph with a simple step from linear algebra, namely matrix multiplication. There are two possible one-mode projections, one onto the groups and the other onto the nodes, depending on the order of the matrix product.\
+We can project the incidence matrix by multiplying it with its transpose. 
+
+```{r}
+# Original
+networklevel(memmott1999, index='connectance')
+
+# Project plants
+# Recall that the logical step '> 0' converts the original matrix into a binary one. Then 'tcrossprod' performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+plants_projected <- tcrossprod(memmott1999>0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(plants_projected) <- 0
+
+g <- graph.adjacency(plants_projected, mode = 'undirected', weighted = T)
+par(mar=c(0,0,0,0))
+plot(g)
+plot(g, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle)
+
+qplot(E(g)$weight)
+```
+
+## Problem 10. Try to project the pollinators and plot the degree distribution of this projection (use your code for question 1).
+
+```{r}
+# Project pollinators
+# Recall that the logical step '> 0' converts the original matrix into a binary one. Then 'tcrossprod' performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+pollinators_projected <- tcrossprod(t(memmott1999)>0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(pollinators_projected) <- 0
+
+g2 <- graph.adjacency(pollinators_projected, mode = 'undirected', weighted = T)
+par(mar=c(0,0,0,0))
+plot(g2)
+plot(g2, vertex.size=6, vertex.label=NA, edge.color='black', edge.width=log(E(g)$weight), layout=layout.circle)
+
+qplot(E(g2)$weight)
+
+# Degree distribution
+
+# make adjacency matrix
+A_pol <- as_adjacency_matrix(g2)
+class(A_pol)
+dim(A_pol)
+
+# in-degree
+in_degree <- rep(0,dim(A_pol)[1])
+for (i in 1:dim(A_pol)[1]){
+  in_degree[i] <- sum(A_pol[i,])
+}
+in_degree
+
+# out-degree
+out_degree <- rep(0,dim(A_pol)[2])
+for (j in 1:dim(A_pol)[2]){
+  out_degree[j] <- sum(A_pol[,j])
+}
+out_degree
+
+# Now we use a dataframe to make the plot.
+df_A <- data.frame(deg=c(out_degree,in_degree), direction=c(rep('out',length(out_degree)),rep('in',length(in_degree))))
+ggplot(df_A, aes(deg, fill=direction)) + geom_histogram(alpha=0.3, binwidth=1)
+
+
+
+```
+
+
+
+
 
 
 
