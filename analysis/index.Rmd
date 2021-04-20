@@ -12,4 +12,5 @@ Welcome to my research website.
 
 * [Networks_homework1](Networks_HW1.html)
 * [Networks_homework2](Networks_HW2.html)
+* [Networks_homework3](Networks_HW3.html)
 
