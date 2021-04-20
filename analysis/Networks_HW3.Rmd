@@ -1,0 +1,93 @@
+---
+title: "Networks_HW3"
+author: "KiseokUchicago"
+date: "2021-04-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Homework3 (Community detection, modularity)
+## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
+Student: **Kiseok Lee** 
+
+```{r}
+# libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+```
+
+## 1. Community detection (a.k.a “modularity”)
+
+## 1.1 Unipartite networks
+community structure detection algorithms are different.
+
+### 1.1.1. Undirected, unweighted
+Let’s try to detect communities in the Chesapeake Food Web from the last lab. This is a quantitative food web but for simplicity at this first stage we will work with an undirected, unweighted graph.
+
+```{r}
+# Load the web
+chesapeake_nodes <- read.csv('data/Chesapeake_bay_nodes.csv', header=F)
+names(chesapeake_nodes) <- c('nodeId','species_name')
+chesapeake_links <- read.csv('data/Chesapeake_bay_links.csv', header=F)
+names(chesapeake_links) <- c('from','to','weight')
+ches_web <- graph.data.frame(chesapeake_links, vertices = chesapeake_nodes, directed = T)
+
+# Detect communities, note the as.undirected command
+ches_web_unweighted <- ches_web
+ches_web_unweighted <- as.undirected(ches_web_unweighted)
+E(ches_web_unweighted)$weight <- 1
+
+# implementing Louvain method
+cl <- cluster_louvain(ches_web_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities
+
+# module membership & visualization
+module_membership <- membership(cl)
+cols <- data.frame(mem=unique(module_membership), col= brewer.pal(length(unique(module_membership)), 'Set1'))
+V(ches_web_unweighted)$module_membership <- module_membership
+V(ches_web_unweighted)$color <- cols$col[match(V(ches_web_unweighted)$module_membership, cols$mem)]
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color, vertex.size=10, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5)
+```
+
+## Problem 1. Can you identify the species in each module? Does the assignment make sense?
+```{r}
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color, vertex.size=10, edge.arrow.width=0.3, edge.arrow.curve=0.5)
+
+v_red <- names(module_membership[module_membership==1])
+v_blue <- names(module_membership[module_membership==2])
+v_green <- names(module_membership[module_membership==3])
+
+# red nodes
+chesapeake_nodes %>% filter(nodeId %in% v_red)
+# blue nodes
+chesapeake_nodes %>% filter(nodeId %in% v_blue)
+# green nodes
+chesapeake_nodes %>% filter(nodeId %in% v_green)
+```
+
+Red nodes and Green nodes makes sense. Red node comprises of microorganism or aquatic animals that dwell in the waters. Green node seems to be bigger animals (top predators like fish). Blue node makes less sense with my prior knowledge. But module would consist of a food web that could include both predator and prey that are closely associated. Therefore, Green node could be artificial.
+
+## Problem 2. Try a different community detection method, like cluster_louvain.
+
+
+## Problem 3. Are there any differences in module assignments?
+
+
+### 1.1.2. Undirected, weighted
+
+
+
+
+
+
+
