@@ -77,17 +77,143 @@ chesapeake_nodes %>% filter(nodeId %in% v_green)
 
 Red nodes and Green nodes makes sense. Red node comprises of microorganism or aquatic animals that dwell in the waters. Green node seems to be bigger animals (top predators like fish). Blue node makes less sense with my prior knowledge. But module would consist of a food web that could include both predator and prey that are closely associated. Therefore, Green node could be artificial.
 
-## Problem 2. Try a different community detection method, like cluster_louvain.
+## Problem 2 & 3. Try a different community detection method, like cluster_edge_betweenness. Are there any differences in module assignments?
+```{r}
+# implementing cluster_edge_betweenness method
+cl_eb <- cluster_edge_betweenness(ches_web_unweighted) # Can also use the weights = NULL argument
+class(cl_eb) # the result is of class communities
 
-
-## Problem 3. Are there any differences in module assignments?
-
+# module membership & visualization
+module_member <- membership(cl_eb)
+cols <- data.frame(mem=unique(module_member), col= brewer.pal(length(unique(module_member)), 'Set1'))
+V(ches_web_unweighted)$module_member <- module_member
+V(ches_web_unweighted)$color2 <- cols$col[match(V(ches_web_unweighted)$module_member, cols$mem)]
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color2, vertex.size=10, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5)
+```
+Yes, they are very different from the previouse Louvain's method. There are up to 7 modules compared to 3 modules before. Also, module 1 is dominant in number of nodes includes and other modules are relatively small, some modules even containing only 1 nodes.
 
 ### 1.1.2. Undirected, weighted
 
+```{r}
+cl_wt <- cluster_louvain(as.undirected(ches_web), weights = E(ches_web)$weight) #Notice the `weights` argument.
+class(cl_wt) # the result is of class communities
+
+module_membership_wt <- membership(cl_wt)
+cols <- data.frame(mem=unique(module_membership_wt), col= brewer.pal(length(unique(module_membership_wt)), 'Set1'))
+V(ches_web)$module_membership_wt <- module_membership_wt
+V(ches_web)$color_wt <- cols$col[match(V(ches_web)$module_membership_wt, cols$mem)]
+plot(as.undirected(ches_web), vertex.color=V(ches_web)$color_wt, vertex.size=5, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5)
+
+```
+
+## Problem 4. Are the module assignments the same as in the unweighted network?
+```{r}
+par(mfrow=c(1,2))
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color, vertex.size=10, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5, main="Unweighted")
+
+plot(as.undirected(ches_web), vertex.color=V(ches_web)$color_wt, vertex.size=5, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5, main="Weighted")
+```
+No, they are not the same. The number of modules is also different.
+
+Directed networks
+We will not touch upon directed networks in the context of modularity maximization, although there is a development for it by Guimera et al (2007). The description of the sofware and the associated papers is here. The problem is that it is not available in an easy package, so you will have to hack your way through this. In fact, for directed networks we recommend using Infomap.
+
+## 3. Bipartite networks
+The difference between bipartite and unipartite networks lies in the “null” term of the modularity function, which should account for the fact that edges cannot be expected between nodes of the same set. This is well explained in (Guimera et al. 2007; Barber 2007) and reviewed in the context of ecology by Thebault (2013). Each of these have their own software associated with their papers. \
+
+But for the sake of this exercise we are looking for an implementation to optimize modularity maximization which will be readily available, and also will allow us to analyze batches of networks (for testing patterns against shuffled networks). The bipartite package has a recent implementation of Stephen Beckett’s DIRTLPAwb+ algorithm (Beckett 2016). This algorithm maximizes a modularity function for weighted bipartite networks (Dorman & Strauss 2014), which is a recent extention of Barber’s (2007) method and is reduced to it if the input is a binary network. All this can be a bit confusing so it is strongly suggested to read these papers if you are about to apply these methods for community detection in your research.
+
+```{r}
+mod <- computeModules(memmott1999)
+slotNames(mod) # see ?moduleWeb for details
+
+mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).
+# 0.3042993
+
+module_list <- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)
+
+module_list <- module_list[[2]] # let's look at the modules. The first element in the list is the whole network, so start with 2
+for (i in 1:2){ # Show the two first modules.
+  message(paste('Module:',i))
+  print(module_list[[i]])
+}
+
+```
+This list data structure is horrible for analysis. This code transforms it to a data frame:
+```{r}
+# Transform the lists to data frames
+m <- length(module_list) # Number of modules
+mod_plants <- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
+names(mod_plants) <- 1:m
+mod_pollinators <- unlist(module_list, recursive = F)[seq(2,2*m,2)] # Assignments of pollinators
+names(mod_pollinators) <- 1:m
+tmp_plants <- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type='Plants')
+tmp_poillnators <- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type='Pollinators')
+# Make one data frame
+(module_assignments <- rbind(tmp_plants,tmp_poillnators))
+
+```
+
+## Problem 5. Try to calculate modularity for the binary version of this web. How do the results differ?
+
+```{r}
+class(memmott1999)
+dim(memmott1999)
+
+# conver to binary matrix
+sum(memmott1999!=0)
+mem_binary <- ifelse(memmott1999>0, 1, 0)
+sum(mem_binary!=0) # conversion worked well
+
+mod <- computeModules(mem_binary)
+slotNames(mod) # see ?moduleWeb for details
+
+mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).
+# 0.3284303
+
+module_list <- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)
+
+module_list <- module_list[[2]] # let's look at the modules. The first element in the list is the whole network, so start with 2
+for (i in 1:2){ # Show the two first modules.
+  message(paste('Module:',i))
+  print(module_list[[i]])
+}
+
+```
+This list data structure is horrible for analysis. This code transforms it to a data frame:
+```{r}
+# Transform the lists to data frames
+m <- length(module_list) # Number of modules
+mod_plants <- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
+names(mod_plants) <- 1:m
+mod_pollinators <- unlist(module_list, recursive = F)[seq(2,2*m,2)] # Assignments of pollinators
+names(mod_pollinators) <- 1:m
+tmp_plants <- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type='Plants')
+tmp_poillnators <- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type='Pollinators')
+# Make one data frame
+(module_assignments <- rbind(tmp_plants,tmp_poillnators))
+```
+
+(1) The modularity Q increased about 10% with binary matrix: from 0.3042993 to 0.3284303
 
 
 
 
+
+4. References
+Barber M. Modularity and community detection in bipartite networks. Physical Review E. 2007;76: 1–9.\
+Beckett SJ. Improved community detection in weighted bipartite networks. R Soc Open Sci. 2016;3: 140536.\
+Dormann CF, Strauss R. A method for detecting modules in quantitative bipartite networks. Methods Ecol Evol. 2014;5: 90–98.\
+Guimerà R, Sales-Pardo M, Amaral LAN. Module identification in bipartite and directed networks. Phys Rev E Stat Nonlin Soft Matter Phys. 2007;76: 036102.\
+Thébault E. Identifying compartments in presence-absence matrices and bipartite networks: insights into modularity measures. J Biogeogr. 2013;40: 759–768.)\
+
+To go deeper into the topic of Community Detection in networks, here are some useful references:\
+
+Fortunato, Santo, and Darko Hric. “Community detection in networks: A user guide.” Physics reports 659 (2016): 1-44.\
+Fortunato, Santo. “Community detection in graphs.” Physics reports 486, no. 3-5 (2010): 75-174.\
 
 
