@@ -382,7 +382,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-04-19
+<strong>Last updated:</strong> 2021-04-24
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree6468cf1059413f4d35405be1516a9fd9e1a829f1targetblank6468cf1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/6468cf1059413f4d35405be1516a9fd9e1a829f1" target="_blank">6468cf1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree436e3febde0ea09501b77a4442f8b67a0f13ffadtargetblank436e3fea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/436e3febde0ea09501b77a4442f8b67a0f13ffad" target="_blank">436e3fe</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree6468cf1059413f4d35405be1516a9fd9e1a829f1targetblank6468cf1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree436e3febde0ea09501b77a4442f8b67a0f13ffadtargetblank436e3fea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/6468cf1059413f4d35405be1516a9fd9e1a829f1" target="_blank">6468cf1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/436e3febde0ea09501b77a4442f8b67a0f13ffad" target="_blank">436e3fe</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/436e3febde0ea09501b77a4442f8b67a0f13ffad/analysis/Networks_HW3.Rmd" target="_blank">436e3fe</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-24
+</td>
+<td>
+HW3
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/fd62530129cbe1f90a2fcbc7b1ef277f3321f627/docs/Networks_HW3.html" target="_blank">fd62530</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -669,13 +703,374 @@ chesapeake_nodes %&gt;% filter(nodeId %in% v_green)</code></pre>
 9     38                  Output </code></pre>
 <p>Red nodes and Green nodes makes sense. Red node comprises of microorganism or aquatic animals that dwell in the waters. Green node seems to be bigger animals (top predators like fish). Blue node makes less sense with my prior knowledge. But module would consist of a food web that could include both predator and prey that are closely associated. Therefore, Green node could be artificial.</p>
 </div>
-<div id="problem-2.-try-a-different-community-detection-method-like-cluster_louvain." class="section level2">
-<h2>Problem 2. Try a different community detection method, like cluster_louvain.</h2>
-</div>
-<div id="problem-3.-are-there-any-differences-in-module-assignments" class="section level2">
-<h2>Problem 3. Are there any differences in module assignments?</h2>
+<div id="problem-2-3.-try-a-different-community-detection-method-like-cluster_edge_betweenness.-are-there-any-differences-in-module-assignments" class="section level2">
+<h2>Problem 2 &amp; 3. Try a different community detection method, like cluster_edge_betweenness. Are there any differences in module assignments?</h2>
+<pre class="r"><code># implementing cluster_edge_betweenness method
+cl_eb &lt;- cluster_edge_betweenness(ches_web_unweighted) # Can also use the weights = NULL argument
+class(cl_eb) # the result is of class communities</code></pre>
+<pre><code>[1] &quot;communities&quot;</code></pre>
+<pre class="r"><code># module membership &amp; visualization
+module_member &lt;- membership(cl_eb)
+cols &lt;- data.frame(mem=unique(module_member), col= brewer.pal(length(unique(module_member)), &#39;Set1&#39;))
+V(ches_web_unweighted)$module_member &lt;- module_member
+V(ches_web_unweighted)$color2 &lt;- cols$col[match(V(ches_web_unweighted)$module_member, cols$mem)]
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color2, vertex.size=10, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /> Yes, they are very different from the previouse Louvain’s method. There are up to 7 modules compared to 3 modules before. Also, module 1 is dominant in number of nodes includes and other modules are relatively small, some modules even containing only 1 nodes.</p>
 <div id="undirected-weighted" class="section level3">
 <h3>1.1.2. Undirected, weighted</h3>
+<pre class="r"><code>cl_wt &lt;- cluster_louvain(as.undirected(ches_web), weights = E(ches_web)$weight) #Notice the `weights` argument.
+class(cl_wt) # the result is of class communities</code></pre>
+<pre><code>[1] &quot;communities&quot;</code></pre>
+<pre class="r"><code>module_membership_wt &lt;- membership(cl_wt)
+cols &lt;- data.frame(mem=unique(module_membership_wt), col= brewer.pal(length(unique(module_membership_wt)), &#39;Set1&#39;))
+V(ches_web)$module_membership_wt &lt;- module_membership_wt
+V(ches_web)$color_wt &lt;- cols$col[match(V(ches_web)$module_membership_wt, cols$mem)]
+plot(as.undirected(ches_web), vertex.color=V(ches_web)$color_wt, vertex.size=5, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="problem-4.-are-the-module-assignments-the-same-as-in-the-unweighted-network" class="section level2">
+<h2>Problem 4. Are the module assignments the same as in the unweighted network?</h2>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(ches_web_unweighted, vertex.color=V(ches_web_unweighted)$color, vertex.size=10, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5, main=&quot;Unweighted&quot;)
+
+plot(as.undirected(ches_web), vertex.color=V(ches_web)$color_wt, vertex.size=5, vertex.label=NA, edge.arrow.width=0.3, edge.arrow.curve=0.5, main=&quot;Weighted&quot;)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /> No, they are not the same. The number of modules is also different.</p>
+<p>Directed networks We will not touch upon directed networks in the context of modularity maximization, although there is a development for it by Guimera et al (2007). The description of the sofware and the associated papers is here. The problem is that it is not available in an easy package, so you will have to hack your way through this. In fact, for directed networks we recommend using Infomap.</p>
+</div>
+<div id="bipartite-networks" class="section level2">
+<h2>3. Bipartite networks</h2>
+<p>The difference between bipartite and unipartite networks lies in the “null” term of the modularity function, which should account for the fact that edges cannot be expected between nodes of the same set. This is well explained in (Guimera et al. 2007; Barber 2007) and reviewed in the context of ecology by Thebault (2013). Each of these have their own software associated with their papers.<br />
+</p>
+<p>But for the sake of this exercise we are looking for an implementation to optimize modularity maximization which will be readily available, and also will allow us to analyze batches of networks (for testing patterns against shuffled networks). The bipartite package has a recent implementation of Stephen Beckett’s DIRTLPAwb+ algorithm (Beckett 2016). This algorithm maximizes a modularity function for weighted bipartite networks (Dorman &amp; Strauss 2014), which is a recent extention of Barber’s (2007) method and is reduced to it if the input is a binary network. All this can be a bit confusing so it is strongly suggested to read these papers if you are about to apply these methods for community detection in your research.</p>
+<pre class="r"><code>mod &lt;- computeModules(memmott1999)
+slotNames(mod) # see ?moduleWeb for details</code></pre>
+<pre><code>[1] &quot;originalWeb&quot; &quot;moduleWeb&quot;   &quot;orderA&quot;      &quot;orderB&quot;      &quot;modules&quot;    
+[6] &quot;likelihood&quot; </code></pre>
+<pre class="r"><code>mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
+<pre><code>[1] 0.3039558</code></pre>
+<pre class="r"><code># 0.3042993
+
+module_list &lt;- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>module_list &lt;- module_list[[2]] # let&#39;s look at the modules. The first element in the list is the whole network, so start with 2
+for (i in 1:2){ # Show the two first modules.
+  message(paste(&#39;Module:&#39;,i))
+  print(module_list[[i]])
+}</code></pre>
+<pre><code>[[1]]
+[1] &quot;Euphrasia.officinalis&quot;
+
+[[2]]
+[1] &quot;Platycheirus.albimanus&quot;
+
+[[1]]
+[1] &quot;Lotus.corniculatus&quot;  &quot;Centaurea.nigra&quot;     &quot;Knautia.arvensis&quot;   
+[4] &quot;Lathyrus.pratensis&quot;  &quot;Trifolium.pratense&quot;  &quot;Angelica.sylvestris&quot;
+
+[[2]]
+ [1] &quot;Coleoptera.spec1&quot;      &quot;Curculionidae.spec1&quot;   &quot;Conipidae.spec1&quot;      
+ [4] &quot;Diptera.spec14&quot;        &quot;Diptera.spec16&quot;        &quot;Diptera.spec25&quot;       
+ [7] &quot;Eristalis.tenax&quot;       &quot;Rhingia.campestris&quot;    &quot;Bombus.lapidarius&quot;    
+[10] &quot;Bombus.muscorum&quot;       &quot;Bombus.pascuorum&quot;      &quot;Bombus.terrestris&quot;    
+[13] &quot;Psithyrus.spec1&quot;       &quot;Apis.mellifera&quot;        &quot;Polyommatus.icarus&quot;   
+[16] &quot;Maniola.jurtina&quot;       &quot;Thymelicus.sylvestris&quot;</code></pre>
+<p>This list data structure is horrible for analysis. This code transforms it to a data frame:</p>
+<pre class="r"><code># Transform the lists to data frames
+m &lt;- length(module_list) # Number of modules
+mod_plants &lt;- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
+names(mod_plants) &lt;- 1:m
+mod_pollinators &lt;- unlist(module_list, recursive = F)[seq(2,2*m,2)] # Assignments of pollinators
+names(mod_pollinators) &lt;- 1:m
+tmp_plants &lt;- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type=&#39;Plants&#39;)
+tmp_poillnators &lt;- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type=&#39;Pollinators&#39;)
+# Make one data frame
+(module_assignments &lt;- rbind(tmp_plants,tmp_poillnators))</code></pre>
+<pre><code>     module                  species        type
+1         1    Euphrasia.officinalis      Plants
+21        2       Lotus.corniculatus      Plants
+22        2          Centaurea.nigra      Plants
+23        2         Knautia.arvensis      Plants
+24        2       Lathyrus.pratensis      Plants
+25        2       Trifolium.pratense      Plants
+26        2      Angelica.sylvestris      Plants
+31        3    Agrimonium.eupatorium      Plants
+32        3           Plantago.major      Plants
+41        4     Leontodon.autumnalis      Plants
+42        4        Medicago.lupulina      Plants
+43        4     Hypochaeris.radicata      Plants
+44        4        Linum.catharticum      Plants
+45        4     Convolvulus.arvensis      Plants
+46        4      Leontodon.saxatilis      Plants
+47        4         Senecio.jacobaea      Plants
+48        4       Leontodon.hispidus      Plants
+49        4        Crepis.capillaris      Plants
+51        5         Rubus.fruticosus      Plants
+52        5            Daucus.carota      Plants
+61        6         Aethusa.cynapium      Plants
+62        6    Eupatorium.cannabinum      Plants
+63        6         Clematis.vitalba      Plants
+64        6  Chamerion.angustifolium      Plants
+65        6         Torilis.japonica      Plants
+11        1   Platycheirus.albimanus Pollinators
+218       2         Coleoptera.spec1 Pollinators
+221       2      Curculionidae.spec1 Pollinators
+231       2          Conipidae.spec1 Pollinators
+241       2           Diptera.spec14 Pollinators
+251       2           Diptera.spec16 Pollinators
+261       2           Diptera.spec25 Pollinators
+27        2          Eristalis.tenax Pollinators
+28        2       Rhingia.campestris Pollinators
+29        2        Bombus.lapidarius Pollinators
+210       2          Bombus.muscorum Pollinators
+211       2         Bombus.pascuorum Pollinators
+212       2        Bombus.terrestris Pollinators
+213       2          Psithyrus.spec1 Pollinators
+214       2           Apis.mellifera Pollinators
+215       2       Polyommatus.icarus Pollinators
+216       2          Maniola.jurtina Pollinators
+217       2    Thymelicus.sylvestris Pollinators
+311       3     Melanostoma.mellinum Pollinators
+321       3      Melanostoma.scalare Pollinators
+33        3   Platycheirus.clypeatus Pollinators
+419       4         Coleoptera.spec2 Pollinators
+421       4         Coleoptera.spec3 Pollinators
+431       4         Coleoptera.spec4 Pollinators
+441       4         Coleoptera.spec5 Pollinators
+451       4         Coleoptera.spec6 Pollinators
+461       4         Coleoptera.spec7 Pollinators
+471       4           Diptera.spec10 Pollinators
+481       4           Diptera.spec17 Pollinators
+491       4           Diptera.spec18 Pollinators
+410       4           Diptera.spec22 Pollinators
+411       4           Diptera.spec23 Pollinators
+412       4    Episyrphus.arbustorum Pollinators
+413       4      Helophilus.pendulus Pollinators
+414       4    Sphaerophoria.scripta Pollinators
+415       4            solitary.bees Pollinators
+416       4         Pieris.brassicae Pollinators
+417       4      Incurvariidae.spec1 Pollinators
+418       4           Aglais.urticae Pollinators
+5110      5            Diptera.spec1 Pollinators
+528       5            Diptera.spec3 Pollinators
+53        5            Diptera.spec4 Pollinators
+54        5            Diptera.spec5 Pollinators
+55        5            Diptera.spec6 Pollinators
+56        5   Scatophaga.stercoraria Pollinators
+57        5            Diptera.spec7 Pollinators
+58        5            Diptera.spec8 Pollinators
+59        5           Diptera.spec11 Pollinators
+510       5           Diptera.spec12 Pollinators
+511       5           Diptera.spec13 Pollinators
+512       5           Diptera.spec15 Pollinators
+513       5           Diptera.spec19 Pollinators
+514       5           Diptera.spec20 Pollinators
+515       5           Diptera.spec21 Pollinators
+516       5        Tephretidae.spec1 Pollinators
+517       5           Diptera.spec26 Pollinators
+518       5           Diptera.spec27 Pollinators
+519       5    Chrysotoxum.bicinctum Pollinators
+520       5     Metasyrphus.corollae Pollinators
+521       5    Platycheirus.scutatus Pollinators
+522       5          Syritta.pipiens Pollinators
+523       5          Syrphus.ribesii Pollinators
+524       5      Syrphus.vitripennis Pollinators
+525       5 Xanthogramma.pedissequum Pollinators
+526       5               Parasitica Pollinators
+527       5           Symphyta.spec1 Pollinators
+614       6        Cantharidae.spec1 Pollinators
+621       6            Diptera.spec2 Pollinators
+631       6            Diptera.spec9 Pollinators
+641       6   Eriothrix.rufomaculata Pollinators
+651       6           Diptera.spec24 Pollinators
+66        6     Episyrphus.balteatus Pollinators
+67        6       Eristalis.pertinax Pollinators
+68        6   Helophilus.trivittatus Pollinators
+69        6    Meliscaeva.auricollis Pollinators
+610       6          Scaeva.pyrastri Pollinators
+611       6         Formicidae.spec1 Pollinators
+612       6           Symphyta.spec2 Pollinators
+613       6          Pyonia.tithonus Pollinators</code></pre>
+</div>
+<div id="problem-5.-try-to-calculate-modularity-for-the-binary-version-of-this-web.-how-do-the-results-differ" class="section level2">
+<h2>Problem 5. Try to calculate modularity for the binary version of this web. How do the results differ?</h2>
+<pre class="r"><code>class(memmott1999)</code></pre>
+<pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
+<pre class="r"><code>dim(memmott1999)</code></pre>
+<pre><code>[1] 25 79</code></pre>
+<pre class="r"><code># conver to binary matrix
+sum(memmott1999!=0)</code></pre>
+<pre><code>[1] 299</code></pre>
+<pre class="r"><code>mem_binary &lt;- ifelse(memmott1999&gt;0, 1, 0)
+sum(mem_binary!=0) # conversion worked well</code></pre>
+<pre><code>[1] 299</code></pre>
+<pre class="r"><code>mod &lt;- computeModules(mem_binary)
+slotNames(mod) # see ?moduleWeb for details</code></pre>
+<pre><code>[1] &quot;originalWeb&quot; &quot;moduleWeb&quot;   &quot;orderA&quot;      &quot;orderB&quot;      &quot;modules&quot;    
+[6] &quot;likelihood&quot; </code></pre>
+<pre class="r"><code>mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
+<pre><code>[1] 0.3240903</code></pre>
+<pre class="r"><code># 0.3284303
+
+module_list &lt;- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>module_list &lt;- module_list[[2]] # let&#39;s look at the modules. The first element in the list is the whole network, so start with 2
+for (i in 1:2){ # Show the two first modules.
+  message(paste(&#39;Module:&#39;,i))
+  print(module_list[[i]])
+}</code></pre>
+<pre><code>[[1]]
+[1] &quot;Lotus.corniculatus&quot; &quot;Centaurea.nigra&quot;    &quot;Knautia.arvensis&quot;  
+[4] &quot;Trifolium.pratense&quot;
+
+[[2]]
+ [1] &quot;Coleoptera.spec1&quot;      &quot;Curculionidae.spec1&quot;   &quot;Diptera.spec7&quot;        
+ [4] &quot;Diptera.spec16&quot;        &quot;Eristalis.tenax&quot;       &quot;Bombus.lapidarius&quot;    
+ [7] &quot;Bombus.muscorum&quot;       &quot;Bombus.pascuorum&quot;      &quot;Bombus.terrestris&quot;    
+[10] &quot;Psithyrus.spec1&quot;       &quot;Apis.mellifera&quot;        &quot;Polyommatus.icarus&quot;   
+[13] &quot;Pyonia.tithonus&quot;       &quot;Thymelicus.sylvestris&quot;
+
+[[1]]
+[1] &quot;Plantago.major&quot;
+
+[[2]]
+[1] &quot;Platycheirus.clypeatus&quot;</code></pre>
+<p>This list data structure is horrible for analysis. This code transforms it to a data frame:</p>
+<pre class="r"><code># Transform the lists to data frames
+m &lt;- length(module_list) # Number of modules
+mod_plants &lt;- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
+names(mod_plants) &lt;- 1:m
+mod_pollinators &lt;- unlist(module_list, recursive = F)[seq(2,2*m,2)] # Assignments of pollinators
+names(mod_pollinators) &lt;- 1:m
+tmp_plants &lt;- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type=&#39;Plants&#39;)
+tmp_poillnators &lt;- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type=&#39;Pollinators&#39;)
+# Make one data frame
+(module_assignments &lt;- rbind(tmp_plants,tmp_poillnators))</code></pre>
+<pre><code>    module                  species        type
+11       1       Lotus.corniculatus      Plants
+12       1          Centaurea.nigra      Plants
+13       1         Knautia.arvensis      Plants
+14       1       Trifolium.pratense      Plants
+2        2           Plantago.major      Plants
+31       3    Agrimonium.eupatorium      Plants
+32       3        Medicago.lupulina      Plants
+33       3     Hypochaeris.radicata      Plants
+34       3        Linum.catharticum      Plants
+35       3     Convolvulus.arvensis      Plants
+36       3      Leontodon.saxatilis      Plants
+37       3         Clematis.vitalba      Plants
+38       3         Senecio.jacobaea      Plants
+41       4     Leontodon.autumnalis      Plants
+42       4         Rubus.fruticosus      Plants
+43       4    Euphrasia.officinalis      Plants
+44       4       Leontodon.hispidus      Plants
+45       4      Angelica.sylvestris      Plants
+51       5    Eupatorium.cannabinum      Plants
+52       5         Torilis.japonica      Plants
+6        6            Daucus.carota      Plants
+71       7       Lathyrus.pratensis      Plants
+72       7  Chamerion.angustifolium      Plants
+73       7        Crepis.capillaris      Plants
+8        8         Aethusa.cynapium      Plants
+115      1         Coleoptera.spec1 Pollinators
+121      1      Curculionidae.spec1 Pollinators
+131      1            Diptera.spec7 Pollinators
+141      1           Diptera.spec16 Pollinators
+15       1          Eristalis.tenax Pollinators
+16       1        Bombus.lapidarius Pollinators
+17       1          Bombus.muscorum Pollinators
+18       1         Bombus.pascuorum Pollinators
+19       1        Bombus.terrestris Pollinators
+110      1          Psithyrus.spec1 Pollinators
+111      1           Apis.mellifera Pollinators
+112      1       Polyommatus.icarus Pollinators
+113      1          Pyonia.tithonus Pollinators
+114      1    Thymelicus.sylvestris Pollinators
+21       2   Platycheirus.clypeatus Pollinators
+312      3         Coleoptera.spec3 Pollinators
+321      3         Coleoptera.spec6 Pollinators
+331      3   Eriothrix.rufomaculata Pollinators
+341      3           Diptera.spec22 Pollinators
+351      3           Diptera.spec23 Pollinators
+361      3     Episyrphus.balteatus Pollinators
+371      3     Melanostoma.mellinum Pollinators
+381      3     Metasyrphus.corollae Pollinators
+39       3    Sphaerophoria.scripta Pollinators
+310      3            solitary.bees Pollinators
+311      3         Pieris.brassicae Pollinators
+417      4         Coleoptera.spec2 Pollinators
+421      4         Coleoptera.spec4 Pollinators
+431      4         Coleoptera.spec5 Pollinators
+441      4         Coleoptera.spec7 Pollinators
+451      4           Diptera.spec10 Pollinators
+46       4           Diptera.spec12 Pollinators
+47       4           Diptera.spec14 Pollinators
+48       4           Diptera.spec17 Pollinators
+49       4           Diptera.spec18 Pollinators
+410      4           Diptera.spec25 Pollinators
+411      4           Diptera.spec27 Pollinators
+412      4    Episyrphus.arbustorum Pollinators
+413      4      Helophilus.pendulus Pollinators
+414      4   Platycheirus.albimanus Pollinators
+415      4          Syritta.pipiens Pollinators
+416      4               Parasitica Pollinators
+513      5        Cantharidae.spec1 Pollinators
+521      5            Diptera.spec2 Pollinators
+53       5            Diptera.spec4 Pollinators
+54       5          Conipidae.spec1 Pollinators
+55       5            Diptera.spec8 Pollinators
+56       5           Diptera.spec24 Pollinators
+57       5       Eristalis.pertinax Pollinators
+58       5   Helophilus.trivittatus Pollinators
+59       5          Scaeva.pyrastri Pollinators
+510      5         Formicidae.spec1 Pollinators
+511      5           Symphyta.spec2 Pollinators
+512      5           Aglais.urticae Pollinators
+61       6            Diptera.spec1 Pollinators
+62       6            Diptera.spec3 Pollinators
+63       6   Scatophaga.stercoraria Pollinators
+64       6            Diptera.spec9 Pollinators
+65       6           Diptera.spec11 Pollinators
+66       6           Diptera.spec13 Pollinators
+67       6           Diptera.spec15 Pollinators
+68       6           Diptera.spec20 Pollinators
+69       6        Tephretidae.spec1 Pollinators
+610      6           Diptera.spec26 Pollinators
+611      6    Chrysotoxum.bicinctum Pollinators
+612      6    Platycheirus.scutatus Pollinators
+613      6          Syrphus.ribesii Pollinators
+614      6      Syrphus.vitripennis Pollinators
+615      6 Xanthogramma.pedissequum Pollinators
+616      6      Incurvariidae.spec1 Pollinators
+617      6          Maniola.jurtina Pollinators
+711      7            Diptera.spec5 Pollinators
+721      7           Diptera.spec21 Pollinators
+731      7      Melanostoma.scalare Pollinators
+74       7       Rhingia.campestris Pollinators
+81       8            Diptera.spec6 Pollinators
+82       8           Diptera.spec19 Pollinators
+83       8    Meliscaeva.auricollis Pollinators
+84       8           Symphyta.spec1 Pollinators</code></pre>
+<ol style="list-style-type: decimal">
+<li>The modularity Q increased about 10% with binary matrix: from 0.3042993 to 0.3284303</li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li>References Barber M. Modularity and community detection in bipartite networks. Physical Review E. 2007;76: 1–9.<br />
+Beckett SJ. Improved community detection in weighted bipartite networks. R Soc Open Sci. 2016;3: 140536.<br />
+Dormann CF, Strauss R. A method for detecting modules in quantitative bipartite networks. Methods Ecol Evol. 2014;5: 90–98.<br />
+Guimerà R, Sales-Pardo M, Amaral LAN. Module identification in bipartite and directed networks. Phys Rev E Stat Nonlin Soft Matter Phys. 2007;76: 036102.<br />
+Thébault E. Identifying compartments in presence-absence matrices and bipartite networks: insights into modularity measures. J Biogeogr. 2013;40: 759–768.)<br />
+</li>
+</ol>
+<p>To go deeper into the topic of Community Detection in networks, here are some useful references:<br />
+</p>
+<p>Fortunato, Santo, and Darko Hric. “Community detection in networks: A user guide.” Physics reports 659 (2016): 1-44.<br />
+Fortunato, Santo. “Community detection in graphs.” Physics reports 486, no. 3-5 (2010): 75-174.<br />
+</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -723,7 +1118,6 @@ loaded via a namespace (and not attached):
 [53] maps_3.3.0        fields_11.6       parallel_4.0.3    yaml_2.2.1       
 [57] colorspace_2.0-0  cluster_2.1.0     dotCall64_1.0-1   knitr_1.31       
 [61] sass_0.3.1       </code></pre>
-</div>
 </div>
 </div>
 
