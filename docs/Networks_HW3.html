@@ -473,16 +473,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree436e3febde0ea09501b77a4442f8b67a0f13ffadtargetblank436e3fea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/436e3febde0ea09501b77a4442f8b67a0f13ffad" target="_blank">436e3fe</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treec02f513258c1e5e9042a3ba6d2c2e34f651a365etargetblankc02f513a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/c02f513258c1e5e9042a3ba6d2c2e34f651a365e" target="_blank">c02f513</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree436e3febde0ea09501b77a4442f8b67a0f13ffadtargetblank436e3fea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treec02f513258c1e5e9042a3ba6d2c2e34f651a365etargetblankc02f513a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/436e3febde0ea09501b77a4442f8b67a0f13ffad" target="_blank">436e3fe</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/c02f513258c1e5e9042a3ba6d2c2e34f651a365e" target="_blank">c02f513</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/c02f513258c1e5e9042a3ba6d2c2e34f651a365e/analysis/Networks_HW3.Rmd" target="_blank">c02f513</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-24
+</td>
+<td>
+HW3
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/2a4b5542c559bd7d83a4d4d5ecc2b22a418cd070/docs/Networks_HW3.html" target="_blank">2a4b554</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -906,17 +940,17 @@ sum(memmott1999!=0)</code></pre>
 <pre class="r"><code>mem_binary &lt;- ifelse(memmott1999&gt;0, 1, 0)
 sum(mem_binary!=0) # conversion worked well</code></pre>
 <pre><code>[1] 299</code></pre>
-<pre class="r"><code>mod &lt;- computeModules(mem_binary)
-slotNames(mod) # see ?moduleWeb for details</code></pre>
+<pre class="r"><code>mod_b &lt;- computeModules(mem_binary)
+slotNames(mod_b) # see ?moduleWeb for details</code></pre>
 <pre><code>[1] &quot;originalWeb&quot; &quot;moduleWeb&quot;   &quot;orderA&quot;      &quot;orderB&quot;      &quot;modules&quot;    
 [6] &quot;likelihood&quot; </code></pre>
-<pre class="r"><code>mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
+<pre class="r"><code>mod_b@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
 <pre><code>[1] 0.3240903</code></pre>
 <pre class="r"><code># 0.3284303
 
-module_list &lt;- listModuleInformation(mod) # The output is rather cumbersome...
+module_list &lt;- listModuleInformation(mod_b) # The output is rather cumbersome...
 par(mfrow=c(1,1))
-plotModuleWeb(mod)</code></pre>
+plotModuleWeb(mod_b)</code></pre>
 <p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>module_list &lt;- module_list[[2]] # let&#39;s look at the modules. The first element in the list is the whole network, so start with 2
 for (i in 1:2){ # Show the two first modules.
@@ -939,8 +973,9 @@ for (i in 1:2){ # Show the two first modules.
 
 [[2]]
 [1] &quot;Platycheirus.clypeatus&quot;</code></pre>
-<p>This list data structure is horrible for analysis. This code transforms it to a data frame:</p>
-<pre class="r"><code># Transform the lists to data frames
+<pre class="r"><code># This list data structure is horrible for analysis. This code transforms it to a data frame:
+
+# Transform the lists to data frames
 m &lt;- length(module_list) # Number of modules
 mod_plants &lt;- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
 names(mod_plants) &lt;- 1:m
@@ -949,7 +984,7 @@ names(mod_pollinators) &lt;- 1:m
 tmp_plants &lt;- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type=&#39;Plants&#39;)
 tmp_poillnators &lt;- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type=&#39;Pollinators&#39;)
 # Make one data frame
-(module_assignments &lt;- rbind(tmp_plants,tmp_poillnators))</code></pre>
+(module_assignments2 &lt;- rbind(tmp_plants,tmp_poillnators))</code></pre>
 <pre><code>    module                  species        type
 11       1       Lotus.corniculatus      Plants
 12       1          Centaurea.nigra      Plants
@@ -1055,17 +1090,190 @@ tmp_poillnators &lt;- data.frame(module = rep(names(mod_pollinators), sapply(mod
 82       8           Diptera.spec19 Pollinators
 83       8    Meliscaeva.auricollis Pollinators
 84       8           Symphyta.spec1 Pollinators</code></pre>
+<pre class="r"><code>par(mfrow=c(1,2))
+plotModuleWeb(mod)
+plotModuleWeb(mod_b)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow=c(1,1))
+
+# module_assignments
+# module_assignments2
+
+module_assignments %&gt;% filter(type==&quot;Plants&quot;)</code></pre>
+<pre><code>   module                 species   type
+1       1   Euphrasia.officinalis Plants
+21      2      Lotus.corniculatus Plants
+22      2         Centaurea.nigra Plants
+23      2        Knautia.arvensis Plants
+24      2      Lathyrus.pratensis Plants
+25      2      Trifolium.pratense Plants
+26      2     Angelica.sylvestris Plants
+31      3   Agrimonium.eupatorium Plants
+32      3          Plantago.major Plants
+41      4    Leontodon.autumnalis Plants
+42      4       Medicago.lupulina Plants
+43      4    Hypochaeris.radicata Plants
+44      4       Linum.catharticum Plants
+45      4    Convolvulus.arvensis Plants
+46      4     Leontodon.saxatilis Plants
+47      4        Senecio.jacobaea Plants
+48      4      Leontodon.hispidus Plants
+49      4       Crepis.capillaris Plants
+51      5        Rubus.fruticosus Plants
+52      5           Daucus.carota Plants
+61      6        Aethusa.cynapium Plants
+62      6   Eupatorium.cannabinum Plants
+63      6        Clematis.vitalba Plants
+64      6 Chamerion.angustifolium Plants
+65      6        Torilis.japonica Plants</code></pre>
+<pre class="r"><code>module_assignments2 %&gt;% filter(type==&quot;Plants&quot;)</code></pre>
+<pre><code>   module                 species   type
+11      1      Lotus.corniculatus Plants
+12      1         Centaurea.nigra Plants
+13      1        Knautia.arvensis Plants
+14      1      Trifolium.pratense Plants
+2       2          Plantago.major Plants
+31      3   Agrimonium.eupatorium Plants
+32      3       Medicago.lupulina Plants
+33      3    Hypochaeris.radicata Plants
+34      3       Linum.catharticum Plants
+35      3    Convolvulus.arvensis Plants
+36      3     Leontodon.saxatilis Plants
+37      3        Clematis.vitalba Plants
+38      3        Senecio.jacobaea Plants
+41      4    Leontodon.autumnalis Plants
+42      4        Rubus.fruticosus Plants
+43      4   Euphrasia.officinalis Plants
+44      4      Leontodon.hispidus Plants
+45      4     Angelica.sylvestris Plants
+51      5   Eupatorium.cannabinum Plants
+52      5        Torilis.japonica Plants
+6       6           Daucus.carota Plants
+71      7      Lathyrus.pratensis Plants
+72      7 Chamerion.angustifolium Plants
+73      7       Crepis.capillaris Plants
+8       8        Aethusa.cynapium Plants</code></pre>
 <ol style="list-style-type: decimal">
 <li>The modularity Q increased about 10% with binary matrix: from 0.3042993 to 0.3284303</li>
+<li>The assignment of the nodes to the module is also slightly different. For example, for plants the number of modules increased by 1 (5 -&gt; 6) in binary matrix. In addition, the biggest module’s size increased to 11 from 9.</li>
 </ol>
-<ol start="4" style="list-style-type: decimal">
-<li>References Barber M. Modularity and community detection in bipartite networks. Physical Review E. 2007;76: 1–9.<br />
+</div>
+<div id="problem-6.-can-you-project-the-network-and-calculate-modularity-in-each-of-the-projections-do-plants-that-cluster-together-in-the-projection-also-cluster-together-in-the-bipartite-version-is-there-an-difference-in-the-ecological-interpretation-between-these-two-scenarios" class="section level2">
+<h2>Problem 6. Can you project the network and calculate modularity in each of the projections? Do plants that cluster together in the projection also cluster together in the bipartite version? Is there an difference in the ecological interpretation between these two scenarios?</h2>
+<pre class="r"><code># lower = g x g matrix for g plants / higher = n x n matrix for n pollinators
+plants_projected &lt;- as.one.mode(memmott1999, project = &#39;lower&#39;)
+dim(plants_projected)</code></pre>
+<pre><code>[1] 25 25</code></pre>
+<pre class="r"><code># plants_projected
+
+# project to pollinators
+# pollinator_projected &lt;- as.one.mode(memmott1999, project = &#39;higher&#39;)
+# dim(pollinator_projected)
+
+rownames(plants_projected)</code></pre>
+<pre><code> [1] &quot;Agrimonium.eupatorium&quot;   &quot;Leontodon.autumnalis&quot;   
+ [3] &quot;Lotus.corniculatus&quot;      &quot;Medicago.lupulina&quot;      
+ [5] &quot;Rubus.fruticosus&quot;        &quot;Hypochaeris.radicata&quot;   
+ [7] &quot;Centaurea.nigra&quot;         &quot;Euphrasia.officinalis&quot;  
+ [9] &quot;Linum.catharticum&quot;       &quot;Convolvulus.arvensis&quot;   
+[11] &quot;Knautia.arvensis&quot;        &quot;Aethusa.cynapium&quot;       
+[13] &quot;Eupatorium.cannabinum&quot;   &quot;Plantago.major&quot;         
+[15] &quot;Leontodon.saxatilis&quot;     &quot;Lathyrus.pratensis&quot;     
+[17] &quot;Clematis.vitalba&quot;        &quot;Senecio.jacobaea&quot;       
+[19] &quot;Trifolium.pratense&quot;      &quot;Chamerion.angustifolium&quot;
+[21] &quot;Leontodon.hispidus&quot;      &quot;Crepis.capillaris&quot;      
+[23] &quot;Torilis.japonica&quot;        &quot;Angelica.sylvestris&quot;    
+[25] &quot;Daucus.carota&quot;          </code></pre>
+<pre class="r"><code>colnames(plants_projected)</code></pre>
+<pre><code> [1] &quot;Agrimonium.eupatorium&quot;   &quot;Leontodon.autumnalis&quot;   
+ [3] &quot;Lotus.corniculatus&quot;      &quot;Medicago.lupulina&quot;      
+ [5] &quot;Rubus.fruticosus&quot;        &quot;Hypochaeris.radicata&quot;   
+ [7] &quot;Centaurea.nigra&quot;         &quot;Euphrasia.officinalis&quot;  
+ [9] &quot;Linum.catharticum&quot;       &quot;Convolvulus.arvensis&quot;   
+[11] &quot;Knautia.arvensis&quot;        &quot;Aethusa.cynapium&quot;       
+[13] &quot;Eupatorium.cannabinum&quot;   &quot;Plantago.major&quot;         
+[15] &quot;Leontodon.saxatilis&quot;     &quot;Lathyrus.pratensis&quot;     
+[17] &quot;Clematis.vitalba&quot;        &quot;Senecio.jacobaea&quot;       
+[19] &quot;Trifolium.pratense&quot;      &quot;Chamerion.angustifolium&quot;
+[21] &quot;Leontodon.hispidus&quot;      &quot;Crepis.capillaris&quot;      
+[23] &quot;Torilis.japonica&quot;        &quot;Angelica.sylvestris&quot;    
+[25] &quot;Daucus.carota&quot;          </code></pre>
+<pre class="r"><code>isSymmetric.matrix(plants_projected) # symmetric, therefore undirected</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>g_plant &lt;- igraph::graph.adjacency(plants_projected, mode = &#39;undirected&#39;)
+par(mar=c(0,0,0,0))
+plot(g_plant, vertex.size=6, edge.curved=0.5)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-11-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Detect communities, note the as.undirected command
+E(g_plant)$weight &lt;- 1
+
+# implementing Louvain method
+cl &lt;- cluster_louvain(g_plant) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities</code></pre>
+<pre><code>[1] &quot;communities&quot;</code></pre>
+<pre class="r"><code># module membership &amp; visualization
+module_membership &lt;- membership(cl)
+cols &lt;- data.frame(mem=unique(module_membership),col=c(&#39;blue&#39;,&#39;red&#39;))
+
+V(g_plant)$module_membership &lt;- module_membership
+V(g_plant)$color &lt;- cols$col[match(V(g_plant)$module_membership, cols$mem)]
+plot(g_plant, vertex.color=V(g_plant)$color, vertex.size=10, edge.arrow.width=0.3, edge.arrow.curve=0.5)</code></pre>
+<p><img src="figure/Networks_HW3.Rmd/unnamed-chunk-11-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># compare membership
+# (1) module membership for bipartite version
+mod_bipartite &lt;- module_assignments %&gt;% filter(type==&quot;Plants&quot;)
+table(mod_bipartite$module)</code></pre>
+<pre><code>
+1 2 3 4 5 6 
+1 6 2 9 2 5 </code></pre>
+<pre class="r"><code># (2) module membership for unipartite version
+table(module_membership)</code></pre>
+<pre><code>module_membership
+ 1  2 
+21  4 </code></pre>
+<pre class="r"><code># look for discrepencies
+# (1) Module that Leontodon.autumnalis is in for bipartite case
+Leon_mod &lt;- mod_bipartite %&gt;% filter(species==&#39;Leontodon.autumnalis&#39;)
+mem_bi &lt;- mod_bipartite %&gt;% filter(module==Leon_mod$module) %&gt;% select(species) %&gt;% unlist()
+
+# (2) Module that Leontodon.autumnalis is in for unipartite modules
+mod_unipartite &lt;- data.frame(species=names(module_membership),module=as.numeric(module_membership))
+Leon_mod_uni &lt;- mod_unipartite %&gt;% filter(species==&#39;Leontodon.autumnalis&#39;) # Leontodon.autumnalis is in module 3
+mem_uni &lt;- mod_unipartite %&gt;% filter(module==Leon_mod_uni$module) %&gt;% select(species) %&gt;% unlist() 
+
+# see difference
+setdiff(mem_bi,mem_uni)</code></pre>
+<pre><code>[1] &quot;Leontodon.hispidus&quot;</code></pre>
+<pre class="r"><code>setdiff(mem_uni,mem_bi)</code></pre>
+<pre><code> [1] &quot;Agrimonium.eupatorium&quot;   &quot;Lotus.corniculatus&quot;     
+ [3] &quot;Rubus.fruticosus&quot;        &quot;Centaurea.nigra&quot;        
+ [5] &quot;Euphrasia.officinalis&quot;   &quot;Knautia.arvensis&quot;       
+ [7] &quot;Aethusa.cynapium&quot;        &quot;Plantago.major&quot;         
+ [9] &quot;Lathyrus.pratensis&quot;      &quot;Clematis.vitalba&quot;       
+[11] &quot;Trifolium.pratense&quot;      &quot;Chamerion.angustifolium&quot;
+[13] &quot;Angelica.sylvestris&quot;    </code></pre>
+<ol style="list-style-type: decimal">
+<li>The number of modules is different between bipartite and unipartite modules</li>
+<li>For example for the module that Leontodon.autumnalis is in, bipartite module is smaller than that of unipartite version. They are not the exact subset of one another. So we can say that not all plants that cluster together in the projection also cluster together in the bipartite version.</li>
+<li>There is a difference in the ecological interpretation between these two scenarios. We lose information when we project the adjacency matrix into unipartite networks. Therefore, when creating modules, we no longer take the pollinator information into account (directly), which is ecologically different than having the pollinator information to directly maximize modularity Q. This is why the unipartite network’s modular structure becomes much simpler(less number of modules) than that of bipartite version.</li>
+</ol>
+</div>
+<div id="problem-7.-find-another-data-set-that-interests-you-personally-in-which-you-could-hypothesize-the-existence-of-communities.-explain-why-this-hypothesis-is-relevant-for-this-data-set.-analyze-for-communities-with-a-method-from-the-material-above.-do-the-results-support-the-hypothesis-e.g.-when-you-examine-the-nodes-in-each-module." class="section level2">
+<h2>Problem 7. Find another data set that interests you personally in which you could hypothesize the existence of communities. Explain why this hypothesis is relevant for this data set. Analyze for communities, with a method from the material above. Do the results support the hypothesis (e.g., when you examine the nodes in each module).</h2>
+<pre class="r"><code># Project plants
+# Recall that the logical step &#39;&gt; 0&#39; converts the original matrix into a binary one. Then &#39;tcrossprod&#39; performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+plants_projected &lt;- tcrossprod(memmott1999&gt;0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(plants_projected) &lt;- 0</code></pre>
+</div>
+<div id="references" class="section level2">
+<h2>4. References</h2>
+<p>Barber M. Modularity and community detection in bipartite networks. Physical Review E. 2007;76: 1–9.<br />
 Beckett SJ. Improved community detection in weighted bipartite networks. R Soc Open Sci. 2016;3: 140536.<br />
 Dormann CF, Strauss R. A method for detecting modules in quantitative bipartite networks. Methods Ecol Evol. 2014;5: 90–98.<br />
 Guimerà R, Sales-Pardo M, Amaral LAN. Module identification in bipartite and directed networks. Phys Rev E Stat Nonlin Soft Matter Phys. 2007;76: 036102.<br />
 Thébault E. Identifying compartments in presence-absence matrices and bipartite networks: insights into modularity measures. J Biogeogr. 2013;40: 759–768.)<br />
-</li>
-</ol>
+</p>
 <p>To go deeper into the topic of Community Detection in networks, here are some useful references:<br />
 </p>
 <p>Fortunato, Santo, and Darko Hric. “Community detection in networks: A user guide.” Physics reports 659 (2016): 1-44.<br />
