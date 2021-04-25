@@ -167,25 +167,23 @@ sum(memmott1999!=0)
 mem_binary <- ifelse(memmott1999>0, 1, 0)
 sum(mem_binary!=0) # conversion worked well
 
-mod <- computeModules(mem_binary)
-slotNames(mod) # see ?moduleWeb for details
+mod_b <- computeModules(mem_binary)
+slotNames(mod_b) # see ?moduleWeb for details
 
-mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).
+mod_b@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).
 # 0.3284303
 
-module_list <- listModuleInformation(mod) # The output is rather cumbersome...
+module_list <- listModuleInformation(mod_b) # The output is rather cumbersome...
 par(mfrow=c(1,1))
-plotModuleWeb(mod)
+plotModuleWeb(mod_b)
 
 module_list <- module_list[[2]] # let's look at the modules. The first element in the list is the whole network, so start with 2
 for (i in 1:2){ # Show the two first modules.
   message(paste('Module:',i))
   print(module_list[[i]])
 }
+# This list data structure is horrible for analysis. This code transforms it to a data frame:
 
-```
-This list data structure is horrible for analysis. This code transforms it to a data frame:
-```{r}
 # Transform the lists to data frames
 m <- length(module_list) # Number of modules
 mod_plants <- unlist(module_list, recursive = F)[seq(1,2*m,2)] # Assignments of plants
@@ -195,16 +193,103 @@ names(mod_pollinators) <- 1:m
 tmp_plants <- data.frame(module = rep(names(mod_plants), sapply(mod_plants, length)), species = unlist(mod_plants), type='Plants')
 tmp_poillnators <- data.frame(module = rep(names(mod_pollinators), sapply(mod_pollinators, length)), species = unlist(mod_pollinators), type='Pollinators')
 # Make one data frame
-(module_assignments <- rbind(tmp_plants,tmp_poillnators))
+(module_assignments2 <- rbind(tmp_plants,tmp_poillnators))
+```
+
+```{r}
+par(mfrow=c(1,2))
+plotModuleWeb(mod)
+plotModuleWeb(mod_b)
+par(mfrow=c(1,1))
+
+# module_assignments
+# module_assignments2
+
+module_assignments %>% filter(type=="Plants")
+module_assignments2 %>% filter(type=="Plants")
+
 ```
 
 (1) The modularity Q increased about 10% with binary matrix: from 0.3042993 to 0.3284303
+(2) The assignment of the nodes to the module is also slightly different. For example, for plants the number of modules increased by 1 (5 -> 6) in binary matrix. In addition, the biggest module's size increased to 11 from 9.  
+
+## Problem 6. Can you project the network and calculate modularity in each of the projections? Do plants that cluster together in the projection also cluster together in the bipartite version? Is there an difference in the ecological interpretation between these two scenarios?
+
+```{r}
+# lower = g x g matrix for g plants / higher = n x n matrix for n pollinators
+plants_projected <- as.one.mode(memmott1999, project = 'lower')
+dim(plants_projected)
+# plants_projected
+
+# project to pollinators
+# pollinator_projected <- as.one.mode(memmott1999, project = 'higher')
+# dim(pollinator_projected)
+
+rownames(plants_projected)
+colnames(plants_projected)
+
+isSymmetric.matrix(plants_projected) # symmetric, therefore undirected
+
+g_plant <- igraph::graph.adjacency(plants_projected, mode = 'undirected')
+par(mar=c(0,0,0,0))
+plot(g_plant, vertex.size=6, edge.curved=0.5)
+
+# Detect communities, note the as.undirected command
+E(g_plant)$weight <- 1
+
+# implementing Louvain method
+cl <- cluster_louvain(g_plant) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities
+
+# module membership & visualization
+module_membership <- membership(cl)
+cols <- data.frame(mem=unique(module_membership),col=c('blue','red'))
+
+V(g_plant)$module_membership <- module_membership
+V(g_plant)$color <- cols$col[match(V(g_plant)$module_membership, cols$mem)]
+plot(g_plant, vertex.color=V(g_plant)$color, vertex.size=10, edge.arrow.width=0.3, edge.arrow.curve=0.5)
+
+# compare membership
+# (1) module membership for bipartite version
+mod_bipartite <- module_assignments %>% filter(type=="Plants")
+table(mod_bipartite$module)
+# (2) module membership for unipartite version
+table(module_membership)
+
+# look for discrepencies
+# (1) Module that Leontodon.autumnalis is in for bipartite case
+Leon_mod <- mod_bipartite %>% filter(species=='Leontodon.autumnalis')
+mem_bi <- mod_bipartite %>% filter(module==Leon_mod$module) %>% select(species) %>% unlist()
+
+# (2) Module that Leontodon.autumnalis is in for unipartite modules
+mod_unipartite <- data.frame(species=names(module_membership),module=as.numeric(module_membership))
+Leon_mod_uni <- mod_unipartite %>% filter(species=='Leontodon.autumnalis') # Leontodon.autumnalis is in module 3
+mem_uni <- mod_unipartite %>% filter(module==Leon_mod_uni$module) %>% select(species) %>% unlist() 
+
+# see difference
+setdiff(mem_bi,mem_uni)
+setdiff(mem_uni,mem_bi)
+
+```
+(1) The number of modules is different between bipartite and unipartite modules
+(2) For example for the module that Leontodon.autumnalis is in, bipartite module is smaller than that of unipartite version. They are not the exact subset of one another. So we can say that not all plants that cluster together in the projection also cluster together in the bipartite version. 
+(3) There is a difference in the ecological interpretation between these two scenarios. We lose information when we project the adjacency matrix into unipartite networks. Therefore, when creating modules, we no longer take the pollinator information into account (directly), which is ecologically different than having the pollinator information to directly maximize modularity Q. This is why the unipartite network's modular structure becomes much simpler(less number of modules) than that of bipartite version.
+
+## Problem 7. Find another data set that interests you personally in which you could hypothesize the existence of communities. Explain why this hypothesis is relevant for this data set. Analyze for communities, with a method from the material above. Do the results support the hypothesis (e.g., when you examine the nodes in each module).
+```{r}
+
+# Project plants
+# Recall that the logical step '> 0' converts the original matrix into a binary one. Then 'tcrossprod' performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
+plants_projected <- tcrossprod(memmott1999>0) 
+# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
+diag(plants_projected) <- 0
+```
 
 
 
 
 
-4. References
+## 4. References
 Barber M. Modularity and community detection in bipartite networks. Physical Review E. 2007;76: 1–9.\
 Beckett SJ. Improved community detection in weighted bipartite networks. R Soc Open Sci. 2016;3: 140536.\
 Dormann CF, Strauss R. A method for detecting modules in quantitative bipartite networks. Methods Ecol Evol. 2014;5: 90–98.\
