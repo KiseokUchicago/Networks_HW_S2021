@@ -276,15 +276,68 @@ setdiff(mem_uni,mem_bi)
 (3) There is a difference in the ecological interpretation between these two scenarios. We lose information when we project the adjacency matrix into unipartite networks. Therefore, when creating modules, we no longer take the pollinator information into account (directly), which is ecologically different than having the pollinator information to directly maximize modularity Q. This is why the unipartite network's modular structure becomes much simpler(less number of modules) than that of bipartite version.
 
 ## Problem 7. Find another data set that interests you personally in which you could hypothesize the existence of communities. Explain why this hypothesis is relevant for this data set. Analyze for communities, with a method from the material above. Do the results support the hypothesis (e.g., when you examine the nodes in each module).
+I would be interested in the modularity of fungal-bacterial network of rice seed. Hypothesis is that fungi and bacteria would not exist as separate module in the network. microbiome.(https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00805-0)
 ```{r}
+# domesticated rice seed microbiome
+domestic_links <- read.csv('data/2_0.3_node_dom.css.ss.5.tsv',sep="\t", header=T)
+b_domestic_links <- read.csv('data/5_0.3_edge_dom.phy.ss.5.tsv',sep="\t", header=T)
+f_domestic_links <- read.csv('data/8_0.3_edge_dom.fun.ss.5.tsv',sep="\t", header=T)
 
-# Project plants
-# Recall that the logical step '> 0' converts the original matrix into a binary one. Then 'tcrossprod' performs thee multiplication of the matrix with its transpose, to get the number of shared pollinators  
-plants_projected <- tcrossprod(memmott1999>0) 
-# In addition, we set the diagonal elements equal to zero, because Pii is otherwise the number of groups that node i belongs to
-diag(plants_projected) <- 0
+# wild rice seed microbiome
+wild_links <- read.csv('data/3_0.3_edge_wil.css.ss.5.tsv',sep="\t", header=T)
+b_wild_links <- read.csv('data/6_0.3_edge_wil.phy.ss.5.tsv',sep="\t", header=T) # bacteria
+f_wild_links <- read.csv('data/9_0.3_edge_wil.fun.ss.5.tsv',sep="\t", header=T) # fungi
+
+# microbial network of wild rice seed endophytes
+wild_web <- graph.data.frame(wild_links, directed = F)
+b_wild_web <- graph.data.frame(b_wild_links, directed = F) # bacteria
+f_wild_web <- graph.data.frame(f_wild_links, directed = F) # fungi
+
+plot(wild_web, vertex.size=5, vertex.label=NA, main="Bacteria & Fungi-Wild rice")
+plot(b_wild_web, vertex.size=5, vertex.label=NA, main="Bacteria-Wild rice")
+plot(f_wild_web, vertex.size=5, vertex.label=NA, main="Fungi-Wild rice")
+
+
+# Detect communities, note the as.undirected command
+wild_unweighted <- wild_web
+wild_unweighted <- as.undirected(wild_unweighted)
+E(wild_unweighted)$weight <- 1
+
+# implementing Louvain method
+cl <- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities
+
+# module membership & visualization
+module_membership <- membership(cl)
+table(module_membership)
+
+my_color_collection <- c(
+  "#CBD588", "#5F7FC7", "orange", "#AD6F3B", "#673770", 
+  "#D14285", "#652926", "#C84248", "#8569D5", "#5E738F",
+  "#D1A33D", "#8A7C64", "#599861","#616163", "#FFCDB2",
+  "#6D9F71", "#242F40",
+   "#CCA43B", "#F92A82", "#ED7B84", "#7EB77F", 
+  "#DEC4A1", "#E5D1D0", '#0E8482', '#C9DAEA', '#337357', 
+  '#95C623', '#E55812', '#04471C', '#F2D7EE', '#D3BCC0', 
+  '#A5668B', '#69306D', '#0E103D', '#1A535C', '#4ECDC4', 
+  '#F7FFF7', '#FF6B6B', '#FFE66D', '#6699CC', '#FFF275', 
+  '#FF8C42', '#FF3C38', '#A23E48', '#000000', '#CF5C36', 
+  '#EEE5E9', '#7C7C7C', '#EFC88B', '#2E5266', '#6E8898', 
+  '#9FB1BC', '#D3D0CB', '#E2C044', '#5BC0EB', '#FDE74C', 
+  '#9BC53D', '#E55934', '#FA7921', "#CD9BCD", "#508578", "#DA5724")
+
+# color
+cols <- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
+V(wild_unweighted)$module_membership <- module_membership
+V(wild_unweighted)$color <- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
+
+# shape: triangle fungi / circle bacteria
+V(wild_unweighted)$shape <- ifelse(substr(V(wild_unweighted)$name,1,1)=="B","circle","csquare")
+
+# plot network
+plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)
 ```
-
+Circle is bacteria and square is fungi. We can see that square and circle coexist in each module.
 
 
 
