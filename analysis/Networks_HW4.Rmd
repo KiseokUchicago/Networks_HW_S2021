@@ -1,0 +1,88 @@
+---
+title: "Networks_HW4"
+author: "KiseokUchicago"
+date: "2021-04-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Homework4 (Randomizations and Nestedness)
+## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
+Student: **Kiseok Lee** 
+
+```{r}
+# libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(vegan)
+```
+
+## 1. Randomizations
+
+As a general guideline, basic considerations when selecting a randomization procedure are:\
+
+1) What is the null hypothesis? For example, randomizing a plant-pollinator matrix while maintaining only the density assumes that pollinators have no dietary restritions and that plants have not evolved to be specialized for specific pollinators. In other words, that the niche breadth of each species is unlimited in this system. This is obviously a very permissive model.\
+2) Limitations such as computation time. \
+
+In this lab we will see a few algorithms for the sake of introduction. Broadly speaking, in the network ecology literature null models are:\
+
+1) equiprobable: assign the same probability to each potential interaction in the network.\
+2) probabilistic: assign a probability to each potential interaction proportional to the number of observed interactions between partners.\
+3) fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.\
+
+Now let’s shuffle a matrix:
+```{r}
+num_iterations <- 10
+memmott1999_binary <- 1*(memmott1999>0) # Make the data binary
+null_model <- vegan::nullmodel(memmott1999_binary, method = 'r00') # Select a null model for the data
+shuffled_r00 <- simulate(null_model, nsim = num_iterations) # Shuffle
+# Shuffling produces an array with 10 matrices, each of them is a shuffled matrix:
+apply(shuffled_r00, 3, dim) 
+
+```
+
+Calculate the density of each of these matrices:
+```{r}
+connectance <- function(m){
+  d <- sum(m>0)/(nrow(m)*ncol(m))
+  return(d)
+}
+# Note how connectance is preserved:
+apply(shuffled_r00, MARGIN = 3, connectance) # Apply the function to the array. Note the MARGIN argument
+
+```
+
+## Problem 1. What kind of model (equiprobable, probabilistic, fixed) is r00? What does it conserve? As such, what kinds of properties of the network does it ignore that you may want to consider in a null model? Why?
+
+"r00": non-sequential algorithm for binary matrices that only preserves the number of presences (fill).\
+This properties are conserved:\
+3) Fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.\
+These two properties are not conserved and ignored. \
+1) Equiprobable: assign the same probability to each potential interaction in the network.\
+2) Probabilistic: assign a probability to each potential interaction proportional to the number of observed interactions between partners.\
+Because we have made the interaction matrix into a binary matrix, we removed the weight information of each interaction. Each interaction is not assigned the same probability.
+
+## Problem 2. Can you program the algorithm for r00 by yourself?
+```{r}
+null_r00 <- function(M){
+  M[,] <- sample(M, replace = F) # shuffle (do not replace)
+  # sum(M)
+  return(M)
+}
+
+null_r00(memmott1999_binary)
+sum(null_r00(memmott1999_binary)) # success
+```
+
+A more conservative null hypothesis is to conserve either the row or colum marginal sums, or both (‘fixed’ null model). Algorithms that conserve both are very restrictive, and are commonly based on randomly selecting 2x2 sub-matrices and then swapping their cell entries (“swap” algorithms). However, swap algorithms suffer from several disadvantages in computational time and sampling limitations of the “null space” (discussed in the references below). A new algorithm that overcomes those limitations is the curveball algorithm (Strona et al. 2014). Note that this is a sequential algorithm in which matrices are generated based on previous ones. So for accuracy, the first generated matrices should be discarded. This is done using the burnin argument.
+
