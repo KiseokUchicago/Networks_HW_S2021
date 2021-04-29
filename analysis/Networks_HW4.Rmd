@@ -67,10 +67,10 @@ apply(shuffled_r00, MARGIN = 3, connectance) # Apply the function to the array. 
 ## Problem 1. What kind of model (equiprobable, probabilistic, fixed) is r00? What does it conserve? As such, what kinds of properties of the network does it ignore that you may want to consider in a null model? Why?
 
 "r00": non-sequential algorithm for binary matrices that only preserves the number of presences (fill).\
-This properties are conserved:\
-3) Fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.\
-These two properties are not conserved and ignored. \
+These 2 properties are conserved:\
 1) Equiprobable: assign the same probability to each potential interaction in the network.\
+3) Fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.\
+This property is not conserved and ignored. \
 2) Probabilistic: assign a probability to each potential interaction proportional to the number of observed interactions between partners.\
 Because we have made the interaction matrix into a binary matrix, we removed the weight information of each interaction. Each interaction is not assigned the same probability.
 
@@ -250,9 +250,14 @@ names(nodf_eval_2$oecosimu) # look at the ?oecosimu help for details on what are
 nodf_eval_2 # The networks is significantly nested.
 ```
 
-It is not significant. Nestedness in not significantly differnt from the null model based on fixed shuffling algorithm like curveball.
+It is not significant. Nestedness in not significantly differnt from the null model based on fixed shuffling algorithm like curveball. The major difference between r00 and curveball randomization algorithm is that r00 is non-sequential and curveball is sequential. 
 
 ## Problem 6. Nestedness has been shown to be correlated with network density and the number of species. That renders comparisons of nestedness scores across many networks statistically inappropriate. How can we compare values of nestedness across networks?
+
+(1) First way to do it which is not recommended is to do a linear regression (nestedness ~ (density, dimension)) with a huge number of network datasets. Then, if it is linear, we can compare the nestedness of networks with different dimension/density by dividing the nestedness by the slope of regression to compensate for the increasing/decreasing effects by density or dimension. \
+
+(2) Second way we can do is to use the nestedness definistion from this paper: Staniczenko, P. P., Kopp, J. C., & Allesina, S. (2013). The ghost of nestedness in ecological networks. Nature communications, 4(1), 1-6.\
+With this spectral method, we will be able to derive the large dominant eigenvalues of adjacency matrix for each network and compare regardless of difference in network density or the number of species.\
 
 
 ## 4. Network robustness
