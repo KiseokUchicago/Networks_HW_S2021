@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="KiseokUchicago" />
+
+<meta name="date" content="2021-04-28" />
+
+<title>Networks_HW4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Networks_HW_S2021</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/KiseokUchicago/Networks_HW_S2021">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Networks_HW4</h1>
+<h4 class="author">KiseokUchicago</h4>
+<h4 class="date">2021-04-28</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-04-28
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Networks_HW_S2021/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210409code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210409)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210409code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210409)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree7ce4666f35a60262cf1d61da5e8fb2cafc5ded51targetblank7ce4666a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/7ce4666f35a60262cf1d61da5e8fb2cafc5ded51" target="_blank">7ce4666</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree7ce4666f35a60262cf1d61da5e8fb2cafc5ded51targetblank7ce4666a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/7ce4666f35a60262cf1d61da5e8fb2cafc5ded51" target="_blank">7ce4666</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/1_0.3_edge_mer.css.ss.5.tsv
+    Untracked:  data/1_0.3_node_mer.css.ss.5.tsv
+    Untracked:  data/2_0.3_edge_dom.css.ss.5.tsv
+    Untracked:  data/2_0.3_node_dom.css.ss.5.tsv
+    Untracked:  data/3_0.3_edge_wil.css.ss.5.tsv
+    Untracked:  data/3_0.3_node_wil.css.ss.5.tsv
+    Untracked:  data/4_0.3_edge_phy.css.ss.5.tsv
+    Untracked:  data/5_0.3_edge_dom.phy.ss.5.tsv
+    Untracked:  data/6_0.3_edge_wil.phy.ss.5.tsv
+    Untracked:  data/7_0.3_edge_fun.css.ss.5.tsv
+    Untracked:  data/8_0.3_edge_dom.fun.ss.5.tsv
+    Untracked:  data/9_0.3_edge_wil.fun.ss.5.tsv
+    Untracked:  data/Chesapeake_bay_links.csv
+    Untracked:  data/Chesapeake_bay_nodes.csv
+    Untracked:  data/Dunne2013PBioSupData.xlsx
+    Untracked:  data/M_PA_003.csv
+    Untracked:  data/NEE2017_nodes.csv
+    Untracked:  data/Otago_Data_Links.csv
+    Untracked:  data/Otago_Data_Nodes.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_hosts.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_parasites.csv
+    Untracked:  data/Pilosof_etal_NEE2017_1.csv
+    Untracked:  data/Pilosof_etal_NEE2017_2.csv
+    Untracked:  data/Pilosof_etal_NEE2017_3.csv
+    Untracked:  data/Pilosof_etal_NEE2017_4.csv
+    Untracked:  data/Pilosof_etal_NEE2017_5.csv
+    Untracked:  data/Pilosof_etal_NEE2017_6.csv
+    Untracked:  data/Tur2016.csv
+    Untracked:  data/Ural_valley_A_HP_048.csv
+    Untracked:  data/chilean_NTIneg.txt
+    Untracked:  data/chilean_NTIpos.txt
+    Untracked:  data/chilean_TI.txt
+    Untracked:  data/chilean_metadata.xls
+    Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+
+Unstaged changes:
+    Modified:   analysis/Networks_HW3.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/Networks_HW4.Rmd</code>) and HTML (<code>docs/Networks_HW4.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/7ce4666f35a60262cf1d61da5e8fb2cafc5ded51/analysis/Networks_HW4.Rmd" target="_blank">7ce4666</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-04-28
+</td>
+<td>
+HW4_start
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="homework4-randomizations-and-nestedness" class="section level2">
+<h2>Homework4 (Randomizations and Nestedness)</h2>
+</div>
+<div id="coding-assignment-for-ecev-44500-networks-in-ecology-and-evolution" class="section level2">
+<h2>Coding assignment for ECEV 44500 Networks in Ecology and Evolution</h2>
+<p>Professor: <strong>Mercedes Pascual</strong>, <strong>Sergio A. Alcala Corona</strong><br />
+Student: <strong>Kiseok Lee</strong></p>
+<pre class="r"><code># libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(vegan)</code></pre>
+</div>
+<div id="randomizations" class="section level2">
+<h2>1. Randomizations</h2>
+<p>As a general guideline, basic considerations when selecting a randomization procedure are:<br />
+</p>
+<ol style="list-style-type: decimal">
+<li>What is the null hypothesis? For example, randomizing a plant-pollinator matrix while maintaining only the density assumes that pollinators have no dietary restritions and that plants have not evolved to be specialized for specific pollinators. In other words, that the niche breadth of each species is unlimited in this system. This is obviously a very permissive model.<br />
+</li>
+<li>Limitations such as computation time.<br />
+</li>
+</ol>
+<p>In this lab we will see a few algorithms for the sake of introduction. Broadly speaking, in the network ecology literature null models are:<br />
+</p>
+<ol style="list-style-type: decimal">
+<li>equiprobable: assign the same probability to each potential interaction in the network.<br />
+</li>
+<li>probabilistic: assign a probability to each potential interaction proportional to the number of observed interactions between partners.<br />
+</li>
+<li>fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.<br />
+</li>
+</ol>
+<p>Now let’s shuffle a matrix:</p>
+<pre class="r"><code>num_iterations &lt;- 10
+memmott1999_binary &lt;- 1*(memmott1999&gt;0) # Make the data binary
+null_model &lt;- vegan::nullmodel(memmott1999_binary, method = &#39;r00&#39;) # Select a null model for the data
+shuffled_r00 &lt;- simulate(null_model, nsim = num_iterations) # Shuffle
+# Shuffling produces an array with 10 matrices, each of them is a shuffled matrix:
+apply(shuffled_r00, 3, dim) </code></pre>
+<pre><code>     sim_1 sim_2 sim_3 sim_4 sim_5 sim_6 sim_7 sim_8 sim_9 sim_10
+[1,]    25    25    25    25    25    25    25    25    25     25
+[2,]    79    79    79    79    79    79    79    79    79     79</code></pre>
+<p>Calculate the density of each of these matrices:</p>
+<pre class="r"><code>connectance &lt;- function(m){
+  d &lt;- sum(m&gt;0)/(nrow(m)*ncol(m))
+  return(d)
+}
+# Note how connectance is preserved:
+apply(shuffled_r00, MARGIN = 3, connectance) # Apply the function to the array. Note the MARGIN argument</code></pre>
+<pre><code>    sim_1     sim_2     sim_3     sim_4     sim_5     sim_6     sim_7     sim_8 
+0.1513924 0.1513924 0.1513924 0.1513924 0.1513924 0.1513924 0.1513924 0.1513924 
+    sim_9    sim_10 
+0.1513924 0.1513924 </code></pre>
+</div>
+<div id="problem-1.-what-kind-of-model-equiprobable-probabilistic-fixed-is-r00-what-does-it-conserve-as-such-what-kinds-of-properties-of-the-network-does-it-ignore-that-you-may-want-to-consider-in-a-null-model-why" class="section level2">
+<h2>Problem 1. What kind of model (equiprobable, probabilistic, fixed) is r00? What does it conserve? As such, what kinds of properties of the network does it ignore that you may want to consider in a null model? Why?</h2>
+<p>“r00”: non-sequential algorithm for binary matrices that only preserves the number of presences (fill).<br />
+This properties are conserved:<br />
+3) Fixed: randomly shuffle the interactions while preserving the observed number of partners of each species.<br />
+These two properties are not conserved and ignored.<br />
+1) Equiprobable: assign the same probability to each potential interaction in the network.<br />
+2) Probabilistic: assign a probability to each potential interaction proportional to the number of observed interactions between partners.<br />
+Because we have made the interaction matrix into a binary matrix, we removed the weight information of each interaction. Each interaction is not assigned the same probability.</p>
+</div>
+<div id="problem-2.-can-you-program-the-algorithm-for-r00-by-yourself" class="section level2">
+<h2>Problem 2. Can you program the algorithm for r00 by yourself?</h2>
+<pre class="r"><code>null_r00 &lt;- function(M){
+  M[,] &lt;- sample(M, replace = F) # shuffle (do not replace)
+  # sum(M)
+  return(M)
+}
+
+null_r00(memmott1999_binary)</code></pre>
+<pre><code>                        Coleoptera.spec1 Coleoptera.spec2 Coleoptera.spec3
+Agrimonium.eupatorium                  0                0                1
+Leontodon.autumnalis                   0                0                0
+Lotus.corniculatus                     0                1                0
+Medicago.lupulina                      0                0                0
+Rubus.fruticosus                       1                0                0
+Hypochaeris.radicata                   0                0                0
+Centaurea.nigra                        0                0                0
+Euphrasia.officinalis                  0                0                0
+Linum.catharticum                      0                1                0
+Convolvulus.arvensis                   0                0                0
+Knautia.arvensis                       0                0                0
+Aethusa.cynapium                       0                1                0
+Eupatorium.cannabinum                  0                0                0
+Plantago.major                         0                0                0
+Leontodon.saxatilis                    1                0                0
+Lathyrus.pratensis                     0                0                0
+Clematis.vitalba                       0                0                0
+Senecio.jacobaea                       0                0                0
+Trifolium.pratense                     0                0                0
+Chamerion.angustifolium                1                1                0
+Leontodon.hispidus                     0                0                0
+Crepis.capillaris                      0                0                0
+Torilis.japonica                       0                0                0
+Angelica.sylvestris                    0                1                0
+Daucus.carota                          0                0                0
+                        Coleoptera.spec4 Coleoptera.spec5 Coleoptera.spec6
+Agrimonium.eupatorium                  0                0                0
+Leontodon.autumnalis                   0                0                0
+Lotus.corniculatus                     0                0                0
+Medicago.lupulina                      1                0                0
+Rubus.fruticosus                       0                1                0
+Hypochaeris.radicata                   0                0                0
+Centaurea.nigra                        0                0                0
+Euphrasia.officinalis                  0                0                0
+Linum.catharticum                      0                0                1
+Convolvulus.arvensis                   0                1                1
+Knautia.arvensis                       0                0                0
+Aethusa.cynapium                       0                1                0
+Eupatorium.cannabinum                  0                0                0
+Plantago.major                         0                0                0
+Leontodon.saxatilis                    0                0                0
+Lathyrus.pratensis                     0                0                0
+Clematis.vitalba                       1                0                0
+Senecio.jacobaea                       1                0                0
+Trifolium.pratense                     0                0                0
+Chamerion.angustifolium                0                0                0
+Leontodon.hispidus                     0                0                0
+Crepis.capillaris                      0                0                0
+Torilis.japonica                       0                0                0
+Angelica.sylvestris                    0                1                0
+Daucus.carota                          0                0                0
+                        Coleoptera.spec7 Cantharidae.spec1 Curculionidae.spec1
+Agrimonium.eupatorium                  0                 0                   0
+Leontodon.autumnalis                   0                 0                   0
+Lotus.corniculatus                     0                 0                   0
+Medicago.lupulina                      0                 0                   0
+Rubus.fruticosus                       0                 1                   1
+Hypochaeris.radicata                   0                 0                   0
+Centaurea.nigra                        1                 0                   0
+Euphrasia.officinalis                  0                 1                   0
+Linum.catharticum                      1                 1                   0
+Convolvulus.arvensis                   0                 0                   0
+Knautia.arvensis                       0                 0                   0
+Aethusa.cynapium                       0                 1                   1
+Eupatorium.cannabinum                  0                 1                   0
+Plantago.major                         0                 0                   0
+Leontodon.saxatilis                    0                 0                   1
+Lathyrus.pratensis                     0                 0                   0
+Clematis.vitalba                       0                 0                   0
+Senecio.jacobaea                       0                 0                   0
+Trifolium.pratense                     0                 0                   0
+Chamerion.angustifolium                0                 0                   0
+Leontodon.hispidus                     0                 0                   1
+Crepis.capillaris                      0                 0                   0
+Torilis.japonica                       1                 0                   0
+Angelica.sylvestris                    0                 0                   1
+Daucus.carota                          0                 1                   0
+                        Diptera.spec1 Diptera.spec2 Diptera.spec3 Diptera.spec4
+Agrimonium.eupatorium               0             1             0             0
+Leontodon.autumnalis                0             0             0             1
+Lotus.corniculatus                  0             0             0             0
+Medicago.lupulina                   0             0             0             0
+Rubus.fruticosus                    1             0             0             0
+Hypochaeris.radicata                0             0             0             0
+Centaurea.nigra                     1             0             0             0
+Euphrasia.officinalis               0             0             0             0
+Linum.catharticum                   0             0             0             0
+Convolvulus.arvensis                0             0             0             0
+Knautia.arvensis                    0             0             0             0
+Aethusa.cynapium                    0             0             0             1
+Eupatorium.cannabinum               0             0             0             0
+Plantago.major                      0             0             1             0
+Leontodon.saxatilis                 0             0             0             1
+Lathyrus.pratensis                  0             0             0             0
+Clematis.vitalba                    0             0             0             0
+Senecio.jacobaea                    1             0             0             0
+Trifolium.pratense                  0             0             1             0
+Chamerion.angustifolium             0             1             0             0
+Leontodon.hispidus                  0             1             0             0
+Crepis.capillaris                   1             1             0             0
+Torilis.japonica                    0             0             0             0
+Angelica.sylvestris                 0             0             0             0
+Daucus.carota                       1             0             0             0
+                        Conipidae.spec1 Diptera.spec5 Diptera.spec6
+Agrimonium.eupatorium                 0             0             0
+Leontodon.autumnalis                  1             0             0
+Lotus.corniculatus                    0             0             0
+Medicago.lupulina                     0             0             0
+Rubus.fruticosus                      0             0             0
+Hypochaeris.radicata                  0             0             0
+Centaurea.nigra                       0             0             1
+Euphrasia.officinalis                 0             0             0
+Linum.catharticum                     0             0             0
+Convolvulus.arvensis                  0             1             0
+Knautia.arvensis                      0             0             0
+Aethusa.cynapium                      0             0             0
+Eupatorium.cannabinum                 0             0             0
+Plantago.major                        1             0             0
+Leontodon.saxatilis                   0             0             0
+Lathyrus.pratensis                    0             0             0
+Clematis.vitalba                      0             0             0
+Senecio.jacobaea                      0             0             0
+Trifolium.pratense                    0             0             0
+Chamerion.angustifolium               0             1             1
+Leontodon.hispidus                    0             0             0
+Crepis.capillaris                     0             0             0
+Torilis.japonica                      1             0             0
+Angelica.sylvestris                   1             0             1
+Daucus.carota                         0             1             0
+                        Scatophaga.stercoraria Diptera.spec7 Diptera.spec8
+Agrimonium.eupatorium                        0             0             0
+Leontodon.autumnalis                         0             0             0
+Lotus.corniculatus                           0             0             0
+Medicago.lupulina                            1             0             0
+Rubus.fruticosus                             0             0             0
+Hypochaeris.radicata                         0             0             0
+Centaurea.nigra                              0             0             0
+Euphrasia.officinalis                        1             1             1
+Linum.catharticum                            1             0             0
+Convolvulus.arvensis                         0             0             0
+Knautia.arvensis                             1             1             0
+Aethusa.cynapium                             0             0             0
+Eupatorium.cannabinum                        0             0             0
+Plantago.major                               0             0             0
+Leontodon.saxatilis                          0             0             0
+Lathyrus.pratensis                           0             1             1
+Clematis.vitalba                             1             0             0
+Senecio.jacobaea                             0             0             0
+Trifolium.pratense                           0             0             0
+Chamerion.angustifolium                      0             0             0
+Leontodon.hispidus                           1             1             0
+Crepis.capillaris                            1             0             0
+Torilis.japonica                             0             0             1
+Angelica.sylvestris                          0             0             0
+Daucus.carota                                0             0             0
+                        Diptera.spec9 Diptera.spec10 Diptera.spec11
+Agrimonium.eupatorium               0              1              0
+Leontodon.autumnalis                0              0              0
+Lotus.corniculatus                  1              1              0
+Medicago.lupulina                   0              0              1
+Rubus.fruticosus                    0              0              0
+Hypochaeris.radicata                0              0              0
+Centaurea.nigra                     1              0              0
+Euphrasia.officinalis               0              0              0
+Linum.catharticum                   0              1              0
+Convolvulus.arvensis                0              0              1
+Knautia.arvensis                    0              0              0
+Aethusa.cynapium                    1              0              1
+Eupatorium.cannabinum               0              0              0
+Plantago.major                      0              0              0
+Leontodon.saxatilis                 1              0              1
+Lathyrus.pratensis                  1              1              0
+Clematis.vitalba                    0              0              0
+Senecio.jacobaea                    0              0              0
+Trifolium.pratense                  0              0              0
+Chamerion.angustifolium             0              0              0
+Leontodon.hispidus                  0              0              0
+Crepis.capillaris                   1              0              0
+Torilis.japonica                    0              0              0
+Angelica.sylvestris                 0              0              1
+Daucus.carota                       0              0              0
+                        Diptera.spec12 Diptera.spec13 Diptera.spec14
+Agrimonium.eupatorium                1              0              1
+Leontodon.autumnalis                 0              0              0
+Lotus.corniculatus                   0              0              0
+Medicago.lupulina                    0              0              0
+Rubus.fruticosus                     0              0              0
+Hypochaeris.radicata                 0              0              0
+Centaurea.nigra                      0              0              0
+Euphrasia.officinalis                0              0              0
+Linum.catharticum                    0              0              0
+Convolvulus.arvensis                 0              0              0
+Knautia.arvensis                     0              0              0
+Aethusa.cynapium                     0              0              0
+Eupatorium.cannabinum                0              0              0
+Plantago.major                       1              1              0
+Leontodon.saxatilis                  0              0              0
+Lathyrus.pratensis                   1              1              0
+Clematis.vitalba                     0              0              0
+Senecio.jacobaea                     0              0              1
+Trifolium.pratense                   0              1              0
+Chamerion.angustifolium              0              0              0
+Leontodon.hispidus                   0              0              0
+Crepis.capillaris                    0              0              0
+Torilis.japonica                     0              0              1
+Angelica.sylvestris                  0              0              0
+Daucus.carota                        0              0              0
+                        Diptera.spec15 Diptera.spec16 Diptera.spec17
+Agrimonium.eupatorium                0              0              0
+Leontodon.autumnalis                 0              0              0
+Lotus.corniculatus                   1              0              0
+Medicago.lupulina                    0              0              0
+Rubus.fruticosus                     0              1              0
+Hypochaeris.radicata                 0              0              0
+Centaurea.nigra                      0              0              0
+Euphrasia.officinalis                0              0              0
+Linum.catharticum                    0              1              0
+Convolvulus.arvensis                 0              0              0
+Knautia.arvensis                     0              0              0
+Aethusa.cynapium                     0              0              0
+Eupatorium.cannabinum                0              0              0
+Plantago.major                       0              0              0
+Leontodon.saxatilis                  1              0              0
+Lathyrus.pratensis                   0              0              0
+Clematis.vitalba                     0              0              0
+Senecio.jacobaea                     0              0              0
+Trifolium.pratense                   0              0              0
+Chamerion.angustifolium              0              0              0
+Leontodon.hispidus                   0              0              0
+Crepis.capillaris                    0              1              0
+Torilis.japonica                     0              0              0
+Angelica.sylvestris                  0              0              0
+Daucus.carota                        0              0              0
+                        Diptera.spec18 Diptera.spec19 Eriothrix.rufomaculata
+Agrimonium.eupatorium                0              0                      0
+Leontodon.autumnalis                 0              0                      0
+Lotus.corniculatus                   0              1                      0
+Medicago.lupulina                    0              0                      0
+Rubus.fruticosus                     0              0                      0
+Hypochaeris.radicata                 0              0                      0
+Centaurea.nigra                      0              1                      0
+Euphrasia.officinalis                0              0                      0
+Linum.catharticum                    0              0                      0
+Convolvulus.arvensis                 0              1                      1
+Knautia.arvensis                     0              0                      1
+Aethusa.cynapium                     0              0                      0
+Eupatorium.cannabinum                0              0                      0
+Plantago.major                       0              0                      1
+Leontodon.saxatilis                  1              1                      0
+Lathyrus.pratensis                   0              1                      0
+Clematis.vitalba                     0              0                      0
+Senecio.jacobaea                     0              0                      0
+Trifolium.pratense                   0              0                      0
+Chamerion.angustifolium              0              1                      0
+Leontodon.hispidus                   1              0                      0
+Crepis.capillaris                    0              0                      0
+Torilis.japonica                     1              0                      0
+Angelica.sylvestris                  0              1                      0
+Daucus.carota                        0              0                      0
+                        Diptera.spec20 Diptera.spec21 Diptera.spec22
+Agrimonium.eupatorium                0              0              1
+Leontodon.autumnalis                 1              0              0
+Lotus.corniculatus                   0              0              0
+Medicago.lupulina                    0              0              1
+Rubus.fruticosus                     0              0              0
+Hypochaeris.radicata                 0              0              0
+Centaurea.nigra                      0              0              0
+Euphrasia.officinalis                0              0              0
+Linum.catharticum                    0              0              0
+Convolvulus.arvensis                 1              0              0
+Knautia.arvensis                     0              0              0
+Aethusa.cynapium                     0              0              0
+Eupatorium.cannabinum                0              0              0
+Plantago.major                       0              0              0
+Leontodon.saxatilis                  0              0              0
+Lathyrus.pratensis                   0              0              0
+Clematis.vitalba                     0              0              0
+Senecio.jacobaea                     0              0              1
+Trifolium.pratense                   0              0              1
+Chamerion.angustifolium              0              0              0
+Leontodon.hispidus                   0              0              0
+Crepis.capillaris                    0              0              0
+Torilis.japonica                     1              1              0
+Angelica.sylvestris                  1              0              1
+Daucus.carota                        0              0              0
+                        Diptera.spec23 Diptera.spec24 Diptera.spec25
+Agrimonium.eupatorium                0              0              0
+Leontodon.autumnalis                 1              0              1
+Lotus.corniculatus                   0              0              0
+Medicago.lupulina                    0              0              0
+Rubus.fruticosus                     0              0              0
+Hypochaeris.radicata                 0              0              0
+Centaurea.nigra                      0              1              0
+Euphrasia.officinalis                0              0              0
+Linum.catharticum                    0              1              1
+Convolvulus.arvensis                 0              0              0
+Knautia.arvensis                     0              0              1
+Aethusa.cynapium                     1              0              1
+Eupatorium.cannabinum                1              0              0
+Plantago.major                       1              0              0
+Leontodon.saxatilis                  0              0              1
+Lathyrus.pratensis                   0              0              0
+Clematis.vitalba                     1              0              0
+Senecio.jacobaea                     0              0              0
+Trifolium.pratense                   1              0              0
+Chamerion.angustifolium              0              0              0
+Leontodon.hispidus                   0              0              0
+Crepis.capillaris                    1              0              1
+Torilis.japonica                     0              0              1
+Angelica.sylvestris                  1              0              0
+Daucus.carota                        0              0              0
+                        Tephretidae.spec1 Diptera.spec26 Diptera.spec27
+Agrimonium.eupatorium                   0              1              0
+Leontodon.autumnalis                    0              0              0
+Lotus.corniculatus                      0              0              0
+Medicago.lupulina                       0              0              0
+Rubus.fruticosus                        0              0              0
+Hypochaeris.radicata                    0              0              0
+Centaurea.nigra                         0              0              0
+Euphrasia.officinalis                   0              0              1
+Linum.catharticum                       0              0              0
+Convolvulus.arvensis                    0              0              0
+Knautia.arvensis                        0              1              0
+Aethusa.cynapium                        0              0              0
+Eupatorium.cannabinum                   0              1              0
+Plantago.major                          0              0              0
+Leontodon.saxatilis                     0              0              0
+Lathyrus.pratensis                      0              0              0
+Clematis.vitalba                        0              0              0
+Senecio.jacobaea                        0              0              0
+Trifolium.pratense                      0              0              0
+Chamerion.angustifolium                 0              0              0
+Leontodon.hispidus                      0              1              1
+Crepis.capillaris                       1              0              1
+Torilis.japonica                        1              0              0
+Angelica.sylvestris                     0              0              0
+Daucus.carota                           0              0              0
+                        Chrysotoxum.bicinctum Episyrphus.arbustorum
+Agrimonium.eupatorium                       0                     1
+Leontodon.autumnalis                        0                     0
+Lotus.corniculatus                          0                     1
+Medicago.lupulina                           0                     0
+Rubus.fruticosus                            0                     0
+Hypochaeris.radicata                        0                     0
+Centaurea.nigra                             0                     0
+Euphrasia.officinalis                       0                     0
+Linum.catharticum                           0                     1
+Convolvulus.arvensis                        0                     0
+Knautia.arvensis                            0                     0
+Aethusa.cynapium                            0                     0
+Eupatorium.cannabinum                       0                     0
+Plantago.major                              0                     0
+Leontodon.saxatilis                         0                     0
+Lathyrus.pratensis                          0                     0
+Clematis.vitalba                            0                     0
+Senecio.jacobaea                            0                     0
+Trifolium.pratense                          0                     0
+Chamerion.angustifolium                     1                     0
+Leontodon.hispidus                          0                     0
+Crepis.capillaris                           0                     0
+Torilis.japonica                            0                     0
+Angelica.sylvestris                         0                     0
+Daucus.carota                               0                     0
+                        Episyrphus.balteatus Eristalis.pertinax Eristalis.tenax
+Agrimonium.eupatorium                      0                  0               0
+Leontodon.autumnalis                       1                  1               0
+Lotus.corniculatus                         0                  0               0
+Medicago.lupulina                          0                  1               0
+Rubus.fruticosus                           0                  0               0
+Hypochaeris.radicata                       0                  1               0
+Centaurea.nigra                            0                  0               0
+Euphrasia.officinalis                      0                  0               0
+Linum.catharticum                          0                  0               0
+Convolvulus.arvensis                       0                  0               1
+Knautia.arvensis                           0                  0               0
+Aethusa.cynapium                           0                  0               0
+Eupatorium.cannabinum                      0                  0               1
+Plantago.major                             0                  0               0
+Leontodon.saxatilis                        0                  0               0
+Lathyrus.pratensis                         0                  0               1
+Clematis.vitalba                           0                  1               0
+Senecio.jacobaea                           1                  0               1
+Trifolium.pratense                         0                  0               0
+Chamerion.angustifolium                    0                  1               0
+Leontodon.hispidus                         0                  0               0
+Crepis.capillaris                          0                  0               0
+Torilis.japonica                           0                  0               1
+Angelica.sylvestris                        0                  0               0
+Daucus.carota                              0                  0               0
+                        Helophilus.pendulus Helophilus.trivittatus
+Agrimonium.eupatorium                     1                      0
+Leontodon.autumnalis                      0                      0
+Lotus.corniculatus                        0                      0
+Medicago.lupulina                         0                      1
+Rubus.fruticosus                          0                      0
+Hypochaeris.radicata                      1                      1
+Centaurea.nigra                           0                      0
+Euphrasia.officinalis                     0                      0
+Linum.catharticum                         0                      0
+Convolvulus.arvensis                      0                      0
+Knautia.arvensis                          0                      0
+Aethusa.cynapium                          0                      0
+Eupatorium.cannabinum                     1                      1
+Plantago.major                            0                      1
+Leontodon.saxatilis                       1                      1
+Lathyrus.pratensis                        0                      0
+Clematis.vitalba                          0                      0
+Senecio.jacobaea                          0                      0
+Trifolium.pratense                        1                      0
+Chamerion.angustifolium                   1                      0
+Leontodon.hispidus                        0                      0
+Crepis.capillaris                         1                      1
+Torilis.japonica                          0                      0
+Angelica.sylvestris                       1                      1
+Daucus.carota                             0                      0
+                        Melanostoma.mellinum Melanostoma.scalare
+Agrimonium.eupatorium                      0                   0
+Leontodon.autumnalis                       0                   0
+Lotus.corniculatus                         0                   1
+Medicago.lupulina                          0                   1
+Rubus.fruticosus                           0                   1
+Hypochaeris.radicata                       0                   0
+Centaurea.nigra                            0                   1
+Euphrasia.officinalis                      0                   0
+Linum.catharticum                          0                   0
+Convolvulus.arvensis                       0                   1
+Knautia.arvensis                           0                   0
+Aethusa.cynapium                           0                   0
+Eupatorium.cannabinum                      1                   1
+Plantago.major                             0                   1
+Leontodon.saxatilis                        1                   0
+Lathyrus.pratensis                         0                   0
+Clematis.vitalba                           0                   0
+Senecio.jacobaea                           0                   0
+Trifolium.pratense                         0                   0
+Chamerion.angustifolium                    0                   0
+Leontodon.hispidus                         0                   0
+Crepis.capillaris                          0                   0
+Torilis.japonica                           0                   0
+Angelica.sylvestris                        1                   0
+Daucus.carota                              0                   0
+                        Meliscaeva.auricollis Metasyrphus.corollae
+Agrimonium.eupatorium                       0                    0
+Leontodon.autumnalis                        0                    0
+Lotus.corniculatus                          0                    0
+Medicago.lupulina                           0                    1
+Rubus.fruticosus                            1                    0
+Hypochaeris.radicata                        0                    0
+Centaurea.nigra                             1                    0
+Euphrasia.officinalis                       0                    0
+Linum.catharticum                           0                    1
+Convolvulus.arvensis                        0                    0
+Knautia.arvensis                            0                    0
+Aethusa.cynapium                            1                    1
+Eupatorium.cannabinum                       0                    0
+Plantago.major                              0                    0
+Leontodon.saxatilis                         0                    0
+Lathyrus.pratensis                          0                    0
+Clematis.vitalba                            0                    0
+Senecio.jacobaea                            0                    0
+Trifolium.pratense                          0                    0
+Chamerion.angustifolium                     0                    0
+Leontodon.hispidus                          0                    0
+Crepis.capillaris                           0                    0
+Torilis.japonica                            0                    0
+Angelica.sylvestris                         0                    0
+Daucus.carota                               1                    0
+                        Platycheirus.albimanus Platycheirus.clypeatus
+Agrimonium.eupatorium                        0                      0
+Leontodon.autumnalis                         0                      0
+Lotus.corniculatus                           0                      0
+Medicago.lupulina                            0                      0
+Rubus.fruticosus                             0                      0
+Hypochaeris.radicata                         0                      0
+Centaurea.nigra                              1                      1
+Euphrasia.officinalis                        0                      0
+Linum.catharticum                            0                      0
+Convolvulus.arvensis                         0                      1
+Knautia.arvensis                             1                      0
+Aethusa.cynapium                             0                      0
+Eupatorium.cannabinum                        0                      0
+Plantago.major                               0                      0
+Leontodon.saxatilis                          0                      0
+Lathyrus.pratensis                           0                      0
+Clematis.vitalba                             0                      0
+Senecio.jacobaea                             0                      1
+Trifolium.pratense                           0                      0
+Chamerion.angustifolium                      0                      0
+Leontodon.hispidus                           1                      0
+Crepis.capillaris                            0                      1
+Torilis.japonica                             1                      0
+Angelica.sylvestris                          1                      0
+Daucus.carota                                0                      0
+                        Platycheirus.scutatus Rhingia.campestris
+Agrimonium.eupatorium                       0                  1
+Leontodon.autumnalis                        0                  0
+Lotus.corniculatus                          0                  0
+Medicago.lupulina                           0                  0
+Rubus.fruticosus                            0                  0
+Hypochaeris.radicata                        0                  1
+Centaurea.nigra                             0                  0
+Euphrasia.officinalis                       0                  0
+Linum.catharticum                           0                  0
+Convolvulus.arvensis                        0                  1
+Knautia.arvensis                            0                  0
+Aethusa.cynapium                            0                  0
+Eupatorium.cannabinum                       0                  1
+Plantago.major                              0                  0
+Leontodon.saxatilis                         0                  0
+Lathyrus.pratensis                          1                  0
+Clematis.vitalba                            0                  0
+Senecio.jacobaea                            0                  1
+Trifolium.pratense                          0                  0
+Chamerion.angustifolium                     0                  1
+Leontodon.hispidus                          0                  0
+Crepis.capillaris                           0                  0
+Torilis.japonica                            0                  1
+Angelica.sylvestris                         0                  0
+Daucus.carota                               1                  0
+                        Scaeva.pyrastri Sphaerophoria.scripta Syritta.pipiens
+Agrimonium.eupatorium                 0                     0               0
+Leontodon.autumnalis                  0                     0               0
+Lotus.corniculatus                    0                     0               0
+Medicago.lupulina                     0                     0               0
+Rubus.fruticosus                      1                     0               0
+Hypochaeris.radicata                  0                     0               0
+Centaurea.nigra                       0                     0               1
+Euphrasia.officinalis                 1                     0               0
+Linum.catharticum                     0                     0               1
+Convolvulus.arvensis                  1                     0               0
+Knautia.arvensis                      0                     0               0
+Aethusa.cynapium                      0                     0               0
+Eupatorium.cannabinum                 0                     1               0
+Plantago.major                        0                     0               0
+Leontodon.saxatilis                   0                     0               1
+Lathyrus.pratensis                    1                     0               1
+Clematis.vitalba                      0                     0               0
+Senecio.jacobaea                      0                     1               0
+Trifolium.pratense                    0                     0               0
+Chamerion.angustifolium               1                     0               0
+Leontodon.hispidus                    0                     0               0
+Crepis.capillaris                     1                     0               0
+Torilis.japonica                      0                     0               0
+Angelica.sylvestris                   0                     0               0
+Daucus.carota                         0                     0               1
+                        Syrphus.ribesii Syrphus.vitripennis
+Agrimonium.eupatorium                 0                   0
+Leontodon.autumnalis                  0                   0
+Lotus.corniculatus                    0                   0
+Medicago.lupulina                     1                   0
+Rubus.fruticosus                      0                   0
+Hypochaeris.radicata                  0                   1
+Centaurea.nigra                       1                   0
+Euphrasia.officinalis                 0                   0
+Linum.catharticum                     0                   0
+Convolvulus.arvensis                  1                   0
+Knautia.arvensis                      0                   1
+Aethusa.cynapium                      0                   0
+Eupatorium.cannabinum                 0                   0
+Plantago.major                        0                   0
+Leontodon.saxatilis                   0                   0
+Lathyrus.pratensis                    0                   0
+Clematis.vitalba                      1                   0
+Senecio.jacobaea                      0                   0
+Trifolium.pratense                    0                   1
+Chamerion.angustifolium               0                   1
+Leontodon.hispidus                    0                   0
+Crepis.capillaris                     0                   1
+Torilis.japonica                      0                   0
+Angelica.sylvestris                   1                   0
+Daucus.carota                         0                   1
+                        Xanthogramma.pedissequum Bombus.lapidarius
+Agrimonium.eupatorium                          0                 0
+Leontodon.autumnalis                           0                 0
+Lotus.corniculatus                             0                 0
+Medicago.lupulina                              0                 0
+Rubus.fruticosus                               1                 0
+Hypochaeris.radicata                           0                 0
+Centaurea.nigra                                0                 0
+Euphrasia.officinalis                          0                 0
+Linum.catharticum                              0                 0
+Convolvulus.arvensis                           0                 1
+Knautia.arvensis                               0                 0
+Aethusa.cynapium                               0                 0
+Eupatorium.cannabinum                          0                 0
+Plantago.major                                 0                 0
+Leontodon.saxatilis                            0                 0
+Lathyrus.pratensis                             1                 1
+Clematis.vitalba                               0                 0
+Senecio.jacobaea                               0                 0
+Trifolium.pratense                             0                 0
+Chamerion.angustifolium                        0                 0
+Leontodon.hispidus                             0                 0
+Crepis.capillaris                              0                 0
+Torilis.japonica                               0                 0
+Angelica.sylvestris                            0                 0
+Daucus.carota                                  0                 0
+                        Bombus.muscorum Bombus.pascuorum Bombus.terrestris
+Agrimonium.eupatorium                 0                0                 0
+Leontodon.autumnalis                  0                1                 0
+Lotus.corniculatus                    0                1                 1
+Medicago.lupulina                     0                0                 0
+Rubus.fruticosus                      0                1                 0
+Hypochaeris.radicata                  0                0                 0
+Centaurea.nigra                       0                0                 0
+Euphrasia.officinalis                 0                0                 0
+Linum.catharticum                     0                0                 0
+Convolvulus.arvensis                  0                0                 0
+Knautia.arvensis                      1                0                 0
+Aethusa.cynapium                      0                0                 0
+Eupatorium.cannabinum                 0                0                 0
+Plantago.major                        0                0                 0
+Leontodon.saxatilis                   0                0                 0
+Lathyrus.pratensis                    0                0                 0
+Clematis.vitalba                      0                0                 0
+Senecio.jacobaea                      0                1                 0
+Trifolium.pratense                    0                0                 0
+Chamerion.angustifolium               0                0                 0
+Leontodon.hispidus                    0                1                 0
+Crepis.capillaris                     1                0                 0
+Torilis.japonica                      0                1                 0
+Angelica.sylvestris                   0                0                 0
+Daucus.carota                         0                0                 0
+                        Psithyrus.spec1 Apis.mellifera Parasitica
+Agrimonium.eupatorium                 1              0          0
+Leontodon.autumnalis                  0              0          0
+Lotus.corniculatus                    1              0          0
+Medicago.lupulina                     0              0          0
+Rubus.fruticosus                      0              0          0
+Hypochaeris.radicata                  0              0          1
+Centaurea.nigra                       0              0          1
+Euphrasia.officinalis                 0              1          0
+Linum.catharticum                     0              1          0
+Convolvulus.arvensis                  0              1          0
+Knautia.arvensis                      0              0          0
+Aethusa.cynapium                      0              0          0
+Eupatorium.cannabinum                 0              0          0
+Plantago.major                        0              1          1
+Leontodon.saxatilis                   0              0          0
+Lathyrus.pratensis                    0              0          0
+Clematis.vitalba                      0              0          0
+Senecio.jacobaea                      0              0          0
+Trifolium.pratense                    0              0          1
+Chamerion.angustifolium               0              0          0
+Leontodon.hispidus                    0              0          0
+Crepis.capillaris                     0              0          1
+Torilis.japonica                      1              0          1
+Angelica.sylvestris                   1              1          0
+Daucus.carota                         0              0          0
+                        Formicidae.spec1 Symphyta.spec1 Symphyta.spec2
+Agrimonium.eupatorium                  0              0              1
+Leontodon.autumnalis                   1              0              0
+Lotus.corniculatus                     1              0              0
+Medicago.lupulina                      0              0              0
+Rubus.fruticosus                       0              1              0
+Hypochaeris.radicata                   0              0              0
+Centaurea.nigra                        0              1              0
+Euphrasia.officinalis                  0              0              0
+Linum.catharticum                      0              1              0
+Convolvulus.arvensis                   0              1              0
+Knautia.arvensis                       0              0              0
+Aethusa.cynapium                       0              0              0
+Eupatorium.cannabinum                  0              0              0
+Plantago.major                         0              0              0
+Leontodon.saxatilis                    0              0              0
+Lathyrus.pratensis                     0              0              1
+Clematis.vitalba                       0              0              0
+Senecio.jacobaea                       0              0              1
+Trifolium.pratense                     0              0              0
+Chamerion.angustifolium                0              0              0
+Leontodon.hispidus                     0              0              0
+Crepis.capillaris                      0              0              0
+Torilis.japonica                       0              0              0
+Angelica.sylvestris                    1              0              1
+Daucus.carota                          0              1              1
+                        solitary.bees Polyommatus.icarus Pyonia.tithonus
+Agrimonium.eupatorium               0                  0               0
+Leontodon.autumnalis                0                  0               1
+Lotus.corniculatus                  0                  0               0
+Medicago.lupulina                   0                  0               0
+Rubus.fruticosus                    0                  0               0
+Hypochaeris.radicata                0                  0               0
+Centaurea.nigra                     0                  0               0
+Euphrasia.officinalis               1                  0               0
+Linum.catharticum                   0                  0               0
+Convolvulus.arvensis                0                  0               0
+Knautia.arvensis                    1                  0               0
+Aethusa.cynapium                    0                  0               0
+Eupatorium.cannabinum               0                  0               0
+Plantago.major                      0                  0               0
+Leontodon.saxatilis                 0                  0               0
+Lathyrus.pratensis                  1                  0               0
+Clematis.vitalba                    0                  0               1
+Senecio.jacobaea                    0                  1               0
+Trifolium.pratense                  0                  0               0
+Chamerion.angustifolium             0                  0               0
+Leontodon.hispidus                  0                  0               0
+Crepis.capillaris                   0                  0               0
+Torilis.japonica                    0                  0               0
+Angelica.sylvestris                 0                  0               0
+Daucus.carota                       0                  0               0
+                        Pieris.brassicae Incurvariidae.spec1 Maniola.jurtina
+Agrimonium.eupatorium                  1                   0               0
+Leontodon.autumnalis                   1                   0               0
+Lotus.corniculatus                     0                   0               0
+Medicago.lupulina                      0                   0               0
+Rubus.fruticosus                       0                   0               1
+Hypochaeris.radicata                   0                   0               0
+Centaurea.nigra                        1                   0               0
+Euphrasia.officinalis                  0                   1               1
+Linum.catharticum                      0                   0               1
+Convolvulus.arvensis                   0                   0               0
+Knautia.arvensis                       0                   0               0
+Aethusa.cynapium                       0                   0               0
+Eupatorium.cannabinum                  0                   0               0
+Plantago.major                         0                   1               0
+Leontodon.saxatilis                    0                   0               0
+Lathyrus.pratensis                     0                   0               0
+Clematis.vitalba                       0                   0               0
+Senecio.jacobaea                       0                   0               0
+Trifolium.pratense                     0                   0               0
+Chamerion.angustifolium                0                   0               0
+Leontodon.hispidus                     0                   1               0
+Crepis.capillaris                      0                   0               0
+Torilis.japonica                       0                   0               0
+Angelica.sylvestris                    1                   0               0
+Daucus.carota                          0                   0               0
+                        Thymelicus.sylvestris Aglais.urticae
+Agrimonium.eupatorium                       0              0
+Leontodon.autumnalis                        0              0
+Lotus.corniculatus                          0              0
+Medicago.lupulina                           0              1
+Rubus.fruticosus                            0              1
+Hypochaeris.radicata                        0              0
+Centaurea.nigra                             0              1
+Euphrasia.officinalis                       0              0
+Linum.catharticum                           0              0
+Convolvulus.arvensis                        0              0
+Knautia.arvensis                            0              0
+Aethusa.cynapium                            0              0
+Eupatorium.cannabinum                       0              0
+Plantago.major                              0              0
+Leontodon.saxatilis                         0              0
+Lathyrus.pratensis                          0              0
+Clematis.vitalba                            0              0
+Senecio.jacobaea                            0              0
+Trifolium.pratense                          0              0
+Chamerion.angustifolium                     0              0
+Leontodon.hispidus                          0              0
+Crepis.capillaris                           0              0
+Torilis.japonica                            0              1
+Angelica.sylvestris                         0              0
+Daucus.carota                               0              0</code></pre>
+<pre class="r"><code>sum(null_r00(memmott1999_binary)) # success</code></pre>
+<pre><code>[1] 299</code></pre>
+<p>A more conservative null hypothesis is to conserve either the row or colum marginal sums, or both (‘fixed’ null model). Algorithms that conserve both are very restrictive, and are commonly based on randomly selecting 2x2 sub-matrices and then swapping their cell entries (“swap” algorithms). However, swap algorithms suffer from several disadvantages in computational time and sampling limitations of the “null space” (discussed in the references below). A new algorithm that overcomes those limitations is the curveball algorithm (Strona et al. 2014). Note that this is a sequential algorithm in which matrices are generated based on previous ones. So for accuracy, the first generated matrices should be discarded. This is done using the burnin argument.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19042)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] RColorBrewer_1.1-2   ggplot2_3.3.3        dplyr_1.0.4         
+ [4] bipartite_2.16       sna_2.6              network_1.16.1      
+ [7] statnet.common_4.4.1 vegan_2.5-7          lattice_0.20-41     
+[10] permute_0.9-5        igraph_1.2.6         workflowr_1.6.2     
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5        assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.27    
+ [5] utf8_1.1.4        rle_0.9.2         R6_2.5.0          evaluate_0.14    
+ [9] coda_0.19-4       spam_2.6-0        pillar_1.5.1      rlang_0.4.10     
+[13] whisker_0.4       jquerylib_0.1.3   Matrix_1.2-18     rmarkdown_2.7    
+[17] splines_4.0.3     stringr_1.4.0     munsell_0.5.0     compiler_4.0.3   
+[21] httpuv_1.5.4      xfun_0.20         pkgconfig_2.0.3   mgcv_1.8-33      
+[25] htmltools_0.5.1.1 tidyselect_1.1.0  tibble_3.0.4      fansi_0.4.2      
+[29] withr_2.4.1       crayon_1.4.1      later_1.1.0.1     MASS_7.3-53      
+[33] grid_4.0.3        nlme_3.1-149      jsonlite_1.7.2    gtable_0.3.0     
+[37] lifecycle_1.0.0   DBI_1.1.1         git2r_0.28.0      magrittr_2.0.1   
+[41] scales_1.1.1      stringi_1.5.3     fs_1.5.0          promises_1.1.1   
+[45] bslib_0.2.4       ellipsis_0.3.1    vctrs_0.3.6       generics_0.1.0   
+[49] tools_4.0.3       glue_1.4.2        purrr_0.3.4       maps_3.3.0       
+[53] fields_11.6       parallel_4.0.3    yaml_2.2.1        colorspace_2.0-0 
+[57] cluster_2.1.0     dotCall64_1.0-1   knitr_1.31        sass_0.3.1       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
