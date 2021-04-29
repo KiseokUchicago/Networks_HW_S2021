@@ -80,9 +80,129 @@ null_r00 <- function(M){
   return(M)
 }
 
-null_r00(memmott1999_binary)
+# null_r00(memmott1999_binary)
 sum(null_r00(memmott1999_binary)) # success
 ```
 
 A more conservative null hypothesis is to conserve either the row or colum marginal sums, or both (‘fixed’ null model). Algorithms that conserve both are very restrictive, and are commonly based on randomly selecting 2x2 sub-matrices and then swapping their cell entries (“swap” algorithms). However, swap algorithms suffer from several disadvantages in computational time and sampling limitations of the “null space” (discussed in the references below). A new algorithm that overcomes those limitations is the curveball algorithm (Strona et al. 2014). Note that this is a sequential algorithm in which matrices are generated based on previous ones. So for accuracy, the first generated matrices should be discarded. This is done using the burnin argument.
+
+```{r}
+num_iterations <- 10
+null_model_curveball <- vegan::nullmodel(memmott1999_binary, method = 'curveball') # Select a null model
+shuffled_curveball <- simulate(null_model_curveball, nsim = num_iterations, burnin = 1000) #Shuffle
+# Calculate the density of each of these matrices
+apply(shuffled_curveball, MARGIN = 3, connectance)
+```
+
+Did the algorithm match the row and column sums?
+```{r}
+all(apply(shuffled_curveball, MARGIN = 3, rowSums)==rowSums(memmott1999_binary)) # all: Are all values true?
+```
+
+Did it shuffle any interactions?
+```{r}
+for (i in 1:num_iterations){
+  if(!identical(shuffled_curveball[,,i], memmott1999_binary)){ # If the shuffled is NOT identical to the original
+    print(paste('Shuffled matrix',i,'is different than the original'))
+  }
+}
+```
+
+Using these randomizations, let’s test if the binary version of the memmot1999 data is “statistically significantly” modular. Here we only present the code, without evaluating it because it takes time… Try running first one iteration before working with several for question 3.
+
+```{r}
+web <- memmott1999_binary
+mod_observed <- computeModules(web)
+Q_obs <- mod_observed@likelihood # This is the value of the modularity function Q for the observed network.
+
+# Now shuffle
+num_iterations <- 100
+null_model <- vegan::nullmodel(web, method = 'r00') # Only preserve matrix fill (density)
+shuffled_r00 <- simulate(null_model, nsim = num_iterations)
+# Calculate modularity of the shuffled networks. For each shuffled network store the results in a vector
+Q_shuff <- NULL
+for (i in 1:10){
+  mod <- computeModules(shuffled_r00[,,i])
+  Q_shuff <- c(Q_shuff, mod@likelihood)
+} 
+#Which proportion of the simulations have a Q value larger than the observed?
+P_value <- sum(Q_obs < Q_shuff)/length(Q_shuff)
+
+```
+
+## Problem 3. Pick another data set from the bipartite package and test if it is significantly modular compared to two null models. 
+
+- Don’t forget to transform it to its binary version! (Or, alternatively, use null models for quantitative networks). One nice way to illustrate your result is to plot the distribution of the quantity of interest, here modularity Q, under the null model (i.e. for the randomizations), and to show there with an arrow or a different marker of your choice where the observation falls. \
+
+- This plot shows clearly if the observation is unlikely under the random assumption, as the observation in that case should fall in the tail of the distribution. The P-value computed above is the area under the curve (of the probability density function) to the right of the observation. Try to produce a plot of this kind and briefly describe your finding. \
+
+```{r}
+# (1) Calculate observed Q
+data(olesen2002flores) 
+olesen2002flores_binary <- 1 * (olesen2002flores > 0) # Make the data binary (unweighted)
+mod_olsen <- computeModules(olesen2002flores_binary)
+Q_obs <- mod_olsen@likelihood
+
+# (2) Calculate null Q
+num_iterations <- 100
+null_model_curveball <- vegan::nullmodel(olesen2002flores_binary, method = 'curveball') # Select a null model
+shuffled_curveball <- simulate(null_model_curveball, nsim = num_iterations, burnin = 1000) #Shuffle
+# Calculate the density of each of these matrices
+apply(shuffled_curveball, MARGIN = 3, connectance)
+
+shuffled_curveball[,,3]
+# Calculate modularity of the shuffled networks. For each shuffled network store the results in a vector
+Q_shuff <- NULL
+for (i in 1:100){
+  mod <- computeModules(shuffled_curveball[,,i])
+  Q_shuff <- c(Q_shuff, mod@likelihood)
+} 
+
+# plot histogram
+hist(Q_shuff, breaks=30, col="darkblue", border="slateblue", main="Histogram of Q of null model", xlab = 'modularity Q')
+abline(v=Q_obs, col ="red")
+
+```
+The red line indicates the observed Q. Most of the values are smaller than observed Q.
+
+```{r}
+P_value <- sum(Q_obs < Q_shuff)/length(Q_shuff)
+P_value
+```
+P value is the area of the probability density curve to the right of the Q observe.
+
+## Problem 4. There is no better way to understand the mechanics of randomization algorithms than to program them yourself! 
+Try to program the probabilistic model from [6]: “The probability of each cell being occupied is the average of the probabilities of occupancy of its row and column.” This means that the probability of drawing an interaction is proportional to the degree of both the lower-level and the higher-level species. Try to program this algorithm. 
+
+```{r}
+A <- olesen2002flores_binary
+dim(A)
+randomize6 <- function(A){
+  # probability of edge matrix for each element A(i,j)
+  prob_M <- matrix(rep(0,dim(A)[1]*dim(A)[2]), dim(A)[1],dim(A)[2])
+  for (i in 1:dim(A)[1]){
+    for(j in 1:dim(A)[2]){
+      prob_row = sum(A[i,])/length((A[i,]))
+      prob_col = sum(A[,j])/length((A[,j]))
+      prob_M[i,j] = (prob_row + prob_col) / 2
+    }
+  }
+  
+  # get random number from uniform distribution [0,1]
+  rand_M <- matrix(runif(dim(A)[1]*dim(A)[2]), dim(A)[1], dim(A)[2])
+  
+  # final randomized matrix
+  randomized_matrix <- ifelse(rand_M < prob_M, 1, 0)
+  colnames(randomized_matrix) <- colnames(A)
+  rownames(randomized_matrix) <- rownames(A)
+  
+  return(randomized_matrix)
+}
+
+randomize6(A)
+```
+
+## 2. Recommended workflow
+
+
 
