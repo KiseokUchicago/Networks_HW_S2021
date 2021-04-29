@@ -42,6 +42,8 @@ In this lab we will see a few algorithms for the sake of introduction. Broadly s
 
 Now let’s shuffle a matrix:
 ```{r}
+data("memmott1999")
+
 num_iterations <- 10
 memmott1999_binary <- 1*(memmott1999>0) # Make the data binary
 null_model <- vegan::nullmodel(memmott1999_binary, method = 'r00') # Select a null model for the data
@@ -203,6 +205,70 @@ randomize6(A)
 ```
 
 ## 2. Recommended workflow
+
+The algorithms that calculate modularity and assign species to modules are not deterministic. These are search algorithms that may produce different results each time they are run. In addition, the value of Q can only be interpreted in relation to some null expectation. Therefore, a typical workflow when working with data would be:
+
+(1) Calculate Q for the empirical network multiple (usually 100) times. \
+(2) Select the run with the max(Q) and use this as the Qobs.\
+(3) Decide on a randomization scheme and produce an ensemble of shuffled networks (usually >=1000).\
+(4) Calculate the Qnull for each of these shuffled networks and create a distribution of these values.\
+(5) Calculate the P value as the proportion of times Qnull > Qobs.\
+
+## 3. Nestedness
+
+There are several methods for calculting the nestedness of a matrix. NODF is the most widely used metric and we will focus on it. NODF is evaluated separately per rows and columns, and then these scores are combined to get the NODF of the whole network. You are encouraged to look at the rationale behind it and how it compares to other metrics [1,2], as described in the lecture. Nestedness has also been suggested for weighted networks [3,4], but we will work with binary networks.
+
+Both vegan and bipartite have a function to calculate nestedness already implemented. The vegan package is more flexible. A basic example:
+
+```{r}
+data("memmott1999")
+memmott1999_binary <- 1*(memmott1999>0)
+nodf <- nestednodf(memmott1999_binary)
+nodf
+
+plot(nodf)
+```
+
+Using oecosimu in vegan, calculting nestedness of a web and comparing it to a null model is super-easy! First we will compare to an equiprobabe shuffling algorithm:
+```{r}
+nodf_eval_1 <- oecosimu(memmott1999_binary, nestednodf, "r00", nsimul = 100)
+nodf_eval_1$statistic # This is the NODF of the observed network
+
+names(nodf_eval_1$oecosimu) # look at the ?oecosimu help for details on what are these values.
+
+nodf_eval_1 # The networks is significantly nested.
+```
+
+## Problem 5. Try comparing to a fixed shuffling algorithm like curveball. Are there differences in the results when using different null models? Why?
+
+```{r}
+nodf_eval_2 <- oecosimu(memmott1999_binary, nestednodf, "curveball", nsimul = 100)
+nodf_eval_2$statistic # This is the NODF of the observed network
+
+names(nodf_eval_2$oecosimu) # look at the ?oecosimu help for details on what are these values.
+
+nodf_eval_2 # The networks is significantly nested.
+```
+
+It is not significant. Nestedness in not significantly differnt from the null model based on fixed shuffling algorithm like curveball.
+
+## Problem 6. Nestedness has been shown to be correlated with network density and the number of species. That renders comparisons of nestedness scores across many networks statistically inappropriate. How can we compare values of nestedness across networks?
+
+
+## 4. Network robustness
+
+The question of how networks with different structures respond to failure of (or attack on) nodes is fundamental across all of network science. For example, in information security, attack on a hub site vs a random site will result in fundamentally different cascades of information failure. These concepts are naturally adapted in ecology. For example, how will a food web collapse if the most connected species go extinct first, compared to when extinctions are random?
+
+We will practice how to examine robustness with an existing implementation in R for bipartite networks in an upcoming lab. Here, for those of you who area curious and like to know about all this in advance to consider this subject for your class project, we direct you to look at functions second.extinct, slope.bipartite, and robustness. You can also read about the Attack Tolerance Curve in [5] and quantifying robustness in [6].
+
+## 5. References
+
+(1) Almeida-Neto M, Guimarães PR, Loyola RD, Ulrich W. A consistent metric for nestedness analysis in ecological systems: reconciling concept and measurement. Oikos. 2008;117: 1227–1239. \
+(2) Ulrich W, Almeida-Neto M, Gotelli NJ. A consumer’s guide to nestedness analysis. Oikos. 2009;118: 3–17.\
+(3) Almeida-Neto M, Ulrich W. A straightforward computational approach for measuring nestedness using quantitative matrices. Environmental Modelling & Software. 2011;26: 173–178.\
+(4) Staniczenko PPA, Kopp JC, Allesina S. The ghost of nestedness in ecological networks. Nat Commun. 2013;4: 1391.\
+(5) Memmott J, Waser NM, Price MV. Tolerance of pollination networks to species extinctions. Proc R Soc B. 2004;271: 2605–2611.\
+(6) Burgos E, Ceva H, Perazzo RPJ, Devoto M, Medan D, Zimmermann M, et al. Why nestedness in mutualistic networks? J Theor Biol. 2007;249: 307–313.\
 
 
 
