@@ -1,0 +1,339 @@
+---
+title: "Infomap_HW"
+author: "KiseokUchicago"
+date: "2021-05-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Homework5 (Multilayer networks)
+## Coding assignment for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
+Lab developed by Shai Pilosof (2021) https://www.bgu.ac.il/ecomplab, pilos@post.bgu.ac.il \
+Student: **Kiseok Lee** 
+
+```{r}
+# libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+library(vegan)
+library(tidyverse)
+library(magrittr)
+library(readxl)
+library(ggalluvial)
+```
+In this lab we will go through the VERY basics of multilayer networks. Although there is a lot of advances with packages like MuxViz and infomapecology, a lot of the analysis, and in particular the preparation of data needs to be done ad-hoc. In this lab I will give an example of how to take a published data set and represent it as a multilayer network. I will also give an introduction for using Infomap to find modules in multilayer networks.
+
+You will need to install the package infomapecology. Full documentation and installation instructions are here: https://ecological-complexity-lab.github.io/infomap_ecology_package/installation
+
+I installed infomap through VS studio prompt.
+```{r}
+library(infomapecology)
+check_infomap() # True
+
+```
+
+## 1. Data structures: Monolayer networks – quick review
+
+The package infomapecology has very useful functions to convert between differnet data structures. Here is an example. Note how the function create_monolayer_object returns multiple data structures, including an igraph object and a list of nodes. This flexibility facilitates downstream analysis. The function automatically detects the input structure and converts it to others.
+
+```{r}
+# Bipartite network matrix input
+data("memmott1999")
+network_object <- create_monolayer_object(x=memmott1999, directed = F, bipartite = T)
+names(network_object)
+network_object$edge_list # An edge list data structure
+
+# Now take an edge list and convert to a matrix
+edgelist_input <- network_object$edge_list
+network_object <- create_monolayer_object(x=edgelist_input, directed = F, bipartite = T)
+names(network_object)
+network_object$mat # A matrix data structure
+```
+
+## Try to use infomapecology to convert between data structures for unipartite networks. 
+Here is an example: ‘https://ecological-complexity-lab.github.io/infomap_ecology_package/monolayer_heirarchical’
+
+```{r}
+# Import data
+data("kongsfjorden_links")
+data("kongsfjorden_nodes")
+nodes <- kongsfjorden_nodes %>%
+  select(node_name=Species, node_id_original=NodeID, everything())
+
+interactions <- kongsfjorden_links %>%
+  select(from=consumer, to=resource) %>%
+  mutate_if(is.factor, as.character) %>%
+  mutate(weight=1)
+
+# Convert link list to adjacency matrix
+network_object <- create_monolayer_object(x=interactions, directed = T, bipartite = F, node_metadata = nodes)
+
+network_object$mat # conversion complete (from link to adjacency matrix)
+
+# Convert adjacency matrix into link list
+network_input <- network_object$mat
+edge_list <- create_monolayer_object(x=network_input, directed = T, bipartite = F, node_metadata = nodes)
+edge_list # conversion complete
+
+# Run infomap, allow hierarchical modules
+# Some species will have only incoming or outgoing links, so the next line will result in a warning
+# infomap_object <- run_infomap_monolayer(network_object, infomap_executable='Infomap',
+#                                         flow_model = 'directed',
+#                                         silent=T,trials=100, two_level=F, seed=123)
+```
+
+## 2. Data structures: Multilayer networks
+We will work first with intralayer edges, and then add interlayer edges.
+The vast number of posibilities that exist to create multilayer networks require a very standardized way of representing them. We use an extended edge list format of the form: layer_from node_from layer_to node_to weight.\
+This is the most flexible format, with which it is possible to represent virtually any network. Most implementations for analysis will not be able to work with node names, only node ids. So we typically replace node and layer names by ids and create a map to identify them. \
+This is the format used by infomapecology::create_multilayer_object. MuxViz has a similar structure.
+
+As an example throughout, we will work with the temporal data of Pilosof et al 2017, Nature Ecol Evol. Here is how it is done in infomapecology:
+```{r}
+data("siberia1982_7_links")
+data("siberia1982_7_nodes")
+layer_map <- tibble(layer_id=1:6, layer_name=1982:1987)
+NEE2017 <- create_multilayer_object(extended = siberia1982_7_links, nodes = siberia1982_7_nodes, intra_output_extended = T, inter_output_extended = T, layers = layer_map)
+head(NEE2017$intra)
+head(NEE2017$inter)
+head(NEE2017$nodes)
+head(NEE2017$layers)
+
+# wow! How did it just do that?
+
+```
+The function infomapecology::create_multilayer_object still needs to get clean data. We are working on functions that will take messy data and create a multilayer networks. Until we do, its up to you!!! So lets try. Your goal is to take the original matrices and create the NEE2017 object yourself. \
+
+This is done in 3 steps: \
+(1) creating intralayer edges, \
+(2) then interlayer edges and \
+(3) then putting them together into a single data frame.\
+
+## 2.1. Intralayer edges
+
+The data has 6 layers, each of them is represented by a matrix.
+```{r}
+# Input first layer
+layer1 <- read_csv('data/Pilosof_etal_NEE2017_1.csv')
+# Note that the host names are in the first column of that data frame but do not need to be in the matrix cells.
+head(layer1$X1)
+# Convert to a matrix (exclude first column)
+layer1_mat <- as.matrix(layer1[,2:ncol(layer1)])
+layer1_mat[1:3,1:3]
+```
+
+The nodes are in the following file. You could actually create this on your own from the layer data. I just saved you some work.
+```{r}
+nodes_id <- read_csv('data/NEE2017_nodes.csv')
+nodes_id_formatted <- nodes_id %>% rename(node_name = species, node_group = type)
+```
+
+## Use the initial code above to transform the 6 layers to an extended edge list. You can use the algorithms from the first section on monolayer networks. Remember that species and layers should be represented as ids. Note that interactions are within the same layer so the id of the layer_from and layer_to is identical.
+
+```{r}
+l1 <- read_csv('data/Pilosof_etal_NEE2017_1.csv')
+l1$X1
+l1_mat <- as.matrix(l1[,2:ncol(l1)])
+dim(l1_mat)
+l2 <- read_csv('data/Pilosof_etal_NEE2017_2.csv')
+l2_mat <- as.matrix(l2[,2:ncol(l2)])
+dim(l2_mat)
+l3 <- read_csv('data/Pilosof_etal_NEE2017_3.csv')
+l3_mat <- as.matrix(l3[,2:ncol(l3)])
+dim(l3_mat)
+l4 <- read_csv('data/Pilosof_etal_NEE2017_4.csv')
+l4_mat <- as.matrix(l4[,2:ncol(l4)])
+l5 <- read_csv('data/Pilosof_etal_NEE2017_5.csv')
+l5_mat <- as.matrix(l5[,2:ncol(l5)])
+l6 <- read_csv('data/Pilosof_etal_NEE2017_6.csv')
+l6_mat <- as.matrix(l6[,2:ncol(l6)])
+dim(l6_mat)
+
+mat_list <- list(l1_mat, l2_mat, l3_mat, l4_mat, l5_mat, l6_mat)
+
+# Make adjacency matrix to edge list for all 6 layers
+edgedf_list <- list()
+for (i in 1:length(mat_list)){
+  edgedf_list[[i]] <- create_monolayer_object(x= mat_list[[i]], directed = F, bipartite = T, node_metadata = nodes_id_formatted, group_names=c('host','paras'))
+  # add column layer_from
+  edgedf_list[[i]]$edge_list$layer_from <- i
+  # add column layer_to
+  edgedf_list[[i]]$edge_list$layer_to <- i
+  # rename to match the output format
+  edgedf_list[[i]]$edge_list <- edgedf_list[[i]]$edge_list %>% rename(node_from = from, node_to = to) %>% select('layer_from', 'node_from', 'layer_to', 'node_to', 'weight')
+  # change the scientific name to node_id
+  edgedf_list[[i]]$edge_list$node_to <- str_replace(edgedf_list[[i]]$edge_list$node_to, "R","")
+  edgedf_list[[i]]$edge_list <- edgedf_list[[i]]$edge_list %>% left_join(nodes_id_formatted, c("node_from"="node_name")) %>% select('layer_from', 'node_id','layer_to', 'node_to', 'weight') %>% rename(node_from = node_id)
+  
+}
+
+# layer 1
+edgedf_list[[1]]$edge_list %>% head()
+edgedf_list[[1]]$edge_list %>% tail()
+
+# rbind all dataframe for all layers
+df_intra <- data.frame()
+for (i in 1:length(edgedf_list)){
+  df_intra <- rbind(df_intra, edgedf_list[[i]]$edge_list)
+}
+
+df_intra %>% head()
+df_intra %>% tail()
+```
+
+## 2.2. Interlayer edges
+In this data set the interlayer edge represent a relative change in the abundance of species between two consecutive years. The data set has 6 layers (years): 1982-1987. So for example if a species had 8 individuals in 1982 and 16 in 1983 the value of the interlayer edge would be: 16/8=2. I already calculated that. The interlayer edges are in files: Pilosof_2017NEE_interlayer_hosts.csv and Pilosof_2017NEE_interlayer_parasites.csv.
+
+## Convert the matrices to interlayer edges of the format layer_from node_from layer_to node_to weight. Note that species are connected to themselves. So the id of the node_from and node_to is identical.
+
+```{r}
+host <- read_csv('data/Pilosof_2017NEE_interlayer_hosts.csv')
+paras <- read_csv('data/Pilosof_2017NEE_interlayer_parasites.csv')
+
+inter_m <- rbind(host, paras) %>% left_join(nodes_id_formatted, c("X1"="node_name")) %>% select("node_id","1983","1984","1985","1986","1987")
+
+dim(inter_m)
+head(inter_m)
+tail(inter_m)
+
+# the row
+df_inter <- data.frame(layer_from=NA, node_from=NA,layer_to=NA, node_to=NA, weight=NA)
+for (i in 1:dim(inter_m)[1]){
+  # the column
+  for (j in 2:dim(inter_m)[2]){
+    if (inter_m[i,j] !=0){ # if the weight is 0, there is no interlayer link
+      vec_1 <- c(0,0,0,0,0) # 'layer_from', 'node_from','layer_to', 'node_to', 'weight'
+      vec_1[2] <- inter_m$node_id[i] # node_from
+      vec_1[4] <- inter_m$node_id[i] # node_to
+      vec_1[1] <- j-1                # layer_from
+      vec_1[3] <- j                  # layer_to
+      vec_1[5] <- inter_m[i,j]       # weight
+      # print(paste0("this is (i,j):",i,",",j))
+      # print(vec_1)
+      df_inter <- rbind(df_inter,vec_1)
+    }
+  }
+}
+dim(df_inter)
+df_inter <- na.omit(df_inter)
+dim(df_inter)
+head(df_inter)
+tail(df_inter)
+```
+
+## 2.3. Putting them together.
+Interlayer edges are the main novel component of multilayer networks. Some methods use them so we need to at least explore their distributions. More crucially, it is recommended that they be on the same scale as intralayer edges, to not bias calculations of some metrics, such as modularity.
+
+## Create a histogram to compare the distriutions of intra and inter-layer edges. Like in the slide from class.
+```{r}
+# Bind the two data frames together.
+df_intra_inter <- rbind(df_intra, df_inter)
+head(df_intra_inter)
+tail(df_intra_inter)
+
+# Histogram to compare
+par(mfrow=c(1,2))
+hist(df_intra$weight, main="Distribution of intra-layer edge's weight")
+hist(df_inter$weight, main="Distribution of inter-layer edge's weight")
+
+dev.off()
+```
+
+## 3. Community detection with Infomap
+Before using Infomap for research you should, however, understand at least the basics. Full information is in the mapequaion.org website. The information on the website can be overwhelming, and not everything is relevant for ecologists. An easier gateway into Infomap is the paper Identifying flow modules in ecological networks using Infomap that can be found in: https://besjournals-onlinelibrary-wiley-com.ezproxy.bgu.ac.il/doi/10.1111/2041-210X.13569, and its accompanying R package infomapecology to facilitate analysis.\
+
+Here is an example for an analysis of modularity for the NEE2017 data set. Before you go into that read the help vignette of run_infomap_multilayer.
+
+```{r}
+# Create a multilayer object
+NEE2017 <- create_multilayer_object(extended = siberia1982_7_links, nodes = siberia1982_7_nodes, intra_output_extended = T, inter_output_extended = T)
+
+#Run infomap
+NEE2017_modules <- run_infomap_multilayer(M=NEE2017, relax = F, flow_model = 'directed', silent = T, trials = 100, seed = 497294, temporal_network = T)
+```
+
+Note the arguments that go into run_infomap_multilayer. In particular see that relax=F. That means that the modules are detected using the interlayer edges. Otherwise the random walker would relax between layers randomly; see https://ecological-complexity-lab.github.io/infomap_ecology_package/multilayer_relax.\
+
+run_infomap_multilayer creates an object of class infomap_multilayer. Lets explore it. \
+
+```{r}
+class(NEE2017_modules)
+# what is the module affiliation of each state node?
+NEE2017_modules$modules
+```
+
+## Try to calculate and present plots of:
+- Number of modules.\
+- Module size (number of state nodes in a module).\
+- Module size per layer (number of physical nodes within each module within each layer).\
+
+```{r}
+# (1) number of modules
+max(NEE2017_modules$modules$module) # 38 modules
+NEE2017_modules$m
+
+# (2) Module size
+df_size <- NEE2017_modules$modules %>% group_by(module) %>% summarize(size = n_distinct(species)) %>% ungroup()
+
+ggplot(df_size,aes(x = module, y = size)) + geom_bar(stat='identity',fill="maroon") + theme_bw() +
+  labs(title="Module size for each modules \n", x="\n Module ID",y="Module size \n")+
+  scale_x_continuous(breaks=seq(1,38,1))+
+  scale_y_continuous(breaks=seq(1,13,1))+
+  theme(panel.grid.minor = element_blank(), panel.background=element_blank(),panel.border=element_blank(), plot.background=element_blank())
+
+# (3) Module size per layer (number of physical nodes within each module within each layer).
+## Plot with many labels
+library(barplot3d)
+# barplot3d
+
+
+barplot3d(rows=2,cols=3,z=1:6,theta=30,phi=50,topcolors=rainbow(6),sidecolors=rainbow(6),
+          xlabels = c("First","Second","Third"),ylabels=c("Front","Back"),
+          xsub="Position",ysub="Row",zsub="Z")
+
+
+
+
+
+
+
+```
+
+This is a temporal network and so modules extedned over several layers in time. We can calculate persistence.
+
+```{r}
+#Module persistance
+modules_persistence <- NEE2017_modules$modules %>%
+  group_by(module) %>%
+  summarise(b=min(layer_id), d=max(layer_id), persistence=d-b+1)
+
+# Plot modules' persistence
+plot_multilayer_modules(NEE2017_modules, type = 'rectangle', color_modules = T)+
+  scale_x_continuous(breaks=seq(0,6,1))+
+  scale_y_continuous(breaks=seq(0,40,5))+
+  scale_fill_viridis_c()+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size=20),
+        axis.text = element_text(size = 20),
+        legend.text =  element_text(size=15),
+        legend.title = element_text(size=20))
+```
+
+
+
+
+
+
+
