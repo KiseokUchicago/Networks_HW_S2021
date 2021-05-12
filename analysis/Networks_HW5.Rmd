@@ -270,7 +270,6 @@ run_infomap_multilayer creates an object of class infomap_multilayer. Lets explo
 class(NEE2017_modules)
 # what is the module affiliation of each state node?
 NEE2017_modules$modules
-
 ```
 
 ## Try to calculate and present plots of:
@@ -279,13 +278,49 @@ NEE2017_modules$modules
 - Module size per layer (number of physical nodes within each module within each layer).\
 
 ```{r}
+# (1) number of modules
+max(NEE2017_modules$modules$module) # 38 modules
+NEE2017_modules$m
+
+# (2) Module size
+df_size <- NEE2017_modules$modules %>% group_by(module) %>% summarize(size = n_distinct(species)) %>% ungroup()
+
+ggplot(df_size,aes(x = module, y = size)) + geom_bar(stat='identity',fill="maroon") + theme_bw() +
+  labs(title="Module size for each modules \n", x="\n Module ID",y="Module size \n")+
+  scale_x_continuous(breaks=seq(1,38,1))+
+  scale_y_continuous(breaks=seq(1,13,1))+
+  theme(panel.grid.minor = element_blank(), panel.background=element_blank(),panel.border=element_blank(), plot.background=element_blank())
+
+# (3) 
+
+
 
 
 
 
 ```
 
+This is a temporal network and so modules extedned over several layers in time. We can calculate persistence.
 
+```{r}
+#Module persistance
+modules_persistence <- NEE2017_modules$modules %>%
+  group_by(module) %>%
+  summarise(b=min(layer_id), d=max(layer_id), persistence=d-b+1)
+
+# Plot modules' persistence
+plot_multilayer_modules(NEE2017_modules, type = 'rectangle', color_modules = T)+
+  scale_x_continuous(breaks=seq(0,6,1))+
+  scale_y_continuous(breaks=seq(0,40,5))+
+  scale_fill_viridis_c()+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.title = element_text(size=20),
+        axis.text = element_text(size = 20),
+        legend.text =  element_text(size=15),
+        legend.title = element_text(size=20))
+```
 
 
 
