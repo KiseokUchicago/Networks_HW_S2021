@@ -272,7 +272,7 @@ class(NEE2017_modules)
 NEE2017_modules$modules
 ```
 
-## Try to calculate and present plots of:
+## Try to calculate and present plots of the following
 - Number of modules.\
 - Module size (number of state nodes in a module).\
 - Module size per layer (number of physical nodes within each module within each layer).\
@@ -291,16 +291,16 @@ ggplot(df_size,aes(x = module, y = size)) + geom_bar(stat='identity',fill="maroo
   scale_y_continuous(breaks=seq(1,13,1))+
   theme(panel.grid.minor = element_blank(), panel.background=element_blank(),panel.border=element_blank(), plot.background=element_blank())
 
-# (3) 
+# (3) Module size per layer (number of physical nodes within each module within each layer).
+df_mspl <- NEE2017_modules$modules %>% group_by(module,layer_id) %>% summarize(size = n_distinct(species)) %>% ungroup()
 
-
-
-
-
-
+library(latticeExtra)
+cloud(size~module+layer_id, df_mspl, panel.3d.cloud=panel.3dbars, col.facet='purple', 
+      xbase=0.6, ybase=0.7, scales=list(arrows=FALSE, col=1), 
+      par.settings = list(axis.line = list(col = "transparent")), screen = list(z = -45, x = -65))
 ```
 
-This is a temporal network and so modules extedned over several layers in time. We can calculate persistence.
+This is a temporal network and so modules extended over several layers in time. We can calculate persistence.
 
 ```{r}
 #Module persistance
@@ -321,6 +321,21 @@ plot_multilayer_modules(NEE2017_modules, type = 'rectangle', color_modules = T)+
         legend.text =  element_text(size=15),
         legend.title = element_text(size=20))
 ```
+In a multilayer network species can occur in more than one layer. That means that they can switch modules – ie, belong to different modules in different layers. This can be nicely plotted with an alluvial diagram.
+```{r}
+#Plot species flow through modules in time
+plot_multilayer_alluvial(NEE2017_modules, module_labels = F)+
+  scale_x_continuous(breaks=seq(0,6,1))+
+  scale_y_continuous(breaks=seq(0,70,5))+
+  labs(y='Number of species')+
+  theme_bw()+
+  theme(legend.position = "none",
+        panel.grid = element_blank(),
+        axis.text = element_text(color='black', size = 20),
+        axis.title = element_text(size=20))
+```
+
+## Try on your own.
 
 
 
