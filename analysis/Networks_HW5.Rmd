@@ -79,18 +79,12 @@ head(interactions)
 # Convert link list to adjacency matrix
 network_object <- create_monolayer_object(x=interactions, directed = T, bipartite = F, node_metadata = nodes)
 
-network_object$mat # conversion complete (from link to adjacency matrix)
+# network_object$mat # conversion complete (from link to adjacency matrix)
 
 # Convert adjacency matrix into link list
 network_input <- network_object$mat
 edge_list <- create_monolayer_object(x=network_input, directed = T, bipartite = F, node_metadata = nodes)
-edge_list # conversion complete
-
-# Run infomap, allow hierarchical modules
-# Some species will have only incoming or outgoing links, so the next line will result in a warning
-# infomap_object <- run_infomap_monolayer(network_object, infomap_executable='Infomap',
-#                                         flow_model = 'directed',
-#                                         silent=T,trials=100, two_level=F, seed=123)
+# edge_list # conversion complete
 ```
 
 ## 2. Data structures: Multilayer networks
@@ -417,7 +411,7 @@ isSymmetric(as.matrix(TI)) # directed matrix
 
 # Testing if it works: convert to edge_list
 edge_TI <- create_monolayer_object(x=TI, directed = T, bipartite = F, node_metadata = nodes_formatted)
-edge_TI$edge_list # conversion complete
+# edge_TI$edge_list # conversion complete
 
 # Checking if it contains nodes # 21, 23, 24, 69, which should not be in the edge list
 edge_TI$edge_list %>% filter(from %in% c(21, 23, 24, 69))
