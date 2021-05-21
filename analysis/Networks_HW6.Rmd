@@ -149,8 +149,6 @@ A_cas <- matrix(rep(0,S*S),nrow = S, ncol = S)
 # loop through row i and col j 
 for (i in 1:length(species_uni)){
   for (j in 1:length(species_uni)){
-    print(i)
-    print(j)
     if (species_uni[i] > species_uni[j]){
       A_cas[i,j] <- rbinom(1,1,P)
     }
@@ -433,7 +431,6 @@ generated_properties_random <- lapply(graphs_list, calculateProperties) # apply 
 generated_properties_random <- do.call(rbind, generated_properties_random) # row-bind the data frames.
 generated_properties_random <- reshape2::melt(generated_properties_random) # This form is easier to plot
 
-
 ## Cascade model
 webs <- CommunityFactory(S=S, n=N, generator=CascadeModelLinks, C=C) # use this function to generate an object of class "community"
 graphs_list <- NULL
@@ -454,6 +451,153 @@ generated_properties_niche <- lapply(graphs_list, calculateProperties)
 generated_properties_niche <- do.call(rbind, generated_properties_niche)
 generated_properties_niche <- reshape2::melt(generated_properties_niche)
 ```
+
+Now let’s see how they compare to each other and to the empirical data.
+```{r}
+# Data frame from the empirical value, to plot vertical lines on the histograms
+intercept_data <- as.data.frame(t(empirical)[,1]) # Intercept is where lines would meet the x axis on the final plot
+names(intercept_data)[1] <- 'intercept'
+intercept_data$variable <- rownames(intercept_data)
+
+# Create a data frame with all the results of the three models
+generated_properties_random$model <- 'Random'
+generated_properties_cascade$model <- 'Cascade'
+generated_properties_niche$model <- 'Niche'
+d <- rbind(generated_properties_random,generated_properties_cascade,generated_properties_niche)
+ggplot(d, aes(value, fill=model))+geom_histogram(alpha=0.3)+
+  facet_wrap(~variable, scales='free')+ # Separate panels for each property
+  geom_vline(data = intercept_data, aes(xintercept = intercept), color='red')+
+  theme_classic()
+```
+
+## Problem 5. Compare generative models for a different network. 
+Please describe with some brief text which model appears to perform best and on the basis of which properties. To better compare the properties for the empirical web to the distributions of a given quantity under a given model, use the z score described in lecture (as in Williams and Martinez). What are some of the issues with trying to decide which model is best?
+
+```{r}
+# calculate Z score
+d_zscore <- d %>% group_by(variable, model) %>% summarize(zscore = (value - mean(value)) / sd(value))
+ggplot(d_zscore, aes(zscore, col=model))+geom_freqpoly()+
+  facet_wrap(~variable, scales='free')+ # Separate panels for each property
+  # geom_vline(data = intercept_data, aes(xintercept = intercept), color='red')+
+  theme_classic()
+```
+In basal species / top species distribution and chain length mean and sd, Niche model seems to be closer to the Otago model than Cascade or Random models. Therefore, we could say that Niche model performs best.
+
+When we calculate the Z-score and use that to compare with the random model, we cannot say that either cascade model or niche model is performing better compared to the random model. Both are different from the random model in terms of Top species, basal species distribution. However, according to number of links, connectivity, generality, vulnerability, niche model and cascade models are both performing similarly to the random model. Links and connectivity are okay to be similar to the random model, because those values were maintained during the generation of cascade and niche model. But, generality and vulnerability should have been different.\
+
+We recommend you choose to work with another food web (such as Chesapeake). You could of course proceed with any other network but if it is not a food web, you would need to come up with generative models that make sense for your system!
+```{r}
+# Load the web
+chesapeake_nodes <- read.csv('data/Chesapeake_bay_nodes.csv', header=F)
+names(chesapeake_nodes) <- c('nodeId','species_name')
+chesapeake_links <- read.csv('data/Chesapeake_bay_links.csv', header=F)
+names(chesapeake_links) <- c('from','to','weight')
+ches_web <- graph.data.frame(chesapeake_links, vertices = chesapeake_nodes, directed = T)
+
+empirical_ches <- calculateProperties(ches_web)
+intercept_ches <- as.data.frame(t(empirical)[,1]) # Intercept is where lines would meet the x axis on the final plot
+names(intercept_ches)[1] <- 'intercept'
+intercept_ches$variable <- rownames(intercept_ches)
+
+# plot intercept with Chesapeake web
+ggplot(d, aes(value, fill=model))+geom_histogram(alpha=0.3)+
+  facet_wrap(~variable, scales='free')+ # Separate panels for each property
+  geom_vline(data = intercept_ches, aes(xintercept = intercept), color='red')+
+  theme_classic()
+```
+Interestingly, now Cascade model has closer basal species, top species distribution compared to the Chesapeake network. 
+
+## 2.2 Using likelihood
+
+## 2.2.1 A visualization of model maximum likelihoods
+Allesina, Alonso & Pascual (Science, 2008) derived the likelihood functions (and their maximum likelihood estimates, mle values) for several generative models. For example, the log-likelihood of the random model is L∗log(p)+(S2−L)∗log(1−p) and it is maximized when p=L/S2. That means that if we generate a network with the random model the mle will be obtained for when p is given by its connectance. Let’s see if that is true. In practice we use log-likelihood because the likelihood is between 0 and 1, and we are often comparing small values. In that way, the log-likelihood expands the scale, and its values are negative with a maximum of zero.
+
+```{r}
+# Generate a network with the random model
+S=100
+C=0.15
+web <- matrix(data = rbinom(S*S,1,C),nrow = S, ncol = S)
+L=sum(web>0)
+p_max=L/S^2
+# Sweep a cross a range of p and see where likelihood is maximized.
+LL_vector=NULL # Store results of log-likelihood
+p_range <- seq(p_max-0.1,p_max+0.1,0.001)
+for (p in p_range){
+  LL <- L*log(p)+(S^2-L)*log(1-p)
+  LL_vector <- c(LL_vector, LL)
+}
+qplot(x=p_range, y=LL_vector)+geom_vline(xintercept = p_max, color='red')
+
+p_range[which.max(LL_vector)] # Connectance corresponding to the maximum log-likelihood
+
+```
+
+The log-likelihood function of the cascade model is log(p)L+log(1−p)⋅(S(S−1)/2−L) and it is maximized when p=2CS/(S−1).
+
+```{r}
+# Generate a random network with the cascade model
+S=100
+C=0.15
+web <- matrix(0, ncol=S, nrow=S)
+num_links_allowed <- S*(S-1)/2
+web[upper.tri(web)] <- 2*C*S/(S - 1) > runif(num_links_allowed)
+L=sum(web>0) # Number of links in the generated network
+C=L/S^2 # Connectance of the generatd network
+p_max=2*C*S/(S - 1) # The value which maximizes the likelihood
+LL_vector=NULL # Store results of log-likelihood
+p_range <- seq(p_max-0.1,p_max+0.1,0.001) # A range to calculate the likelihoods
+for (p in p_range){
+  LL <- L*log(p)+(S*(S-1)/2-L)*log(1-p)
+  LL_vector <- c(LL_vector, LL)
+}
+# d <- data.frame(p_range=p_range, LL_vector=LL_vector)
+# d <- d %>% arrange(LL_vector, p_range)
+qplot(x=p_range, y=LL_vector)+geom_vline(xintercept = p_max, color='red')
+
+p_range[which.max(LL_vector)]-p_max # Connectance corresponding to the maximum log-likelihood
+
+```
+
+## 2.2.2 Comparing between models using likelihoods
+The likelihood allows us to compare different models by asking the question of which model better fits the data? More formally, we are asking what is the probability of the data given the model. For example, if we compare the Random Model to the Modified Cascade:
+
+```{r}
+S <- vcount(otago_web)
+L <- ecount(otago_web)
+
+# random
+p <- L/S^2
+LL_random <- L*log(p)+(S^2-L)*log(1-p)
+
+# Modified cascade
+A <- as_adjacency_matrix(otago_web, sparse=F)
+L1 <- sum(A[upper.tri(A)]>0)
+L2 <- sum(A[lower.tri(A)]>0)+sum(diag(A))
+q1 <- 2*L1/(S*(S-1))
+q2 <- 2*L2/(S*(S+1))
+LL_modified1 <- L1*log(q1)+(S*(S-1)/2-L1)*log(1-q1)
+LL_modified2 <- L2*log(q2)+(S*(S+1)/2-L2)*log(1-q2)
+LL_modified <- LL_modified1+LL_modified2
+data.frame(model=c('Random','Modified-cascade'), loglik=c(LL_random,LL_modified)) %>% arrange(desc(loglik))
+```
+
+## 2.2.3 Note on using likelihood to fit a model to network data
+Note that for the Modified Cascade model, we used this version of the likelihood function: qL11(1−q1)S(S−1)/2−L1×qL22(1−q2)S(S+1)/2−L2. However, if we look at the original likelihood functions, we see that the order of the species (the hierarchy along the niche axis) is given (i.e. it is considered a parameter in the likelihood functions of the Cascade, Modified Cascade and Niche models. If we change the order of the rows or columns of Aij, we can obtain a different value for the likelihood function! Purely for the sake of the example, in the code above we assumed that the line A <- as_adjacency_matrix(otago_web, sparse=F) gave us a matrix Aij which was ordered in a way that would maximize the likelihood function of the Modified Cascade model, ∏Si∏Sj>i[qAij1(1−q1)1−Aij]∏Si∏ij=1[qAij2(1−q2)1−Aij]. (This allows us to use the given likelihood function but it is not necessarily the case). To find the maximum likelihood, we should search for the optimal order of the species, and therefore, Aij, which maximizes the likelihood.
+
+## Problem 6. Devise a code that maximizes the likelihood by also searching for the correct species order.
+
+
+## Problem 7. Generating networks can be used to test hypotheses regarding the consequences of structure. 
+For example, we can ask if networks generated with the niche model are more robust to species losses than those generated using an Erdos-Reyni process. One exercise would be to generate a distribution of networks of a given size and connectance using different models, and then test their robustness. You could try to develop that code. You could also try to test if robustness is affected by the interaction between size, connectance and the different models (i.e., if different models produce more robust networks for a given range of S or C).
+
+
+
+
+
+
+
+
+
 
 
 
