@@ -385,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-05-20
+<strong>Last updated:</strong> 2021-05-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -476,16 +476,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree45488b68b5435cd90524eee921a7e87b23da2904targetblank45488b6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/45488b68b5435cd90524eee921a7e87b23da2904" target="_blank">45488b6</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree2f8ec7b5f58f86c1524e88bd5eb60ea5d2f7c816targetblank2f8ec7ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/2f8ec7b5f58f86c1524e88bd5eb60ea5d2f7c816" target="_blank">2f8ec7b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree45488b68b5435cd90524eee921a7e87b23da2904targetblank45488b6a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree2f8ec7b5f58f86c1524e88bd5eb60ea5d2f7c816targetblank2f8ec7ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/45488b68b5435cd90524eee921a7e87b23da2904" target="_blank">45488b6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/2f8ec7b5f58f86c1524e88bd5eb60ea5d2f7c816" target="_blank">2f8ec7b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -584,6 +584,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/2f8ec7b5f58f86c1524e88bd5eb60ea5d2f7c816/analysis/Networks_HW6.Rmd" target="_blank">2f8ec7b</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-21
+</td>
+<td>
+HW6
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/851cb17d6dbe08e2ab9838f31f37c793403359f0/docs/Networks_HW6.html" target="_blank">851cb17</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/45488b68b5435cd90524eee921a7e87b23da2904/analysis/Networks_HW6.Rmd" target="_blank">45488b6</a>
 </td>
 <td>
@@ -659,10 +693,8 @@ library(gtools)
 library(devtools)</code></pre>
 <pre class="r"><code># install_github(&#39;quicklizard99/Basingstoke&#39;)
 library(Basingstoke)</code></pre>
-</div>
-<div id="define-function" class="section level1">
-<h1>define function</h1>
-<pre class="r"><code># We will need this function later. It is based on the code from lab 1.
+<pre class="r"><code># define function
+# We will need this function later. It is based on the code from lab 1.
 plot_web_trophic &lt;- function(g){
   basal &lt;- which(igraph::degree(g, mode = &#39;in&#39;) == 0) # Basal species do not have ingoing links
   top &lt;- which(igraph::degree(g, mode = &#39;out&#39;) == 0) # Top species do not have outgoing links
@@ -687,6 +719,7 @@ plot_web_trophic &lt;- function(g){
               edge.arrow.size=.3,
               edge.width=.5)
 }</code></pre>
+</div>
 <div id="network-generation" class="section level2">
 <h2>1. Network generation</h2>
 <p>Generating synthetic networks is the process of filling an adjaceny matrix according to a given set of rules. We will examine 3 models applied to food webs that create unweighted food webs.</p>
@@ -1201,10 +1234,11 @@ ggplot(d, aes(value, fill=model))+geom_histogram(alpha=0.3)+
 </div>
 <div id="a-visualization-of-model-maximum-likelihoods" class="section level2">
 <h2>2.2.1 A visualization of model maximum likelihoods</h2>
-<p>Allesina, Alonso &amp; Pascual (Science, 2008) derived the likelihood functions (and their maximum likelihood estimates, mle values) for several generative models. For example, the log-likelihood of the random model is L∗log(p)+(S2−L)∗log(1−p) and it is maximized when p=L/S2. That means that if we generate a network with the random model the mle will be obtained for when p is given by its connectance. Let’s see if that is true. In practice we use log-likelihood because the likelihood is between 0 and 1, and we are often comparing small values. In that way, the log-likelihood expands the scale, and its values are negative with a maximum of zero.</p>
+<p>Allesina, Alonso &amp; Pascual (Science, 2008) derived the likelihood functions (and their maximum likelihood estimates, mle values) for several generative models. For example, the log-likelihood of the random model is L∗log(p)+(S2−L)∗log(1−p) and it is maximized when p=L/S2.<br />
+That means that if we generate a network with the random model the mle will be obtained for when p is given by its connectance. Let’s see if that is true. In practice we use log-likelihood because the likelihood is between 0 and 1, and we are often comparing small values. In that way, the log-likelihood expands the scale, and its values are negative with a maximum of zero.</p>
 <pre class="r"><code># Generate a network with the random model
 S=100
-C=0.15
+C=0.15 
 web &lt;- matrix(data = rbinom(S*S,1,C),nrow = S, ncol = S)
 L=sum(web&gt;0)
 p_max=L/S^2
@@ -1239,8 +1273,8 @@ for (p in p_range){
 # d &lt;- d %&gt;% arrange(LL_vector, p_range)
 qplot(x=p_range, y=LL_vector)+geom_vline(xintercept = p_max, color=&#39;red&#39;)</code></pre>
 <p><img src="figure/Networks_HW6.Rmd/unnamed-chunk-22-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p_range[which.max(LL_vector)]-p_max # Connectance corresponding to the maximum log-likelihood</code></pre>
-<pre><code>[1] 0</code></pre>
+<pre class="r"><code>p_range[which.max(LL_vector)] # Connectance corresponding to the maximum log-likelihood</code></pre>
+<pre><code>[1] 0.3113131</code></pre>
 </div>
 <div id="comparing-between-models-using-likelihoods" class="section level2">
 <h2>2.2.2 Comparing between models using likelihoods</h2>
@@ -1268,10 +1302,64 @@ data.frame(model=c(&#39;Random&#39;,&#39;Modified-cascade&#39;), loglik=c(LL_ran
 </div>
 <div id="note-on-using-likelihood-to-fit-a-model-to-network-data" class="section level2">
 <h2>2.2.3 Note on using likelihood to fit a model to network data</h2>
-<p>Note that for the Modified Cascade model, we used this version of the likelihood function: qL11(1−q1)S(S−1)/2−L1×qL22(1−q2)S(S+1)/2−L2. However, if we look at the original likelihood functions, we see that the order of the species (the hierarchy along the niche axis) is given (i.e. it is considered a parameter in the likelihood functions of the Cascade, Modified Cascade and Niche models. If we change the order of the rows or columns of Aij, we can obtain a different value for the likelihood function! Purely for the sake of the example, in the code above we assumed that the line A &lt;- as_adjacency_matrix(otago_web, sparse=F) gave us a matrix Aij which was ordered in a way that would maximize the likelihood function of the Modified Cascade model, ∏Si∏Sj&gt;i[qAij1(1−q1)1−Aij]∏Si∏ij=1[qAij2(1−q2)1−Aij]. (This allows us to use the given likelihood function but it is not necessarily the case). To find the maximum likelihood, we should search for the optimal order of the species, and therefore, Aij, which maximizes the likelihood.</p>
+<p>Note that for the Modified Cascade model, we used this version of the likelihood function: qL11(1−q1)S(S−1)/2−L1×qL22(1−q2)S(S+1)/2−L2. However, if we look at the original likelihood functions, we see that the order of the species (the hierarchy along the niche axis) is given (i.e. it is considered a parameter in the likelihood functions of the Cascade, Modified Cascade and Niche models.<br />
+If we change the order of the rows or columns of Aij, we can obtain a different value for the likelihood function! Purely for the sake of the example, in the code above we assumed that the line A &lt;- as_adjacency_matrix(otago_web, sparse=F) gave us a matrix Aij which was ordered in a way that would maximize the likelihood function of the Modified Cascade model, ∏Si∏Sj&gt;i[qAij1(1−q1)1−Aij]∏Si∏ij=1[qAij2(1−q2)1−Aij]. (This allows us to use the given likelihood function but it is not necessarily the case). To find the maximum likelihood, we should search for the optimal order of the species, and therefore, Aij, which maximizes the likelihood.</p>
 </div>
 <div id="problem-6.-devise-a-code-that-maximizes-the-likelihood-by-also-searching-for-the-correct-species-order." class="section level2">
 <h2>Problem 6. Devise a code that maximizes the likelihood by also searching for the correct species order.</h2>
+<pre class="r"><code>S &lt;- vcount(otago_web)
+L &lt;- ecount(otago_web)
+
+# random
+p &lt;- L/S^2
+LL_random &lt;- L*log(p)+(S^2-L)*log(1-p)
+
+# Modified cascade
+A &lt;- as_adjacency_matrix(otago_web, sparse=F)
+
+get_likelihood_cascade &lt;- function(A){
+  L1 &lt;- sum(A[upper.tri(A)]&gt;0)
+  L2 &lt;- sum(A[lower.tri(A)]&gt;0)+sum(diag(A))
+  q1 &lt;- 2*L1/(S*(S-1))
+  q2 &lt;- 2*L2/(S*(S+1))
+  LL_modified1 &lt;- L1*log(q1)+(S*(S-1)/2-L1)*log(1-q1)
+  LL_modified2 &lt;- L2*log(q2)+(S*(S+1)/2-L2)*log(1-q2)
+  LL_modified &lt;- LL_modified1+LL_modified2
+  return(LL_modified)
+}
+
+
+# Correcting species order
+# Randomize rows and get the order with highest log likelihood
+
+# reference point start
+A &lt;- as_adjacency_matrix(otago_web, sparse=F)
+reference &lt;- get_likelihood_cascade(A)
+
+rand_number &lt;- 50000
+store_vec &lt;- c(reference)
+for (i in 1:rand_number){
+  # print(i)
+  A_row_permutation &lt;- A[sample(nrow(A)),]
+  # if this permutated matrix&#39;s log likelihood is higher, then save
+  LL_permute &lt;- get_likelihood_cascade(A_row_permutation)
+  store_vec &lt;- c(store_vec, LL_permute)
+  if (LL_permute &gt; reference){
+    reference &lt;- LL_permute
+  }
+}
+
+LL_reorder &lt;- reference
+
+data.frame(model=c(&#39;Random&#39;,&#39;Modified-cascade&#39;,&#39;Reordered-Modified-cascade&#39;), loglik=c(LL_random,LL_modified,LL_reorder)) %&gt;% arrange(desc(loglik))</code></pre>
+<pre><code>                       model    loglik
+1 Reordered-Modified-cascade -7145.365
+2           Modified-cascade -7286.475
+3                     Random -7298.607</code></pre>
+<pre class="r"><code># Draw histogram
+hist(store_vec, main=&quot;Distribution of randomly permutated log-likelihood&quot;)
+abline(v=LL_reorder, col=&quot;red&quot;, lwd=3, lty=2)</code></pre>
+<p><img src="figure/Networks_HW6.Rmd/unnamed-chunk-24-1.png" width="1056" style="display: block; margin: auto;" /> The red vertical line is the “Reordered” log-likelihood.</p>
 </div>
 <div id="problem-7.-generating-networks-can-be-used-to-test-hypotheses-regarding-the-consequences-of-structure." class="section level2">
 <h2>Problem 7. Generating networks can be used to test hypotheses regarding the consequences of structure.</h2>
@@ -1338,7 +1426,6 @@ loaded via a namespace (and not attached):
 [89] rmarkdown_2.7     grid_4.0.3        data.table_1.14.0 callr_3.7.0      
 [93] git2r_0.28.0      reprex_2.0.0      digest_0.6.27     httpuv_1.6.0     
 [97] munsell_0.5.0     bslib_0.2.4       sessioninfo_1.1.1</code></pre>
-</div>
 </div>
 </div>
 
