@@ -38,8 +38,8 @@ library(devtools)
 library(Basingstoke)
 ```
 
-# define function
 ```{r}
+# define function
 # We will need this function later. It is based on the code from lab 1.
 plot_web_trophic <- function(g){
   basal <- which(igraph::degree(g, mode = 'in') == 0) # Basal species do not have ingoing links
@@ -510,12 +510,13 @@ Interestingly, now Cascade model has closer basal species, top species distribut
 ## 2.2 Using likelihood
 
 ## 2.2.1 A visualization of model maximum likelihoods
-Allesina, Alonso & Pascual (Science, 2008) derived the likelihood functions (and their maximum likelihood estimates, mle values) for several generative models. For example, the log-likelihood of the random model is L∗log(p)+(S2−L)∗log(1−p) and it is maximized when p=L/S2. That means that if we generate a network with the random model the mle will be obtained for when p is given by its connectance. Let’s see if that is true. In practice we use log-likelihood because the likelihood is between 0 and 1, and we are often comparing small values. In that way, the log-likelihood expands the scale, and its values are negative with a maximum of zero.
+Allesina, Alonso & Pascual (Science, 2008) derived the likelihood functions (and their maximum likelihood estimates, mle values) for several generative models. For example, the log-likelihood of the random model is L∗log(p)+(S2−L)∗log(1−p) and it is maximized when p=L/S2.\
+That means that if we generate a network with the random model the mle will be obtained for when p is given by its connectance. Let’s see if that is true. In practice we use log-likelihood because the likelihood is between 0 and 1, and we are often comparing small values. In that way, the log-likelihood expands the scale, and its values are negative with a maximum of zero.
 
 ```{r}
 # Generate a network with the random model
 S=100
-C=0.15
+C=0.15 
 web <- matrix(data = rbinom(S*S,1,C),nrow = S, ncol = S)
 L=sum(web>0)
 p_max=L/S^2
@@ -554,7 +555,7 @@ for (p in p_range){
 # d <- d %>% arrange(LL_vector, p_range)
 qplot(x=p_range, y=LL_vector)+geom_vline(xintercept = p_max, color='red')
 
-p_range[which.max(LL_vector)]-p_max # Connectance corresponding to the maximum log-likelihood
+p_range[which.max(LL_vector)] # Connectance corresponding to the maximum log-likelihood
 
 ```
 
@@ -582,13 +583,74 @@ data.frame(model=c('Random','Modified-cascade'), loglik=c(LL_random,LL_modified)
 ```
 
 ## 2.2.3 Note on using likelihood to fit a model to network data
-Note that for the Modified Cascade model, we used this version of the likelihood function: qL11(1−q1)S(S−1)/2−L1×qL22(1−q2)S(S+1)/2−L2. However, if we look at the original likelihood functions, we see that the order of the species (the hierarchy along the niche axis) is given (i.e. it is considered a parameter in the likelihood functions of the Cascade, Modified Cascade and Niche models. If we change the order of the rows or columns of Aij, we can obtain a different value for the likelihood function! Purely for the sake of the example, in the code above we assumed that the line A <- as_adjacency_matrix(otago_web, sparse=F) gave us a matrix Aij which was ordered in a way that would maximize the likelihood function of the Modified Cascade model, ∏Si∏Sj>i[qAij1(1−q1)1−Aij]∏Si∏ij=1[qAij2(1−q2)1−Aij]. (This allows us to use the given likelihood function but it is not necessarily the case). To find the maximum likelihood, we should search for the optimal order of the species, and therefore, Aij, which maximizes the likelihood.
+Note that for the Modified Cascade model, we used this version of the likelihood function: qL11(1−q1)S(S−1)/2−L1×qL22(1−q2)S(S+1)/2−L2. However, if we look at the original likelihood functions, we see that the order of the species (the hierarchy along the niche axis) is given (i.e. it is considered a parameter in the likelihood functions of the Cascade, Modified Cascade and Niche models. \
+If we change the order of the rows or columns of Aij, we can obtain a different value for the likelihood function! Purely for the sake of the example, in the code above we assumed that the line A <- as_adjacency_matrix(otago_web, sparse=F) gave us a matrix Aij which was ordered in a way that would maximize the likelihood function of the Modified Cascade model, ∏Si∏Sj>i[qAij1(1−q1)1−Aij]∏Si∏ij=1[qAij2(1−q2)1−Aij]. (This allows us to use the given likelihood function but it is not necessarily the case). To find the maximum likelihood, we should search for the optimal order of the species, and therefore, Aij, which maximizes the likelihood.
 
 ## Problem 6. Devise a code that maximizes the likelihood by also searching for the correct species order.
 
+```{r}
+S <- vcount(otago_web)
+L <- ecount(otago_web)
+
+# random
+p <- L/S^2
+LL_random <- L*log(p)+(S^2-L)*log(1-p)
+
+# Modified cascade
+A <- as_adjacency_matrix(otago_web, sparse=F)
+
+get_likelihood_cascade <- function(A){
+  L1 <- sum(A[upper.tri(A)]>0)
+  L2 <- sum(A[lower.tri(A)]>0)+sum(diag(A))
+  q1 <- 2*L1/(S*(S-1))
+  q2 <- 2*L2/(S*(S+1))
+  LL_modified1 <- L1*log(q1)+(S*(S-1)/2-L1)*log(1-q1)
+  LL_modified2 <- L2*log(q2)+(S*(S+1)/2-L2)*log(1-q2)
+  LL_modified <- LL_modified1+LL_modified2
+  return(LL_modified)
+}
+
+
+# Correcting species order
+# Randomize rows and get the order with highest log likelihood
+
+# reference point start
+A <- as_adjacency_matrix(otago_web, sparse=F)
+reference <- get_likelihood_cascade(A)
+
+rand_number <- 50000
+store_vec <- c(reference)
+for (i in 1:rand_number){
+  # print(i)
+  A_row_permutation <- A[sample(nrow(A)),]
+  # if this permutated matrix's log likelihood is higher, then save
+  LL_permute <- get_likelihood_cascade(A_row_permutation)
+  store_vec <- c(store_vec, LL_permute)
+  if (LL_permute > reference){
+    reference <- LL_permute
+  }
+}
+
+LL_reorder <- reference
+
+data.frame(model=c('Random','Modified-cascade','Reordered-Modified-cascade'), loglik=c(LL_random,LL_modified,LL_reorder)) %>% arrange(desc(loglik))
+
+# Draw histogram
+hist(store_vec, main="Distribution of randomly permutated log-likelihood")
+abline(v=LL_reorder, col="red", lwd=3, lty=2)
+```
+The red vertical line is the "Reordered" log-likelihood.
 
 ## Problem 7. Generating networks can be used to test hypotheses regarding the consequences of structure. 
 For example, we can ask if networks generated with the niche model are more robust to species losses than those generated using an Erdos-Reyni process. One exercise would be to generate a distribution of networks of a given size and connectance using different models, and then test their robustness. You could try to develop that code. You could also try to test if robustness is affected by the interaction between size, connectance and the different models (i.e., if different models produce more robust networks for a given range of S or C).
+
+```{r}
+
+
+
+
+```
+
 
 
 
