@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="KiseokUchicago" />
+
+<meta name="date" content="2021-05-26" />
+
+<title>Networks_HW7</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Networks_HW_S2021</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/KiseokUchicago/Networks_HW_S2021">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Networks_HW7</h1>
+<h4 class="author">KiseokUchicago</h4>
+<h4 class="date">2021-05-26</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-05-26
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Networks_HW_S2021/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210409code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210409)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210409code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210409)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree7a597c142f8c2832adf36711cb1f785be2ce4c54targetblank7a597c1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/7a597c142f8c2832adf36711cb1f785be2ce4c54" target="_blank">7a597c1</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree7a597c142f8c2832adf36711cb1f785be2ce4c54targetblank7a597c1a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/7a597c142f8c2832adf36711cb1f785be2ce4c54" target="_blank">7a597c1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/infomap
+    Untracked:  data/1_0.3_edge_mer.css.ss.5.tsv
+    Untracked:  data/1_0.3_node_mer.css.ss.5.tsv
+    Untracked:  data/2_0.3_edge_dom.css.ss.5.tsv
+    Untracked:  data/2_0.3_node_dom.css.ss.5.tsv
+    Untracked:  data/3_0.3_edge_wil.css.ss.5.tsv
+    Untracked:  data/3_0.3_node_wil.css.ss.5.tsv
+    Untracked:  data/4_0.3_edge_phy.css.ss.5.tsv
+    Untracked:  data/5_0.3_edge_dom.phy.ss.5.tsv
+    Untracked:  data/6_0.3_edge_wil.phy.ss.5.tsv
+    Untracked:  data/7_0.3_edge_fun.css.ss.5.tsv
+    Untracked:  data/8_0.3_edge_dom.fun.ss.5.tsv
+    Untracked:  data/9_0.3_edge_wil.fun.ss.5.tsv
+    Untracked:  data/Chesapeake_bay_links.csv
+    Untracked:  data/Chesapeake_bay_nodes.csv
+    Untracked:  data/Dunne2013PBioSupData.xlsx
+    Untracked:  data/M_PA_003.csv
+    Untracked:  data/NEE2017_nodes.csv
+    Untracked:  data/Otago_Data_Links.csv
+    Untracked:  data/Otago_Data_Nodes.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_hosts.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_parasites.csv
+    Untracked:  data/Pilosof_etal_NEE2017_1.csv
+    Untracked:  data/Pilosof_etal_NEE2017_2.csv
+    Untracked:  data/Pilosof_etal_NEE2017_3.csv
+    Untracked:  data/Pilosof_etal_NEE2017_4.csv
+    Untracked:  data/Pilosof_etal_NEE2017_5.csv
+    Untracked:  data/Pilosof_etal_NEE2017_6.csv
+    Untracked:  data/Tur2016.csv
+    Untracked:  data/Ural_valley_A_HP_048.csv
+    Untracked:  data/chilean_NTIneg.txt
+    Untracked:  data/chilean_NTIpos.txt
+    Untracked:  data/chilean_TI.txt
+    Untracked:  data/chilean_metadata.xls
+    Untracked:  data/kongsfjorden_links.RData
+    Untracked:  data/kongsfjorden_nodes.RData
+    Untracked:  data/siberia1982_7_links.RData
+    Untracked:  data/siberia1982_7_nodes.RData
+    Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+    Untracked:  infomap-script.py
+    Untracked:  infomap.exe
+
+Unstaged changes:
+    Deleted:    analysis/Infomap_HW.Rmd
+    Modified:   analysis/Networks_HW3.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/Networks_HW7.Rmd</code>) and HTML (<code>docs/Networks_HW7.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/7a597c142f8c2832adf36711cb1f785be2ce4c54/analysis/Networks_HW7.Rmd" target="_blank">7a597c1</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-26
+</td>
+<td>
+HW7
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="homework7-local-stability-analysis" class="section level2">
+<h2>Homework7 (Local stability analysis)</h2>
+</div>
+<div id="coding-assignment-for-ecev-44500-networks-in-ecology-and-evolution" class="section level2">
+<h2>Coding assignment for ECEV 44500 Networks in Ecology and Evolution</h2>
+<p>Professor: <strong>Mercedes Pascual</strong>, <strong>Sergio A. Alcala Corona</strong>, <strong>Shai Pilosof</strong>, <strong>Carlos Serván</strong><br />
+Student: <strong>Kiseok Lee</strong></p>
+<pre class="r"><code>library(igraph)
+library(tidyverse)
+library(magrittr)
+library(MASS)
+library(RColorBrewer)
+
+## theme for ggplot
+
+mytheme &lt;- theme_bw() + theme(
+  legend.title  = element_text( size=17),
+  #  legend.position = &quot;bottom&quot;,
+  # legend.direction = &quot;horizontal&quot;,
+  legend.key = element_blank(),
+  legend.text  = element_text( size=17),
+  panel.background = element_blank(),
+  panel.grid = element_blank(),
+  text = element_text( family=&quot;Helvetica&quot;, size=19),
+  strip.text.x = element_text(family = &quot;Helvetica&quot;, size = 10),
+  strip.text.y = element_text(family = &quot;Helvetica&quot;, size = 10),
+  panel.border = element_rect( colour = &quot;black&quot;, size=1.3),
+  axis.ticks = element_line(size = 1.3),
+  strip.background = element_rect( fill = &quot;transparent&quot;, size = 1.3, colour = &quot;black&quot;  ),
+  strip.text = element_text(size = 19)
+)</code></pre>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In this lab we are going to model the community matrix M as a random matrix. We start with the work of May (1973), which addressed the simplest case. We then explore the results of Allesina and colleagues, probing at each step the influence of different ecological features on the local stability of the community.</p>
+</div>
+<div id="mays-results" class="section level2">
+<h2>1. May’s results</h2>
+<p>Generally, we can analyze the local stability of an equilibrium point of a system of S functions and S variables by linearizing the functions and obtaining the Jacobian matrix J evaluated at the equilibrium (notice that there can be more than one equilibrium point). This is represented by the community matrix M. May sampled the entries of M from a uniform distribution and assumed that the entries Mij are i.i.d random variables with mean μ=0 and variance σ=1. Each entry represents the effect of species j on the population of species i. Therefore, the diagonal elements Mii represent the effect of each species on itself (self-regulation). May set the diagonal to d=−1. We will see later that these assumptions can be relaxed.<br />
+</p>
+<p>The eigenvalues of M characterize the dynamics of the system “close” to equilibrium. There are S eigenvalues, and these are distributed approximately uniformly within a circle with a radius √S. To obtain a radius equal to 1, we can divide the off-diagonal values of M by √S.<br />
+</p>
+<pre class="r"><code># Here sigma=1
+S &lt;- 500
+M &lt;- matrix(runif(S^2, min = -sqrt(3), max = sqrt(3)), S, S) # We use sqrt(3) so the sd of the uniform distribution will be 1)
+diag(M) &lt;- -1
+e &lt;- eigen(M, only.values = TRUE)$values ## compute the eigenvalues of M
+data_eigenvalues &lt;- tibble(x = Re(e), y = Im(e), S = S) ## data frame storage useful for plotting with ggplot
+
+data_eigenvalues %&gt;% ggplot(aes(x = x, y = y)) + geom_point() + mytheme + coord_fixed() + geom_vline(xintercept = -1, color=&#39;blue&#39;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-2-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>M will be locally stable when all the real parts of the eigenvalues are negative (max(Re(λ))&lt;0. We can visualize the expected eigenvalues boundaries by drawing a circle whose perimeter determines these boundaries.</p>
+<pre class="r"><code>expectation_girko &lt;- tibble(x = rep(seq(-1,1,0.001), 2), 
+                                type = rep(c(1, -1), each = length(x)/2), 
+                                y = sqrt(1 - (x)^2) * type)
+expectation_girko %&lt;&gt;% mutate(x = sqrt(S) * x,
+                             y = sqrt(S) * y)                          
+                            
+data_eigenvalues %&gt;% ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  geom_path(data = expectation_girko, colour = &quot;red&quot;) +
+  mytheme +
+  xlab(expression(Re(lambda))) +
+  ylab(expression(Im(lambda)))+coord_fixed()+ geom_vline(xintercept = -1, color=&#39;blue&#39;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>The matrix in this section is not stable. How can you make it stable? Show.</p>
+</div>
+<div id="role-of-sigma-and-d" class="section level2">
+<h2>2. Role of sigma and d</h2>
+<p>Until now we have only used May’s results. Now we can probe how playing with some features of M will change local stability. σ will change the radius of the circle and d will shift its center. Note that S−−√ normalizes the radius of the circle to be σ. The diagonal represents the self regulation of species. Intuitively, stronger self-regulation will stabilize the system (shift the center of the circle to the left). The determination of the rightmost eigenvalue will be a result of both d and σ.</p>
+<pre class="r"><code>S &lt;- 500
+sigma_seq &lt;- c(0.5, 1, 1.5) # A sequence of sigma values
+diag_seq &lt;- c(-3, 0, 3) # A sequence of values for the diagonal
+
+# This function creates a random matrix with a given sigma and d, and returns the ev.
+get_eigenvalues_sigma_d &lt;- function(sigma, d){
+  M &lt;- matrix(runif(S^2, min = -sqrt(3)*sigma, max = sqrt(3)*sigma), S, S)/sqrt(S) # Normalize by square root of S
+  M &lt;- M + diag(S) * d # Shift the diagonal
+  e &lt;- eigen(M, only.values = TRUE)$values
+  return(tibble(x = Re(e), y = Im(e), S = S, d = d, sigma = sigma))
+}
+
+# Get the ev of random matrices for each combination of sigma and d
+data_ev_sigma_d &lt;- NULL
+for (sigma in sigma_seq){
+  for (d in diag_seq){
+    data_ev_sigma_d &lt;- rbind(data_ev_sigma_d, get_eigenvalues_sigma_d(sigma, d))
+  }
+}
+data_ev_sigma_d %&gt;% arrange(desc(sigma)) %&gt;% ggplot(aes(x = x, y = y, colour = factor(sigma))) +
+  geom_point(size = 2.5, alpha = 0.5) +
+  mytheme +
+  xlab(expression(Re(lambda))) +
+  ylab(expression(Im(lambda))) +
+  scale_colour_discrete(name = expression(sigma)) +
+  coord_fixed() +
+  facet_grid(d~.) +
+  scale_x_continuous(breaks = seq(from = -4.5, to = 4.5, by=1.5)) +
+  geom_vline(xintercept = c(-1.5,1.5), linetype=&#39;dashed&#39;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Given a matrix with S=250 and a self-regulation value of -1.5, what is the necessary variance of the interactions to make it stable? Show analytically and computationally.</p>
+</div>
+<div id="probability-of-stability" class="section level2">
+<h2>3. Probability of stability</h2>
+<p>The stability bound (the condition for the rightmost eigenvalue to have negative real part) is given by √SC⋅σ&lt;−d. Therefore, setting the diagonal to −√SC will set the threshold for stability at σ=1. So, for large S, the system is expected to be stable when σ&lt;1.</p>
+<pre class="r"><code>S_seq &lt;- c(25, 50, 100) # A curve per network size
+nsim &lt;- 100 # Generate multiple random matrices for each S
+sigma_seq &lt;- seq(0.8, 1.2, 0.01) # vary sigma
+C &lt;- 0.15
+
+# Function to create a matrix and test if its righmost ev is negative.
+stable_matrix &lt;- function(i){
+  M &lt;- matrix(runif(S^2, min = -sqrt(3)*sigma, max = sqrt(3)*sigma) * rbinom(S^2, size = 1, prob = C), S, S)
+  diag(M) &lt;- 0
+  M &lt;- M + diag(S) * d
+  e &lt;- eigen(M, only.values = TRUE)$values
+  return (max(Re(e)) &lt; 0) # The rightmost eigenvalue should be negative for the matrix to be locally-stable
+}
+
+# Calculate the probability of stability for each combination of network size and sigma.
+prob_stability_df &lt;- NULL
+for (S in S_seq){
+  print(S)
+  d &lt;- -sqrt(S * C) # Set the diagonal to sqrt(SC) to make sigma=1
+  for (sigma in sigma_seq){
+    num_stable &lt;- 0
+    for (i in 1:nsim){
+      num_stable &lt;- num_stable+stable_matrix() # If the matrix is stable at it ot the count.
+    }
+    p_stability &lt;- num_stable/nsim
+    prob_stability_df &lt;- rbind(prob_stability_df, data.frame(S=S, sigma=sigma, p_stability=p_stability))
+  }
+}</code></pre>
+<pre><code>[1] 25
+[1] 50
+[1] 100</code></pre>
+<pre class="r"><code>prob_stability_df %&gt;% ggplot(aes(x = sigma, y = p_stability, colour = factor(S), shape = factor(S))) +
+  geom_point(size = 3) +
+  geom_line() +
+  mytheme +
+  xlab(expression(sigma)) +
+  ylab(expression(p[stab])) +
+  scale_colour_discrete(name = &quot;S&quot;) +
+  scale_shape_discrete(name = &quot;S&quot;) +
+  geom_vline(xintercept = 1, linetype=&#39;dashed&#39;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>How does the probability of stability depend on the number of species? Why? Try to increase the number of species.</p>
+</div>
+<div id="the-role-of-mean" class="section level2">
+<h2>4. The role of mean</h2>
+<p>The mean “determines” if interactions are more likely to be mutualistic (positive mean) or antagonistic (negative mean). Adding a constant to M without perturbing the diagonal will move one eigenvalue to approximately μ(S−1)+d. Where this eigenvalue falls with respect to the original spectrum can influence the stability. The more positive the mean, the more positive the eigenvalue and the higher the probability to destabilize the system.</p>
+<pre class="r"><code>S &lt;- 500
+mu_seq &lt;- c(-0.1, 0.01, 0.1)
+
+outliers &lt;- tibble(x = (S - 1) * mu_seq-sqrt(S), y = 0, mu = mu_seq) # Estimation of where the ev will fall
+
+data_eigenvalues_mean &lt;- map(mu_seq, # map is instead of using for. it maps a function to each element of the vector mu_seq
+                             function(mu){
+                               M &lt;- matrix(runif(S^2, min = -sqrt(3), max = sqrt(3)), S, S)
+                               diag(M) &lt;- -sqrt(S)
+                               M &lt;- M + mu - diag(S) * mu
+                               e &lt;- eigen(M, only.values = TRUE)$values
+                               tibble(x = Re(e), y = Im(e), S = S, mu = mu)
+                             }) %&gt;% bind_rows()
+
+
+data_eigenvalues_mean %&gt;% ggplot(aes(x = x, y = y)) + 
+  geom_point(size = 1.3, alpha = 0.5) + 
+  mytheme + 
+  xlab(expression(Re(lambda))) + 
+  ylab(expression(Im(lambda))) + 
+  facet_grid(mu ~.) +
+  coord_fixed() +
+  geom_point(data = outliers, size = 2, colour = &quot;red&quot;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Try to examine the role of the mean for a different distribution than uniform (in line M &lt;- matrix(runif(S^2, min = -sqrt(3), max = sqrt(3)), S, S))</p>
+</div>
+<div id="role-of-correlation-ρ" class="section level2">
+<h2>5. Role of correlation (ρ)</h2>
+<p>Until now, Mij was independent of Mji. But in ecology this is not necessarily the case. For example, assuming μ=0, negative corelation is like prey-predator (+/-) and positive is like competition (-/-) or mutualism (+/+). When ρ=0, the eigenvalues fall on a circle, which is what we have seen so far. When ρ≠0, the eigenvalues fall on an ellipse. Negative correlation (ρ&lt;0) shrinks the real part, whereas positive correlation (ρ&gt;0) shrinks the imaginary part. So a negative correlation tends to stabilize the system.</p>
+<pre class="r"><code>S &lt;- 300
+rho_seq &lt;- c(-0.75, 0, 0.75)
+
+generate_eigenvalues_cor &lt;- function(rho){
+  M &lt;- matrix(0, S, S)
+  Sigma &lt;- matrix(c(1, rho, rho, 1), nrow = 2) ## set 2x2 covariance matrix
+  M &lt;- diag(rnorm(S)) ## set the diagonal, notice thas as long as it has mean 0 it can have a variance
+  for(i in seq(1, S - 1)) {
+    for (j in seq(i + 1, S)){
+      Z &lt;- mvrnorm(1, c(0,0), Sigma) # Now sample from a bivariate normal distribution with vector of means (0,0) and covariance matrix Sigma
+      M[i,j] &lt;- Z[1]  ## Set the offdiagonal pairs of M
+      M[j,i] &lt;- Z[2]
+    }
+  }
+  M &lt;- M / sqrt(S) # Rescale EV
+  e &lt;- eigen(M, only.values = TRUE)$values
+  data_frame(x = Re(e), y = Im(e), S = S, rho = rho)
+}
+
+data_eigenvalues_cor &lt;- map(rho_seq, generate_eigenvalues_cor) %&gt;% bind_rows()
+
+data_eigenvalues_cor %&gt;% ggplot(aes(x = x, y = y, colour = factor(rho))) +
+  geom_point(size = 2.5, alpha = 0.5) +
+  mytheme +
+  xlab(expression(Re(lambda))) +
+  ylab(expression(Im(lambda))) +
+  scale_colour_discrete(name = expression(rho)) +
+  coord_fixed() +
+  scale_x_continuous(breaks = c(1 + rho_seq, -1 - rho_seq)) +
+  scale_y_continuous(breaks = c(1 - rho_seq, -1 + rho_seq))</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="role-of-structure" class="section level2">
+<h2>6. Role of structure</h2>
+<p>We have changed parameters that influence interaction weights, but M was not structured. That is, the interactions were distributed randomly. Let’s see how adding blocks (modules) affects local stability. In the following example, each module has a random structure. We have already seen that when μ≠0, one eigenvalue was shifted to μ(S−1)+d. Now, this quantity may have different values for each of the blocks because the size of the block is different, and because it is also affected by the sign of the modularity. In particular for two blocks, there would be at most two outliers given approximately by the eigenvalues of the matrix of means, which is a block structured matrix having in each block a constant value depicting the mean interaction strength between the respective groups.</p>
+<pre class="r"><code>S &lt;- 100
+C &lt;- 0.4
+alpha &lt;- 1/4
+m &lt;- S * alpha  ## size of the top module
+sigma &lt;- 1
+mu_seq &lt;- c(-1/4, 0, 1/4)
+#n &lt;- length(mu_seq)
+rho_seq &lt;- c(-1/4, -3/4, -0.5)
+Q_seq &lt;- c(-0.5, 0, 0.35) # This is the modularity
+
+generate_K &lt;- function(Q){
+  K &lt;- matrix(0, S, S) ## adjacency matrix
+  Cw &lt;- C * (1 + Q/(alpha^2 + (1-alpha)^2)) # within block connectance
+  Cb &lt;- C * (1 - Q/(2 * alpha * (1-alpha))) # between block connectance
+  # Between-block interactions
+  AB &lt;- matrix(runif(m * (S-m)) &lt; Cb, m , S - m) 
+  # Within-block interactions
+  K[1:m, 1:m] &lt;- matrix(runif(m^2) &lt; Cw, m, m)
+  K[(m + 1):S, (m+1):S] &lt;- matrix(runif((S - m)^2) &lt; Cw, S - m, S - m)
+  # Add the between-block interactions to K
+  K[1:m, (m+1):S] &lt;- AB
+  K[(m+1):S, 1:m] &lt;- t(AB)
+  return(K)
+}
+
+generate_M &lt;- function(mu, rho, K, Q){
+  M &lt;- matrix(0, S, S) ## Community matrix
+  Sigma &lt;- matrix(c(sigma^2, rho * sigma^2, rho * sigma^2, sigma^2), nrow = 2) # Covariance matrix for bivariate normal distribution
+  # Fill in M with interaction values
+  for(i in seq(1, S - 1)) {
+    for (j in seq(i + 1, S)){
+      if (K[i,j] &gt; 0){
+        Z &lt;- mvrnorm(1, c(mu, mu), Sigma) #
+        M[i,j] &lt;- Z[1] 
+        M[j,i] &lt;- Z[2]
+      }   
+    }
+  }
+  return(M)
+}</code></pre>
+<p>Let’s see how these matrices look like</p>
+<pre class="r"><code># Plot the matrices
+K &lt;- generate_K(0.35)
+heatmap(K, Rowv = NA, Colv = NA, symm = F, scale = &#39;none&#39;, revC = T, col=brewer.pal(2,&quot;RdBu&quot;))</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>M &lt;- generate_M(0, 0.5, K)
+heatmap(M, Rowv = NA, Colv = NA, symm = F, scale = &#39;none&#39;, revC = T)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-9-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Now find the stability.</p>
+<pre class="r"><code>data_modules &lt;- NULL
+data_outliers &lt;- NULL
+for (Q in Q_seq){
+  K &lt;- generate_K(Q)
+  for (i in 1:length(mu_seq)){
+    mu &lt;- mu_seq[i]
+    rho &lt;- rho_seq[i]
+    print (paste(Q, mu, rho))
+    M &lt;- generate_M(mu, rho, K, Q)
+    # Get the eigenvalues of M
+    e &lt;- eigen(M, only.values = TRUE)$values
+    data_modules &lt;- rbind(data_modules, data_frame(x = Re(e), y = Im(e), S = S, mu = mu, rho = rho, Q = Q))
+
+    ## the following calculates the eigenvalues for the matrix of means + a small correction
+    ## given by the correlation
+    Cw &lt;- C * (1 + Q/(alpha^2 + (1-alpha)^2)) # within block connectance
+    Cb &lt;- C * (1 - Q/(2 * alpha * (1-alpha))) # between block conenctnve
+    mu_w &lt;- Cw * mu
+    mu_b &lt;- Cb * mu
+    data_outliers &lt;- rbind(data_outliers,
+    tibble(x = S/2 * (mu_w + c(1,-1) * (sqrt((1 - 4*alpha * (1- alpha)) * mu_w^2 + 4 * alpha* (1-alpha) * mu_b^2))), correction = ifelse(x !=0, rho/x, 0), y = 0, S = S, mu = mu, rho = rho, Q = Q)) # This line is taken from the paper.
+  }
+}</code></pre>
+<pre><code>[1] &quot;-0.5 -0.25 -0.25&quot;
+[1] &quot;-0.5 0 -0.75&quot;
+[1] &quot;-0.5 0.25 -0.5&quot;
+[1] &quot;0 -0.25 -0.25&quot;
+[1] &quot;0 0 -0.75&quot;
+[1] &quot;0 0.25 -0.5&quot;
+[1] &quot;0.35 -0.25 -0.25&quot;
+[1] &quot;0.35 0 -0.75&quot;
+[1] &quot;0.35 0.25 -0.5&quot;</code></pre>
+<pre class="r"><code>data_modules %&gt;% ggplot(aes(x = x, y = y, colour = factor(mu))) + 
+    geom_point(size = 2.5, alpha = 0.5) +
+    geom_point(data = data_outliers, aes(x = x + correction), colour = &quot;red&quot;) + 
+  mytheme + xlab(expression(Re(lambda))) + 
+  ylab(expression(Im(lambda))) + 
+  scale_colour_discrete(name = expression(mu))+
+  coord_fixed() + 
+  facet_grid(Q ~ mu, 
+             labeller = label_bquote(cols = paste(mu,&quot; = &quot;,.(mu), collapse = &quot;&quot;), 
+                                     rows = paste(Q,&quot; = &quot;,.(Q), collapse = &quot;&quot;)))</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>What do you notice about the effect of modularity vs. anti-modularity on the outlier eigenvalues?</p>
+</div>
+<div id="practicing-linearizing-a-system-to-evaluate-the-local-stability-of-an-equilibrium." class="section level2">
+<h2>7. Practicing linearizing a system to evaluate the local stability of an equilibrium.</h2>
+<p>To get a sense for what is involved in obtaining the linear approximation of a nonlinear system close to equilibrium, consider the Lotka-Volterra competition system in the paper by Maynard et al. (Ecology Letters 2018). You need to first find the equilibrium vector for species abundances, say x∗. Then, you would compute the Jacobian matrix J and evaluate it at this equilibrium to obtain the community matrix.</p>
+</div>
+<div id="last-problem." class="section level2">
+<h2>Last problem.</h2>
+<p>A general expression for x∗ is given in the paper, but show the steps (only a couple of lines of simple algebra). Then show the analytical formula for the Jacobian J and the corresponding community matrix for the nxn system.<br />
+</p>
+<p>Finally, explore the eigenvalues of the community matrix for different parameter sets computationally. For this, set the number of species n to some given value of your choice, choose the interaction parameters aij (i≠j) at random, and make all the growth rates ri=1 and the self-regulation parameters aii=−1.<br />
+</p>
+<pre class="r"><code>n &lt;- 500
+A = matrix(runif(n^2),nrow=n, ncol=n )
+diag(A) &lt;- -1
+r &lt;- rep(1,n)
+D_r &lt;- diag(r)
+# plot matrix A in heatmap
+heatmap(A, Rowv = NA, Colv = NA, symm = F, scale = &#39;none&#39;, revC = T)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-11-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># 1. solution
+x_star = solve(A, -r)
+# 2. Community matrix
+M = diag(x_star) %*% A /sqrt(n) # # Normalize by square root of n
+# 3. Get eigenvalues
+e &lt;- eigen(M, only.values = TRUE)$values ## compute the eigenvalues of M
+data_eigenvalues &lt;- tibble(x = Re(e), y = Im(e), S = S) ## data frame storage useful for plotting with ggplot
+# plot
+data_eigenvalues %&gt;% ggplot(aes(x = x, y = y)) + geom_point() + mytheme + coord_fixed() + geom_vline(xintercept = 0, color=&#39;blue&#39;)</code></pre>
+<p><img src="figure/Networks_HW7.Rmd/unnamed-chunk-11-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>For different samples of the interaction parameters, obtain the corresponding eigenvalues and plot them in the 2-D space of their real and imaginary parts. Where do they fall? Why?<br />
+</p>
+<p>The values fall within the circle with radius of 0.5. It is circular because of the circular law. σ will change the radius of the circle and here σ is 0.5. Dividing the elements of community matrix M with √S normalizes the radius of the circle to be σ.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19042)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] RColorBrewer_1.1-2 MASS_7.3-53        magrittr_2.0.1     forcats_0.5.1     
+ [5] stringr_1.4.0      dplyr_1.0.5        purrr_0.3.4        readr_1.4.0       
+ [9] tidyr_1.1.3        tibble_3.0.4       ggplot2_3.3.3      tidyverse_1.3.1   
+[13] igraph_1.2.6       workflowr_1.6.2   
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5        lubridate_1.7.10  ps_1.6.0          assertthat_0.2.1 
+ [5] rprojroot_2.0.2   digest_0.6.27     utf8_1.1.4        R6_2.5.0         
+ [9] cellranger_1.1.0  backports_1.2.1   reprex_2.0.0      evaluate_0.14    
+[13] highr_0.9         httr_1.4.2        pillar_1.6.0      rlang_0.4.10     
+[17] readxl_1.3.1      rstudioapi_0.13   whisker_0.4       jquerylib_0.1.4  
+[21] rmarkdown_2.7     labeling_0.4.2    munsell_0.5.0     broom_0.7.6      
+[25] compiler_4.0.3    httpuv_1.6.0      modelr_0.1.8      xfun_0.22        
+[29] pkgconfig_2.0.3   htmltools_0.5.1.1 tidyselect_1.1.1  fansi_0.4.2      
+[33] crayon_1.4.1      dbplyr_2.1.1      withr_2.4.2       later_1.2.0      
+[37] grid_4.0.3        jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0  
+[41] DBI_1.1.1         git2r_0.28.0      scales_1.1.1      cli_2.5.0        
+[45] stringi_1.5.3     farver_2.1.0      fs_1.5.0          promises_1.2.0.1 
+[49] xml2_1.3.2        bslib_0.2.4       ellipsis_0.3.1    generics_0.1.0   
+[53] vctrs_0.3.6       tools_4.0.3       glue_1.4.2        hms_1.0.0        
+[57] yaml_2.2.1        colorspace_2.0-0  rvest_1.0.0       knitr_1.33       
+[61] haven_2.4.1       sass_0.3.1       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
