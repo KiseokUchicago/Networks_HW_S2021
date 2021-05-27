@@ -645,9 +645,7 @@ The red vertical line is the "Reordered" log-likelihood.
 For example, we can ask if networks generated with the niche model are more robust to species losses than those generated using an Erdos-Reyni process. One exercise would be to generate a distribution of networks of a given size and connectance using different models, and then test their robustness. You could try to develop that code. You could also try to test if robustness is affected by the interaction between size, connectance and the different models (i.e., if different models produce more robust networks for a given range of S or C).
 
 ```{r}
-
-
-
+# can do later
 
 ```
 
