@@ -476,16 +476,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree304e189a878a90214d53d43735f34e558444bb5dtargetblank304e189a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/304e189a878a90214d53d43735f34e558444bb5d" target="_blank">304e189</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeaddb92156c8a874794c97b5c3e4f76db7e7af9ddtargetblankaddb921a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/addb92156c8a874794c97b5c3e4f76db7e7af9dd" target="_blank">addb921</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree304e189a878a90214d53d43735f34e558444bb5dtargetblank304e189a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeaddb92156c8a874794c97b5c3e4f76db7e7af9ddtargetblankaddb921a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/304e189a878a90214d53d43735f34e558444bb5d" target="_blank">304e189</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/addb92156c8a874794c97b5c3e4f76db7e7af9dd" target="_blank">addb921</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -515,6 +515,10 @@ Untracked files:
     Untracked:  Hub_dom_both.pdf
     Untracked:  Hub_wild_bac.pdf
     Untracked:  Hub_wild_both.pdf
+    Untracked:  Metric_raw.pdf
+    Untracked:  Metric_zscore.pdf
+    Untracked:  Metrics_norm.pdf
+    Untracked:  Module_visualization.pdf
     Untracked:  Robustenss_50lines_dom_bac.pdf
     Untracked:  Robustness_50lines_dom.pdf
     Untracked:  Robustness_50lines_wild.pdf
@@ -613,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/addb92156c8a874794c97b5c3e4f76db7e7af9dd/analysis/network_project.Rmd" target="_blank">addb921</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-30
+</td>
+<td>
+almost
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/c21d3f37430f7d1377a61ff199e4b220dd51dbec/docs/network_project.html" target="_blank">c21d3f3</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -731,6 +769,8 @@ project_start
 Student: <strong>Kiseok Lee</strong></p>
 <pre class="r"><code># libraries
 library(igraph)
+library(tidygraph)
+library(ggraph)
 library(bipartite)
 library(dplyr)
 library(ggplot2)
@@ -812,32 +852,6 @@ plot(wild_web, vertex.size=5, vertex.label=NA, main=&quot;Bacteria &amp; Fungi-W
 <p><img src="figure/network_project.Rmd/unnamed-chunk-2-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>plot(f_wild_web, vertex.size=5, vertex.label=NA, main=&quot;Fungi-Wild rice&quot;)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-2-3.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># Detect communities, note the as.undirected command
-wild_unweighted &lt;- wild_web
-wild_unweighted &lt;- as.undirected(wild_unweighted)
-E(wild_unweighted)$weight &lt;- 1
-
-# implementing Louvain method
-cl &lt;- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
-class(cl) # the result is of class communities</code></pre>
-<pre><code>[1] &quot;communities&quot;</code></pre>
-<pre class="r"><code># module membership &amp; visualization
-module_membership &lt;- membership(cl)
-table(module_membership)</code></pre>
-<pre><code>module_membership
- 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 
-22  5  8 22 10 14 29 44  2  3  4 18 15  3 21 19 23 31 33 15 20 </code></pre>
-<pre class="r"><code># color
-cols &lt;- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
-V(wild_unweighted)$module_membership &lt;- module_membership
-V(wild_unweighted)$color &lt;- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
-
-# shape: triangle fungi / circle bacteria
-V(wild_unweighted)$shape &lt;- ifelse(substr(V(wild_unweighted)$name,1,1)==&quot;B&quot;,&quot;circle&quot;,&quot;csquare&quot;)
-
-# plot network
-plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-2-4.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="centrality-distribution" class="section level2">
 <h2>2. Centrality distribution</h2>
@@ -1835,8 +1849,649 @@ ggplot(melt_AUC, aes(x=Attack, y=AUC, group=Network, color=Network)) +
   theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family=&quot;serif&quot;))</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="metrics-comparison" class="section level2">
-<h2>4. Metrics comparison</h2>
+<div id="various-metrics-comparison" class="section level2">
+<h2>4. Various Metrics comparison</h2>
+</div>
+<div id="connectance" class="section level2">
+<h2>4.1. Connectance</h2>
+<pre class="r"><code># connectance
+ecount(wild_web)*2/(vcount(wild_web)^2) # multiply by 2 because undirected.</code></pre>
+<pre><code>[1] 0.01032834</code></pre>
+<pre class="r"><code># install_github(&quot;clementviolet/omnivor&quot;)
+library(omnivor)
+omnivor::connectance(wild_web, loops = F, directed = F) # checking whether my calculation is correct</code></pre>
+<pre><code>[1] 0.01035703</code></pre>
+<pre class="r"><code># store it in a vector
+connectance_vec &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>connectance_vec[1] &lt;- omnivor::connectance(wild_web, loops = F, directed = F)
+connectance_vec[2] &lt;- omnivor::connectance(b_wild_web, loops = F, directed = F)
+connectance_vec[3] &lt;- omnivor::connectance(domestic_web, loops = F, directed = F)
+connectance_vec[4] &lt;- omnivor::connectance(b_domestic_web, loops = F, directed = F)
+connectance_vec</code></pre>
+<pre><code>[1] 0.01035703 0.02138466 0.01901647 0.07897793</code></pre>
+<pre class="r"><code># Randomization and null model to normalize summary metrics
+
+# Use the connectance function below
+connectance &lt;- function(m){
+  d &lt;- sum(m&gt;0)/(nrow(m)*ncol(m))
+  return(d)
+}
+  
+null_curveball_simulation &lt;- function(wild_web, connectance, num_iterations = 1000){
+  null_model_curveball &lt;- vegan::nullmodel(as_adjacency_matrix(wild_web), method = &#39;curveball&#39;)
+  shuffled_curveball &lt;- simulate(null_model_curveball, nsim = num_iterations, burnin = 1000) #Shuffle adjacency matrix
+  connectance_curveball &lt;- apply(shuffled_curveball, MARGIN = 3, connectance) # apply metric
+  # P-value: Which proportion of the simulations have a Q value larger than the observed?
+  P_value &lt;- sum(connectance_vec[1] &lt; connectance_curveball)/length(connectance_curveball)
+  # if P-value is larger than 0.5, subtract it from 1
+  if (P_value &gt; 0.5){
+    print(&quot;observed value is bigger than null value (did not say significant)&quot;)
+    P_value &lt;- 1 - P_value
+  }
+  print(paste0(&quot;P-value is: &quot;,P_value))
+  print(paste0(&quot;mean is: &quot;, mean(connectance_curveball)))
+  print(paste0(&quot;sd is: &quot;, sd(connectance_curveball)))
+  return(connectance_curveball)
+}
+
+connectance_sim1 &lt;- null_curveball_simulation(wild_web, connectance, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.01032834309129&quot;
+[1] &quot;sd is: 0&quot;</code></pre>
+<pre class="r"><code>connectance_sim2 &lt;- null_curveball_simulation(b_wild_web, connectance, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0211388558594266&quot;
+[1] &quot;sd is: 0&quot;</code></pre>
+<pre class="r"><code>connectance_sim3 &lt;- null_curveball_simulation(domestic_web, connectance, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0188690583498588&quot;
+[1] &quot;sd is: 0&quot;</code></pre>
+<pre class="r"><code>connectance_sim4 &lt;- null_curveball_simulation(b_domestic_web, connectance, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0770975056689342&quot;
+[1] &quot;sd is: 0&quot;</code></pre>
+<pre class="r"><code># now save the normalized (x / mean) value
+# store it in a vector
+connectance_norm &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>connectance_norm[1] &lt;- (omnivor::connectance(wild_web, loops = F, directed = F) / mean(connectance_sim1))
+connectance_norm[2] &lt;- (omnivor::connectance(b_wild_web, loops = F, directed = F) / mean(connectance_sim2))
+connectance_norm[3] &lt;- (omnivor::connectance(domestic_web, loops = F, directed = F) / mean(connectance_sim3))
+connectance_norm[4] &lt;- (omnivor::connectance(b_domestic_web, loops = F, directed = F) / mean(connectance_sim4))
+connectance_norm</code></pre>
+<pre><code>[1] 1.002778 1.011628 1.007812 1.024390</code></pre>
+<p>Connectance decreases when fungi is added.</p>
+</div>
+<div id="clustering-coefficient-transitivity" class="section level2">
+<h2>4.2. Clustering coefficient (transitivity)</h2>
+<pre class="r"><code># The ratio of the triangles connected to the vertex and the triples centered on the vertex.
+transitivity(wild_web, type = &#39;local&#39;)</code></pre>
+<pre><code>  [1] 0.75000000 0.28787879 0.16666667 0.50000000 0.28571429 0.66666667
+  [7] 0.33333333 0.58181818 0.40000000 0.40000000 0.41025641 1.00000000
+ [13] 1.00000000 0.82142857 0.24175824 0.03571429 0.10000000 0.13333333
+ [19] 0.16666667 0.00000000 1.00000000 0.23809524 0.00000000 1.00000000
+ [25] 0.10000000 0.33333333 1.00000000 0.33333333        NaN 0.20000000
+ [31] 0.14285714 0.00000000 0.20000000 0.16363636 1.00000000 0.63888889
+ [37] 1.00000000 0.46428571 0.16666667 0.13333333        NaN 1.00000000
+ [43] 0.00000000 1.00000000 1.00000000 0.66666667 0.30000000 0.16666667
+ [49] 1.00000000 0.07692308 1.00000000 0.00000000 0.30000000 0.30000000
+ [55] 0.00000000 0.66666667 0.22222222 0.21645022 0.37500000 0.39285714
+ [61] 0.39285714 0.50000000 0.40000000 0.21212121 0.26666667 0.00000000
+ [67] 0.16666667 0.06666667 0.00000000 0.26666667 0.16666667 1.00000000
+ [73] 1.00000000 0.09090909 0.26666667 0.17857143 0.16666667 0.33333333
+ [79] 0.00000000 1.00000000 0.04761905 0.56060606 0.60000000 0.36666667
+ [85] 0.66666667 0.66666667 1.00000000 0.06060606        NaN        NaN
+ [91]        NaN 0.00000000        NaN 1.00000000 0.33333333 1.00000000
+ [97] 0.00000000 0.80000000 0.50000000 0.13333333        NaN 0.50000000
+[103] 0.66666667 0.19047619 0.16363636        NaN        NaN 1.00000000
+[109] 0.50000000 0.50000000 0.00000000 0.93333333 0.66666667 0.19047619
+[115] 0.00000000 0.00000000 0.06666667 0.00000000 0.06666667 1.00000000
+[121] 0.33333333 0.66666667 0.00000000 0.00000000 0.10714286 0.60000000
+[127] 0.33333333 0.73333333 0.73333333 0.17857143 0.66666667 0.00000000
+[133] 0.66666667 0.17857143 0.32142857 0.24444444 1.00000000 0.03571429
+[139] 0.00000000 1.00000000 0.00000000 0.00000000 0.00000000 0.00000000
+[145]        NaN 0.33333333 0.14285714 0.66666667 0.06666667 0.00000000
+[151] 0.00000000 0.00000000 0.00000000        NaN 0.30000000 0.33333333
+[157] 0.33333333 0.00000000 0.46666667 0.00000000 1.00000000 0.33333333
+[163] 0.30000000 0.83333333 0.21428571 1.00000000        NaN 0.66666667
+[169] 1.00000000 1.00000000        NaN 1.00000000 0.40000000 0.00000000
+[175] 0.33333333 0.00000000 0.33333333        NaN 0.30000000 0.83333333
+[181] 0.83333333        NaN 1.00000000 1.00000000 1.00000000 0.66666667
+[187] 0.93333333 1.00000000        NaN 0.46666667 0.83333333 1.00000000
+[193] 1.00000000 0.33333333        NaN 0.00000000 0.33333333 0.00000000
+[199]        NaN 1.00000000 1.00000000 1.00000000 1.00000000 1.00000000
+[205] 1.00000000 1.00000000 0.83333333 1.00000000 1.00000000 1.00000000
+[211] 0.25000000 1.00000000 1.00000000 0.53333333 1.00000000        NaN
+[217]        NaN 0.50000000 0.00000000 0.26666667 0.10000000        NaN
+[223] 1.00000000 0.33333333 0.16666667 0.00000000 1.00000000 0.90476190
+[229] 0.66666667 0.00000000 0.00000000 0.30000000 1.00000000 0.00000000
+[235] 1.00000000        NaN 1.00000000 0.20000000 1.00000000 0.83333333
+[241] 0.00000000        NaN 0.00000000 1.00000000 0.50000000 0.00000000
+[247]        NaN        NaN 1.00000000 0.50000000 0.00000000 0.40000000
+[253]        NaN 1.00000000 1.00000000        NaN        NaN 0.83333333
+[259]        NaN 0.00000000 0.50000000 1.00000000        NaN 0.93333333
+[265] 0.00000000        NaN        NaN        NaN        NaN        NaN
+[271]        NaN        NaN        NaN 1.00000000 1.00000000        NaN
+[277] 1.00000000        NaN        NaN 1.00000000 1.00000000        NaN
+[283]        NaN        NaN 1.00000000 1.00000000        NaN        NaN
+[289] 1.00000000        NaN 1.00000000        NaN        NaN 1.00000000
+[295] 0.00000000        NaN        NaN        NaN        NaN        NaN
+[301] 1.00000000        NaN 1.00000000 1.00000000        NaN        NaN
+[307] 0.00000000 0.00000000 0.00000000        NaN        NaN 0.66666667
+[313] 0.83333333 0.00000000 0.00000000 1.00000000 0.16666667 0.00000000
+[319] 0.40000000 0.00000000        NaN 0.33333333 1.00000000 0.00000000
+[325]        NaN        NaN        NaN 0.00000000        NaN 1.00000000
+[331] 0.33333333 0.16666667 1.00000000        NaN 0.26666667        NaN
+[337] 0.33333333 1.00000000        NaN        NaN 1.00000000        NaN
+[343] 1.00000000 1.00000000 1.00000000        NaN        NaN        NaN
+[349]        NaN        NaN        NaN        NaN        NaN        NaN
+[355]        NaN        NaN        NaN 1.00000000        NaN        NaN
+[361]        NaN</code></pre>
+<pre class="r"><code>histogram(transitivity(wild_web, type = &#39;local&#39;), col = &#39;pink&#39;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-22-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># The ratio of the triangles and the connected triples in the whole graph
+transitivity(wild_web, type = &#39;global&#39;) </code></pre>
+<pre><code>[1] 0.3293695</code></pre>
+<pre class="r"><code># store it in a vector
+transitivity_vec &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>transitivity_vec[1] &lt;- transitivity(wild_web, type = &#39;global&#39;)
+transitivity_vec[2] &lt;- transitivity(b_wild_web, type = &#39;global&#39;)
+transitivity_vec[3] &lt;- transitivity(domestic_web, type = &#39;global&#39;)
+transitivity_vec[4] &lt;- transitivity(b_domestic_web, type = &#39;global&#39;)
+transitivity_vec</code></pre>
+<pre><code>[1] 0.3293695 0.3471074 0.3621730 0.5822368</code></pre>
+<pre class="r"><code># Randomization and null model to normalize summary metrics
+# Use this transitivity function for simulation below
+transitivity_in_matrix &lt;- function(wild_mat){
+  wild_web &lt;- igraph::graph.adjacency(wild_mat, mode = &#39;undirected&#39;)
+  trans &lt;- transitivity(wild_web, type=&quot;global&quot;)
+  return(trans)
+}
+
+transitivity_sim1 &lt;- null_curveball_simulation(wild_web, transitivity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0492807901400484&quot;
+[1] &quot;sd is: 0.00259522124724725&quot;</code></pre>
+<pre class="r"><code>transitivity_sim2 &lt;- null_curveball_simulation(b_wild_web, transitivity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0563700762647282&quot;
+[1] &quot;sd is: 0.0155783714558186&quot;</code></pre>
+<pre class="r"><code>transitivity_sim3 &lt;- null_curveball_simulation(domestic_web, transitivity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.0809505619082877&quot;
+[1] &quot;sd is: 0.0060644023763273&quot;</code></pre>
+<pre class="r"><code>transitivity_sim4 &lt;- null_curveball_simulation(b_domestic_web, transitivity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.255341665653182&quot;
+[1] &quot;sd is: 0.0206789199009135&quot;</code></pre>
+<pre class="r"><code># now save the normalized (x - mean / sd) value = zscore
+# store it in a vector
+transitivity_zscore &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>transitivity_zscore[1] &lt;- (transitivity(wild_web, type = &#39;global&#39;) - mean(transitivity_sim1)) / sd(transitivity_sim1)
+transitivity_zscore[2] &lt;- (transitivity(b_wild_web, type = &#39;global&#39;) - mean(transitivity_sim2)) / sd(transitivity_sim2)
+transitivity_zscore[3] &lt;- (transitivity(domestic_web, type = &#39;global&#39;) - mean(transitivity_sim3)) / sd(transitivity_sim3)
+transitivity_zscore[4] &lt;- (transitivity(b_domestic_web, type = &#39;global&#39;) - mean(transitivity_sim4)) / sd(transitivity_sim4)
+transitivity_zscore</code></pre>
+<pre><code>[1] 107.92478  18.66289  46.37266  15.80814</code></pre>
+<pre class="r"><code># too high...
+
+# now save the normalized (x / mean) value
+# store it in a vector
+transitivity_norm &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>transitivity_norm[1] &lt;- (transitivity(wild_web, type = &#39;global&#39;) / mean(transitivity_sim1))
+transitivity_norm[2] &lt;- (transitivity(b_wild_web, type = &#39;global&#39;) / mean(transitivity_sim2))
+transitivity_norm[3] &lt;- (transitivity(domestic_web, type = &#39;global&#39;) / mean(transitivity_sim3))
+transitivity_norm[4] &lt;- (transitivity(b_domestic_web, type = &#39;global&#39;) / mean(transitivity_sim4))
+transitivity_norm</code></pre>
+<pre><code>[1] 6.683527 6.157654 4.474003 2.280227</code></pre>
+<p>Transitivity decreases when fungi is added.</p>
+</div>
+<div id="modularity" class="section level2">
+<h2>4.3. Modularity</h2>
+<p>Let’s plot modular structure</p>
+<pre class="r"><code># Detect communities, note the as.undirected command
+wild_unweighted &lt;- wild_web
+wild_unweighted &lt;- as.undirected(wild_unweighted)
+E(wild_unweighted)$weight &lt;- 1
+
+# implementing Louvain method
+cl &lt;- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities</code></pre>
+<pre><code>[1] &quot;communities&quot;</code></pre>
+<pre class="r"><code># module membership &amp; visualization
+module_membership &lt;- membership(cl)
+table(module_membership)</code></pre>
+<pre><code>module_membership
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 
+22  5  8 22 10 14 29 44  2  3  4 18 15  3 21 19 23 31 33 15 20 </code></pre>
+<pre class="r"><code># color
+cols &lt;- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
+V(wild_unweighted)$module_membership &lt;- module_membership
+V(wild_unweighted)$color &lt;- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
+
+# shape: triangle fungi / circle bacteria
+V(wild_unweighted)$shape &lt;- ifelse(substr(V(wild_unweighted)$name,1,1)==&quot;B&quot;,&quot;circle&quot;,&quot;csquare&quot;)
+
+# plot network
+plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-23-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Calculate modularity and use tidygraph - Adapted from this resource: <a href="https://dgarcia-eu.github.io/SocialDataScience/5_SocialNetworkPhenomena/057_Tidygraph2/tidygraph2.html" class="uri">https://dgarcia-eu.github.io/SocialDataScience/5_SocialNetworkPhenomena/057_Tidygraph2/tidygraph2.html</a><br />
+</p>
+<pre class="r"><code>library(ggraph)
+library(tidygraph)
+
+# convert igraph to tidygraph object
+wild_tbl &lt;- as_tbl_graph(wild_web)
+
+# Louvain clustering
+wild_tbl %&lt;&gt;%
+  tidygraph::activate(nodes) %&gt;% 
+  mutate(community=as.character(group_louvain()))
+
+# Modules / add bacteria or fungi info
+wild_tbl %&lt;&gt;% 
+  activate(nodes) %&gt;% 
+  mutate(Bacteria = ifelse(substr(name,1,1)==&quot;B&quot;,&quot;Bacteria&quot;,&quot;Fungi&quot;) )
+
+# plot again with ggraph
+wild_tbl %&gt;% 
+  ggraph(&quot;fr&quot;)  + geom_edge_link()  + geom_node_point(aes(color=community, shape=Bacteria), size=4) + theme_graph()</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-24-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Modularity Q
+wild_tbl %&gt;% 
+  activate(nodes) %&gt;% 
+  mutate(modularity = graph_modularity(group=community)) %&gt;% 
+  pull(modularity) %&gt;% 
+  head(1)</code></pre>
+<pre><code>[1] 0.8173168</code></pre>
+<pre class="r"><code>modularity_Q &lt;- function(wild_web){
+  # convert object
+  wild_tbl &lt;- as_tbl_graph(wild_web)
+  # Louvain clustering
+  wild_tbl %&lt;&gt;%
+    tidygraph::activate(nodes) %&gt;% 
+    mutate(community=as.character(group_louvain()))
+  # Modularity Q
+  wild_tbl %&gt;% 
+    activate(nodes) %&gt;% 
+    mutate(modularity = graph_modularity(group=community)) %&gt;% 
+    pull(modularity) %&gt;% 
+    head(1)
+}
+
+# store Modularity Q in a vector
+modularity_vec &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>modularity_vec[1] &lt;- modularity_Q(wild_web)
+modularity_vec[2] &lt;- modularity_Q(b_wild_web)
+modularity_vec[3] &lt;- modularity_Q(domestic_web)
+modularity_vec[4] &lt;- modularity_Q(b_domestic_web)
+modularity_vec</code></pre>
+<pre><code>[1] 0.8173168 0.8562500 0.7802953 0.5615268</code></pre>
+<pre class="r"><code># Randomization and null model to normalize summary metrics
+# Use this transitivity function for simulation below
+modularity_in_matrix &lt;- function(wild_mat){
+  wild_web &lt;- igraph::graph.adjacency(wild_mat, mode = &#39;undirected&#39;)
+  mod &lt;- modularity_Q(wild_web)
+  return(mod)
+}
+
+modularity_sim1 &lt;- null_curveball_simulation(wild_web, modularity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.336244187461641&quot;
+[1] &quot;sd is: 0.00493675891655652&quot;</code></pre>
+<pre class="r"><code>modularity_sim2 &lt;- null_curveball_simulation(b_wild_web, modularity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.509383993959762&quot;
+[1] &quot;sd is: 0.013931199260996&quot;</code></pre>
+<pre class="r"><code>modularity_sim3 &lt;- null_curveball_simulation(domestic_web, modularity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.421610286365522&quot;
+[1] &quot;sd is: 0.0111340148479394&quot;</code></pre>
+<pre class="r"><code>modularity_sim4 &lt;- null_curveball_simulation(b_domestic_web, modularity_in_matrix, num_iterations = 1000)</code></pre>
+<pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
+[1] &quot;P-value is: 0&quot;
+[1] &quot;mean is: 0.292559441782375&quot;
+[1] &quot;sd is: 0.0150004565721355&quot;</code></pre>
+<pre class="r"><code># now save the normalized (x - mean / sd) value = zscore
+# store it in a vector
+modularity_zscore &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>modularity_zscore[1] &lt;- (modularity_Q(wild_web) - mean(modularity_sim1)) / sd(modularity_sim1)
+modularity_zscore[2] &lt;- (modularity_Q(b_wild_web) - mean(modularity_sim2)) / sd(modularity_sim2)
+modularity_zscore[3] &lt;- (modularity_Q(domestic_web) - mean(modularity_sim3)) / sd(modularity_sim3)
+modularity_zscore[4] &lt;- (modularity_Q(b_domestic_web) - mean(modularity_sim4)) / sd(modularity_sim4)
+modularity_zscore</code></pre>
+<pre><code>[1] 97.44706 24.89850 32.21525 17.93061</code></pre>
+<pre class="r"><code># too high...
+
+# now save the normalized (x / mean) value
+# store it in a vector
+modularity_norm &lt;- c()
+row_vec</code></pre>
+<pre><code>[1] &quot;Wild-Bacterial-Fungal&quot;         &quot;Wild-Bacterial&quot;               
+[3] &quot;Domesticated-Bacterial-Fungal&quot; &quot;Domesticated-Bacterial&quot;       </code></pre>
+<pre class="r"><code>modularity_norm[1] &lt;- (modularity_Q(wild_web) / mean(modularity_sim1))
+modularity_norm[2] &lt;- (modularity_Q(b_wild_web) / mean(modularity_sim2))
+modularity_norm[3] &lt;- (modularity_Q(domestic_web) / mean(modularity_sim3))
+modularity_norm[4] &lt;- (modularity_Q(b_domestic_web) / mean(modularity_sim4))
+modularity_norm</code></pre>
+<pre><code>[1] 2.430724 1.680952 1.850750 1.919360</code></pre>
+</div>
+<div id="plot-normalized-summary-statistics" class="section level2">
+<h2>4.4. Plot normalized summary statistics</h2>
+<pre class="r"><code># make dataframe
+df_summary &lt;- tibble(Network = row_vec, Connectance = connectance_norm, Transitivity= transitivity_norm, Modularity= modularity_norm)
+
+# Melt for plotting
+melt_summary &lt;- melt(df_summary)
+colnames(melt_summary) &lt;- c(&quot;Network&quot;,&quot;Stat&quot;,&quot;Normalized_metric&quot;)
+melt_summary$Network &lt;- factor(melt_summary$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+
+# Plotting for visualiztion
+ggplot(melt_summary, aes(x=Stat, y=Normalized_metric, group=Network, color=Network)) +
+  geom_point(size =3.5, shape=16) +
+  geom_line(size=0.5) +
+  ggtitle(paste0(&quot;Network metrics comparison&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Metric&#39;)+
+  ylab(&quot;Normalized metric (x / mean(null_model)) \n&quot;) +
+  scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+  scale_y_continuous(limits = c(0, max(melt_summary$Normalized_metric)), breaks=seq(0, max(melt_summary$Normalized_metric), 1)) +
+  geom_hline(yintercept=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family=&quot;serif&quot;))</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-25-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Just in case, plotting the metrics without normalization</p>
+<pre class="r"><code># make dataframe
+df_summary_no_norm &lt;- tibble(Network = row_vec, Connectance = connectance_vec, Transitivity= transitivity_vec, Modularity= modularity_vec)
+
+# Melt for plotting
+melt_summary_no_norm &lt;- melt(df_summary_no_norm)
+colnames(melt_summary_no_norm) &lt;- c(&quot;Network&quot;,&quot;Stat&quot;,&quot;Metric&quot;)
+melt_summary_no_norm$Network &lt;- factor(melt_summary_no_norm$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+
+# Plotting for visualiztion
+ggplot(melt_summary_no_norm, aes(x=Stat, y=Metric, group=Network, color=Network)) +
+  geom_point(size =3.5) +
+  geom_line(size=0.5) +
+  ggtitle(paste0(&quot;Network metrics comparison&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Metric&#39;)+
+  ylab(&quot;Non-normalized metric \n&quot;) +
+  scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+  scale_y_continuous(limits = c(0, max(melt_summary_no_norm$Metric)), breaks=seq(0, max(melt_summary_no_norm$Metric), 0.1)) +
+  # geom_hline(yintercept=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family=&quot;serif&quot;))</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-26-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Just in case, plotting the zscore normalized metric. - Warning: connectance is not zscore normalized due to sd(null) being 0. It is just divided by mean(null).</p>
+<pre class="r"><code># make dataframe
+df_summary_zscore &lt;- tibble(Network = row_vec, Connectance = connectance_norm, Transitivity= transitivity_zscore, Modularity= modularity_zscore)
+
+# Melt for plotting
+melt_summary_zscore &lt;- melt(df_summary_zscore)
+colnames(melt_summary_zscore) &lt;- c(&quot;Network&quot;,&quot;Stat&quot;,&quot;Metric&quot;)
+melt_summary_zscore$Network &lt;- factor(melt_summary_zscore$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+
+# Plotting for visualiztion
+ggplot(melt_summary_zscore, aes(x=Stat, y=Metric, group=Network, color=Network)) +
+  geom_point(size =3.5) +
+  geom_line(size=0.5) +
+  ggtitle(paste0(&quot;Network metrics comparison&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Metric&#39;)+
+  ylab(&quot;Zscore-normalized metric \n&quot;) +
+  scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+  scale_y_continuous(limits = c(0, max(melt_summary_zscore$Metric)), breaks=seq(0, max(melt_summary_zscore$Metric), 10)) +
+  # geom_hline(yintercept=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family=&quot;serif&quot;))</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-27-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="bacterial-fungal-bipartite-network-and-nestedness" class="section level2">
+<h2>5. Bacterial-fungal Bipartite network and Nestedness</h2>
+<ul>
+<li>Exclude all the Bacterial-bacterial interaction<br />
+</li>
+<li>Exclude all the Fungal-Fungal interaction<br />
+</li>
+<li>Only leave Bacterial-Fungal interaction<br />
+</li>
+<li>Convert to bipartite matrix</li>
+</ul>
+<pre class="r"><code># Prune and make it into Bipartite
+get.edgelist(wild_web) %&gt;% dim()</code></pre>
+<pre><code>[1] 673   2</code></pre>
+<pre class="r"><code>wild_edge &lt;- get.edgelist(wild_web) 
+class(wild_edge)</code></pre>
+<pre><code>[1] &quot;matrix&quot; &quot;array&quot; </code></pre>
+<pre class="r"><code>wild_edge &lt;- data.frame(wild_edge)
+dim(wild_edge) # 673</code></pre>
+<pre><code>[1] 673   2</code></pre>
+<pre class="r"><code># classify the edge type
+wild_edge$type &lt;- paste0(substr(wild_edge$X1,1,1), substr(wild_edge$X2,1,1))
+
+# filter out BB (bac-bac interaction) and FF (Fungal-Fungal interaction)
+wild_edge_BF &lt;- wild_edge %&gt;% filter(type %in% c(&quot;FB&quot;,&quot;BF&quot;)) # 303/673 = 45%
+
+# need to put bacteria to the left column, and fungi to the right column
+wild_edge_new &lt;- wild_edge_BF
+for (i in 1:dim(wild_edge_BF)[1]){
+  if (wild_edge_BF$type[i] == &quot;FB&quot;){
+    wild_edge_new[i,1] &lt;- wild_edge_BF[i,2]
+    wild_edge_new[i,2] &lt;- wild_edge_BF[i,1]
+  }
+}
+# remove type column
+wild_edge_BFn &lt;- wild_edge_new %&gt;% select(-type)</code></pre>
+<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
+<pre class="r"><code>colnames(wild_edge_BFn)</code></pre>
+<pre><code>Error in is.data.frame(x): object &#39;wild_edge_BFn&#39; not found</code></pre>
+<pre class="r"><code># bipartite adjacency network
+wild_bipartite_mat &lt;- table(wild_edge_BFn$X1,wild_edge_BFn$X2)</code></pre>
+<pre><code>Error in table(wild_edge_BFn$X1, wild_edge_BFn$X2): object &#39;wild_edge_BFn&#39; not found</code></pre>
+<pre class="r"><code>dim(wild_bipartite_mat)</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_bipartite_mat&#39; not found</code></pre>
+<pre class="r"><code>class(wild_bipartite_mat)</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_bipartite_mat&#39; not found</code></pre>
+<pre class="r"><code># Compute metrics
+nl_metrics &lt;- networklevel(wild_bipartite_mat)</code></pre>
+<pre><code>Error in empty(web): object &#39;wild_bipartite_mat&#39; not found</code></pre>
+<pre class="r"><code>nl_metrics[7]</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nl_metrics&#39; not found</code></pre>
+<pre class="r"><code>nl_metrics[8]</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;nl_metrics&#39; not found</code></pre>
+<p>Function and apply to all networks</p>
+<pre class="r"><code># get nestedness
+
+get_nestedness &lt;- function(wild_web){
+  # Prune and make it into Bipartite
+  get.edgelist(wild_web) %&gt;% dim()
+  wild_edge &lt;- get.edgelist(wild_web) 
+  class(wild_edge)
+  wild_edge &lt;- data.frame(wild_edge)
+  dim(wild_edge) # 673
+  
+  # classify the edge type
+  wild_edge$type &lt;- paste0(substr(wild_edge$X1,1,1), substr(wild_edge$X2,1,1))
+  
+  # filter out BB (bac-bac interaction) and FF (Fungal-Fungal interaction)
+  wild_edge_BF &lt;- wild_edge %&gt;% filter(type %in% c(&quot;FB&quot;,&quot;BF&quot;)) # 303/673 = 45%
+  
+  # need to put bacteria to the left column, and fungi to the right column
+  wild_edge_new &lt;- wild_edge_BF
+  for (i in 1:dim(wild_edge_BF)[1]){
+    if (wild_edge_BF$type[i] == &quot;FB&quot;){
+      wild_edge_new[i,1] &lt;- wild_edge_BF[i,2]
+      wild_edge_new[i,2] &lt;- wild_edge_BF[i,1]
+    }
+  }
+  # remove type column
+  wild_edge_BFn &lt;- wild_edge_new %&gt;% select(-type)
+  colnames(wild_edge_BFn)
+  
+  # bipartite adjacency network
+  wild_bipartite_mat &lt;- table(wild_edge_BFn$X1,wild_edge_BFn$X2)
+  dim(wild_bipartite_mat)
+  class(wild_bipartite_mat)
+  
+  # Compute metrics
+  nl_metrics &lt;- networklevel(wild_bipartite_mat)
+  print(nl_metrics[7])
+  print(nl_metrics[8])
+  return(nl_metrics)
+}
+
+wild_nest &lt;- get_nestedness(wild_web)</code></pre>
+<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
+<pre class="r"><code>dom_nest &lt;- get_nestedness(domestic_web)</code></pre>
+<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
+<pre class="r"><code>wild_nest[c(7,8)]</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_nest&#39; not found</code></pre>
+<pre class="r"><code>dom_nest[c(7,8)]</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object &#39;dom_nest&#39; not found</code></pre>
+<p>Bipartite and modularity</p>
+<pre class="r"><code># modularity
+# mod &lt;- computeModules(wild_bipartite_mat)
+slotNames(mod)</code></pre>
+<pre><code>NULL</code></pre>
+<pre class="r"><code>mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): trying to get slot &quot;likelihood&quot; from an object of a basic class (&quot;function&quot;) with no slots</code></pre>
+<pre class="r"><code>module_list &lt;- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)</code></pre>
+<pre class="r"><code># Visualization
+
+plot_web_trophic &lt;- function(g){
+  basal &lt;- which(igraph::degree(g, mode = &#39;in&#39;) == 0) # Basal species do not have ingoing links
+  top &lt;- which(igraph::degree(g, mode = &#39;out&#39;) == 0) # Top species do not have outgoing links
+  interm &lt;- V(g)[which(!V(g) %in% c(basal,top))] # Intermediate are all the rest
+  
+  V(g)$troph_pos &lt;- rep(0,length(V(g)))
+  V(g)$troph_pos[which(V(g)$name %in% basal)] &lt;- 1
+  V(g)$troph_pos[which(V(g)$name %in% top)] &lt;- 3
+  V(g)$troph_pos[which(V(g)$name %in% interm)] &lt;- 2
+  # create a matrix forthe layout coordinates.
+  coords &lt;- matrix(nrow=length(V(g)), ncol=2) #
+  # The x positions are randomly selected
+  coords[,1] &lt;- runif(length(V(g)))
+  # The y positions are the trophoc positions
+  coords[,2] &lt;- V(g)$troph_pos
+  par(mar=c(0,0,0,0))
+  plot(g,layout=coords,
+              vertex.color=V(g)$troph_pos,
+              vertex.label=NA,
+              vertex.size=8,
+              edge.color=&#39;black&#39;,
+              edge.arrow.size=.3,
+              edge.width=.5)
+}</code></pre>
+</div>
+<div id="motif" class="section level2">
+<h2>6. Motif</h2>
+<pre class="r"><code>par(mfrow=c(4,4), mar=c(.75,.75,.75,.75))
+for (i in 0:15){ # note that counting starts at 0
+  plot(graph_from_isomorphism_class(size = 3, number = i),
+       edge.arrow.size = 0.4,
+       edge.color=&#39;black&#39;,
+       main = i + 1)
+  box(col=&#39;red&#39;)
+}</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-32-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>null device 
+          1 </code></pre>
+<pre class="r"><code>motifs(wild_web) # absolute numbers</code></pre>
+<pre><code>[1]   NA   NA 2425  397</code></pre>
+<pre class="r"><code>motifs(wild_web)/count_motifs(wild_web) # Proportion</code></pre>
+<pre><code>[1]        NA        NA 0.8593196 0.1406804</code></pre>
+<pre class="r"><code># plotting motif function
+
+plot_motif &lt;- function(wild_web, title = &quot;Motif relative abundance (Wild)&quot;){
+  df_motif &lt;- data.frame(relative_abun=motifs(wild_web)/count_motifs(wild_web))
+  df_motif &lt;- tibble::rownames_to_column(df_motif, var=&#39;motif_n&#39;)
+  ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
+    geom_bar(stat=&quot;identity&quot;) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Motif number&#39;)+
+    ylab(&quot;Relative abundance  \n&quot;) +
+    mytheme
+}
+
+plot_motif(wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
+plot_motif(b_wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
+# plot_motif(f_wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
+
+plot_motif(domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)
+plot_motif(b_domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)
+# plot_motif(f_domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)</code></pre>
+<p>Nothing noteworthy.</p>
+</div>
+<div id="module-further-analysis" class="section level2">
+<h2>7. Module further analysis</h2>
+<p>Maybe more module analysis could be done. Modularity visualization</p>
+<pre class="r"><code>plot_graph_module &lt;- function(wild_web){
+  # convert igraph to tidygraph object
+  wild_tbl &lt;- as_tbl_graph(wild_web)
+  # Louvain clustering
+  wild_tbl %&lt;&gt;%
+    tidygraph::activate(nodes) %&gt;% 
+    mutate(community=as.character(group_louvain()))
+  
+  # Modules / add bacteria or fungi info
+  wild_tbl %&lt;&gt;% 
+    activate(nodes) %&gt;% 
+    mutate(Bacteria = ifelse(substr(name,1,1)==&quot;B&quot;,&quot;Bacteria&quot;,&quot;Fungi&quot;) )
+  # plot again with ggraph
+  wild_tbl %&gt;% 
+    ggraph(&quot;fr&quot;)  + geom_edge_link()  + geom_node_point(aes(color=community, shape=Bacteria), size=3) + theme_graph() 
+}
+
+# plot
+ggr1 &lt;- plot_graph_module(wild_web)
+ggr2 &lt;- plot_graph_module(b_wild_web)
+# plot_graph_module(f_wild_web)
+ggr3 &lt;- plot_graph_module(domestic_web)
+ggr4 &lt;- plot_graph_module(b_domestic_web)
+# plot_graph_module(f_domestic_web)
+
+ggarrange(ggr1 + rremove(&quot;legend&quot;), ggr2 + rremove(&quot;legend&quot;), ggr3 + rremove(&quot;legend&quot;), ggr4 + rremove(&quot;legend&quot;), # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggarrange(ggr1, ggr2, ggr3, ggr4,
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;,&quot;D&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-33-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1862,46 +2517,58 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] DescTools_0.99.41    scatterplot3d_0.3-41 MASS_7.3-53         
- [4] ggpubr_0.4.0         devtools_2.4.0       usethis_2.0.1       
- [7] gtools_3.8.2         reshape2_1.4.4       magrittr_2.0.1      
-[10] forcats_0.5.1        stringr_1.4.0        purrr_0.3.4         
-[13] readr_1.4.0          tidyr_1.1.3          tibble_3.0.4        
-[16] tidyverse_1.3.1      RColorBrewer_1.1-2   ggrepel_0.9.1       
-[19] ggplot2_3.3.3        dplyr_1.0.5          bipartite_2.16      
+ [1] omnivor_0.0.0.950    DescTools_0.99.41    scatterplot3d_0.3-41
+ [4] MASS_7.3-53          ggpubr_0.4.0         devtools_2.4.0      
+ [7] usethis_2.0.1        gtools_3.8.2         reshape2_1.4.4      
+[10] magrittr_2.0.1       forcats_0.5.1        stringr_1.4.0       
+[13] purrr_0.3.4          readr_1.4.0          tidyr_1.1.3         
+[16] tibble_3.0.4         tidyverse_1.3.1      RColorBrewer_1.1-2  
+[19] ggrepel_0.9.1        dplyr_1.0.5          bipartite_2.16      
 [22] sna_2.6              network_1.16.1       statnet.common_4.4.1
 [25] vegan_2.5-7          lattice_0.20-41      permute_0.9-5       
-[28] igraph_1.2.6         workflowr_1.6.2     
+[28] ggraph_2.0.5         ggplot2_3.3.3        tidygraph_1.2.0     
+[31] igraph_1.2.6         workflowr_1.6.2     
 
 loaded via a namespace (and not attached):
-  [1] readxl_1.3.1      backports_1.2.1   spam_2.6-0        plyr_1.8.6       
-  [5] splines_4.0.3     digest_0.6.27     htmltools_0.5.1.1 fansi_0.4.2      
-  [9] memoise_2.0.0     rle_0.9.2         cluster_2.1.0     openxlsx_4.2.3   
- [13] remotes_2.3.0     modelr_0.1.8      prettyunits_1.1.1 colorspace_2.0-0 
- [17] rvest_1.0.0       haven_2.4.1       xfun_0.22         callr_3.7.0      
- [21] crayon_1.4.1      jsonlite_1.7.2    Exact_2.1         glue_1.4.2       
- [25] gtable_0.3.0      car_3.0-10        pkgbuild_1.2.0    maps_3.3.0       
- [29] abind_1.4-5       scales_1.1.1      mvtnorm_1.1-1     DBI_1.1.1        
- [33] rstatix_0.7.0     Rcpp_1.0.5        foreign_0.8-80    proxy_0.4-25     
- [37] dotCall64_1.0-1   httr_1.4.2        ellipsis_0.3.1    pkgconfig_2.0.3  
- [41] farver_2.1.0      sass_0.3.1        dbplyr_2.1.1      utf8_1.1.4       
- [45] tidyselect_1.1.1  labeling_0.4.2    rlang_0.4.10      later_1.2.0      
- [49] munsell_0.5.0     cellranger_1.1.0  tools_4.0.3       cachem_1.0.4     
- [53] cli_2.5.0         generics_0.1.0    broom_0.7.6       evaluate_0.14    
- [57] fastmap_1.1.0     yaml_2.2.1        processx_3.5.1    knitr_1.33       
- [61] fs_1.5.0          zip_2.1.1         rootSolve_1.8.2.1 nlme_3.1-149     
- [65] whisker_0.4       xml2_1.3.2        compiler_4.0.3    rstudioapi_0.13  
- [69] curl_4.3.1        e1071_1.7-6       testthat_3.0.2    ggsignif_0.6.1   
- [73] reprex_2.0.0      bslib_0.2.4       stringi_1.5.3     highr_0.9        
- [77] ps_1.6.0          desc_1.3.0        fields_11.6       Matrix_1.2-18    
- [81] vctrs_0.3.6       pillar_1.6.0      lifecycle_1.0.0   jquerylib_0.1.4  
- [85] data.table_1.14.0 cowplot_1.1.1     lmom_2.8          httpuv_1.6.0     
- [89] R6_2.5.0          promises_1.2.0.1  rio_0.5.26        gld_2.6.2        
- [93] sessioninfo_1.1.1 boot_1.3-25       assertthat_0.2.1  pkgload_1.2.1    
- [97] rprojroot_2.0.2   withr_2.4.2       mgcv_1.8-33       expm_0.999-6     
-[101] parallel_4.0.3    hms_1.0.0         grid_4.0.3        coda_0.19-4      
-[105] class_7.3-17      rmarkdown_2.7     carData_3.0-4     git2r_0.28.0     
-[109] lubridate_1.7.10 </code></pre>
+  [1] readxl_1.3.1       backports_1.2.1    spam_2.6-0        
+  [4] plyr_1.8.6         splines_4.0.3      digest_0.6.27     
+  [7] htmltools_0.5.1.1  viridis_0.6.1      fansi_0.4.2       
+ [10] memoise_2.0.0      rle_0.9.2          cluster_2.1.0     
+ [13] openxlsx_4.2.3     remotes_2.3.0      graphlayouts_0.7.1
+ [16] modelr_0.1.8       prettyunits_1.1.1  colorspace_2.0-0  
+ [19] rvest_1.0.0        haven_2.4.1        xfun_0.22         
+ [22] callr_3.7.0        crayon_1.4.1       jsonlite_1.7.2    
+ [25] Exact_2.1          glue_1.4.2         polyclip_1.10-0   
+ [28] gtable_0.3.0       car_3.0-10         pkgbuild_1.2.0    
+ [31] maps_3.3.0         abind_1.4-5        scales_1.1.1      
+ [34] mvtnorm_1.1-1      DBI_1.1.1          rstatix_0.7.0     
+ [37] Rcpp_1.0.5         viridisLite_0.4.0  proxy_0.4-25      
+ [40] foreign_0.8-80     dotCall64_1.0-1    httr_1.4.2        
+ [43] ellipsis_0.3.1     pkgconfig_2.0.3    farver_2.1.0      
+ [46] sass_0.3.1         dbplyr_2.1.1       utf8_1.1.4        
+ [49] tidyselect_1.1.1   labeling_0.4.2     rlang_0.4.10      
+ [52] later_1.2.0        munsell_0.5.0      cellranger_1.1.0  
+ [55] tools_4.0.3        cachem_1.0.4       cli_2.5.0         
+ [58] generics_0.1.0     broom_0.7.6        evaluate_0.14     
+ [61] fastmap_1.1.0      yaml_2.2.1         processx_3.5.1    
+ [64] knitr_1.33         fs_1.5.0           zip_2.1.1         
+ [67] rootSolve_1.8.2.1  nlme_3.1-149       whisker_0.4       
+ [70] xml2_1.3.2         compiler_4.0.3     rstudioapi_0.13   
+ [73] curl_4.3.1         e1071_1.7-6        testthat_3.0.2    
+ [76] ggsignif_0.6.1     reprex_2.0.0       tweenr_1.0.2      
+ [79] bslib_0.2.4        stringi_1.5.3      highr_0.9         
+ [82] ps_1.6.0           desc_1.3.0         fields_11.6       
+ [85] Matrix_1.2-18      vctrs_0.3.6        pillar_1.6.0      
+ [88] lifecycle_1.0.0    jquerylib_0.1.4    data.table_1.14.0 
+ [91] cowplot_1.1.1      lmom_2.8           httpuv_1.6.0      
+ [94] R6_2.5.0           promises_1.2.0.1   gridExtra_2.3     
+ [97] rio_0.5.26         gld_2.6.2          sessioninfo_1.1.1 
+[100] boot_1.3-25        assertthat_0.2.1   pkgload_1.2.1     
+[103] rprojroot_2.0.2    withr_2.4.2        expm_0.999-6      
+[106] mgcv_1.8-33        parallel_4.0.3     hms_1.0.0         
+[109] grid_4.0.3         class_7.3-17       coda_0.19-4       
+[112] rmarkdown_2.7      carData_3.0-4      git2r_0.28.0      
+[115] ggforce_0.3.3      lubridate_1.7.10  </code></pre>
 </div>
 </div>
 
