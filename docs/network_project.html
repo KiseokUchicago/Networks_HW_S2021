@@ -385,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-05-29
+<strong>Last updated:</strong> 2021-05-30
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -476,16 +476,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree2a0669cae9fec75ed5a8004968950b42ae8b84a3targetblank2a0669ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/2a0669cae9fec75ed5a8004968950b42ae8b84a3" target="_blank">2a0669c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree304e189a878a90214d53d43735f34e558444bb5dtargetblank304e189a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/304e189a878a90214d53d43735f34e558444bb5d" target="_blank">304e189</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree2a0669cae9fec75ed5a8004968950b42ae8b84a3targetblank2a0669ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021tree304e189a878a90214d53d43735f34e558444bb5dtargetblank304e189a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/2a0669cae9fec75ed5a8004968950b42ae8b84a3" target="_blank">2a0669c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/304e189a878a90214d53d43735f34e558444bb5d" target="_blank">304e189</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,11 +499,14 @@ Untracked files:
     Untracked:  Betweenness_dom.pdf
     Untracked:  Betweenness_wild.pdf
     Untracked:  Change_BT_dom.pdf
+    Untracked:  Change_BT_merge.pdf
     Untracked:  Change_BT_wild.pdf
     Untracked:  Change_Eigen_dom.pdf
     Untracked:  Change_Eigen_wild.pdf
     Untracked:  Change_degree_dom.pdf
+    Untracked:  Change_degree_merge.pdf
     Untracked:  Change_degree_wild.pdf
+    Untracked:  Degree_attack_wild.pdf
     Untracked:  Degree_dom.pdf
     Untracked:  Degree_wild.pdf
     Untracked:  Eigen_dom.pdf
@@ -512,6 +515,19 @@ Untracked files:
     Untracked:  Hub_dom_both.pdf
     Untracked:  Hub_wild_bac.pdf
     Untracked:  Hub_wild_both.pdf
+    Untracked:  Robustenss_50lines_dom_bac.pdf
+    Untracked:  Robustness_50lines_dom.pdf
+    Untracked:  Robustness_50lines_wild.pdf
+    Untracked:  Robustness_50lines_wild_bac.pdf
+    Untracked:  Robustness_AUC.pdf
+    Untracked:  Robustness_BT.pdf
+    Untracked:  Robustness_ave_dom.pdf
+    Untracked:  Robustness_ave_dom_bac.pdf
+    Untracked:  Robustness_ave_wild.pdf
+    Untracked:  Robustness_ave_wild_bac.pdf
+    Untracked:  Robustness_degree.pdf
+    Untracked:  Robustness_eign.pdf
+    Untracked:  Robustness_random.pdf
     Untracked:  analysis/infomap
     Untracked:  data/1_0.3_edge_mer.css.ss.5.tsv
     Untracked:  data/1_0.3_node_mer.css.ss.5.tsv
@@ -551,8 +567,10 @@ Untracked files:
     Untracked:  data/siberia1982_7_links.RData
     Untracked:  data/siberia1982_7_nodes.RData
     Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+    Untracked:  df_AUC.xlsx
     Untracked:  infomap-script.py
     Untracked:  infomap.exe
+    Untracked:  ~$df_AUC.xlsx
 
 Unstaged changes:
     Deleted:    analysis/Infomap_HW.Rmd
@@ -595,6 +613,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/304e189a878a90214d53d43735f34e558444bb5d/analysis/network_project.Rmd" target="_blank">304e189</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-30
+</td>
+<td>
+almost_there
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/42e4ad926f918db3f27d72d53db7272485bd98c4/analysis/network_project.Rmd" target="_blank">42e4ad9</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-30
+</td>
+<td>
+robustness
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/e6a37802cae67d96bd8b2eb57a7ba4855203aa44/docs/network_project.html" target="_blank">e6a3780</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -670,14 +739,11 @@ library(RColorBrewer)
 library(vegan)
 library(tidyverse)
 library(magrittr)
-library(readxl)
 library(reshape2)
 library(gtools)
 library(devtools)
-library(ggpubr)</code></pre>
-<pre><code>Error: package or namespace load failed for &#39;ggpubr&#39; in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
- there is no package called &#39;rstatix&#39;</code></pre>
-<pre class="r"><code>library(MASS)
+library(ggpubr)
+library(MASS)
 
 ## theme for ggplot
 mytheme &lt;- theme_bw() + 
@@ -776,8 +842,9 @@ plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge
 <div id="centrality-distribution" class="section level2">
 <h2>2. Centrality distribution</h2>
 <p>We are doing centrality analysis to see if there is descriptive difference.</p>
-<div id="degree" class="section level3">
-<h3>2.1. Degree</h3>
+</div>
+<div id="degree" class="section level2">
+<h2>2.1. Degree</h2>
 <pre class="r"><code>## Degree histogram
 plot_degree &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
   d.wild &lt;- igraph::degree(wild_web)
@@ -808,16 +875,16 @@ p_fw &lt;- plot_degree(f_wild_web, title=&quot;Wild fungal microbiome&quot;)
 ggarrange(p_bw, p_fw + rremove(&quot;ylab&quot;), p_w, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_bw, p_fw + rremove(&quot;ylab&quot;), p_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria
 plot_log_degree(b_wild_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Fungi
 plot_log_degree(f_wild_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-3.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria + fungi
 plot_log_degree(wild_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-4.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated
 p_d &lt;- plot_degree(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
 p_bd &lt;- plot_degree(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
@@ -826,19 +893,19 @@ p_fd &lt;- plot_degree(f_domestic_web, title=&quot;Domesticated fungal microbiom
 ggarrange(p_bd, p_fd + rremove(&quot;ylab&quot;), p_d, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_bd, p_fd + rremove(&quot;ylab&quot;), p_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-5.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria
 plot_log_degree(b_domestic_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-6.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated fungi
 plot_log_degree(f_domestic_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-5.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-7.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria + fungi
 plot_log_degree(domestic_web)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-3-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-8.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="betweenness-centrality" class="section level3">
-<h3>2.2. Betweenness centrality</h3>
+<div id="betweenness-centrality" class="section level2">
+<h2>2.2. Betweenness centrality</h2>
 <pre class="r"><code>## Betweenness histogram
 plot_betweenness &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
   bt.wild &lt;- igraph::betweenness(wild_web)
@@ -856,7 +923,7 @@ plot_log_betweenness &lt;- function(wild_web, bin_interval=500){
   bt.wild &lt;- igraph::betweenness(wild_web)
   bin_interval = bin_interval
   bt_dist &lt;- as.data.frame(table(cut(bt.wild, breaks=seq(0,max(bt.wild), by=bin_interval))))
-  hist(bt_dist$Freq)
+  # hist(bt_dist$Freq)
   colnames(bt_dist)
   freq_sum = sum(bt_dist$Freq)
   bt_dist$density &lt;- bt_dist$Freq / freq_sum
@@ -876,16 +943,16 @@ p_bt_fw &lt;- plot_betweenness(f_wild_web, title=&quot;Wild fungal microbiome&qu
 ggarrange(p_bt_bw, p_bt_fw + rremove(&quot;ylab&quot;), p_bt_w, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_bt_bw, p_bt_fw + rremove(&quot;ylab&quot;), p_bt_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria
 plot_log_betweenness(b_wild_web, bin_interval=10)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Fungi
 plot_log_betweenness(f_wild_web, bin_interval=200)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-3.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-3.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria + fungi
 plot_log_betweenness(wild_web, bin_interval=500)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-5.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-4.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated
 p_bt_d &lt;- plot_betweenness(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
 p_bt_bd &lt;- plot_betweenness(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
@@ -894,19 +961,19 @@ p_bt_fd &lt;- plot_betweenness(f_domestic_web, title=&quot;Domesticated fungal m
 ggarrange(p_bt_bd, p_bt_fd + rremove(&quot;ylab&quot;), p_bt_d, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_bt_bd, p_bt_fd + rremove(&quot;ylab&quot;), p_bt_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-5.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria
 plot_log_betweenness(b_domestic_web, bin_interval=10)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-7.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-8.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-6.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated fungi
 plot_log_betweenness(f_domestic_web, bin_interval=1)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-9.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-10.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-7.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria + fungi
 plot_log_betweenness(domestic_web, bin_interval=70)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-4-11.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-12.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-8.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="eigenvectors-centrality" class="section level3">
-<h3>2.3. Eigenvector’s centrality</h3>
+<div id="eigenvectors-centrality" class="section level2">
+<h2>2.3. Eigenvector’s centrality</h2>
 <pre class="r"><code>## Eigenvector centrality histogram
 plot_eigenvector &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
   eig.wild &lt;- igraph::eigen_centrality(wild_web)$vector
@@ -924,7 +991,7 @@ plot_log_eigenvector &lt;- function(wild_web, bin_interval=0.00005){
   eig.wild &lt;- igraph::eigen_centrality(wild_web)$vector
   bin_interval = bin_interval
   eig_dist &lt;- as.data.frame(table(cut(eig.wild, breaks=seq(0,max(eig.wild), by=bin_interval))))
-  hist(eig_dist$Freq)
+  # hist(eig_dist$Freq)
   colnames(eig_dist)
   freq_sum = sum(eig_dist$Freq)
   eig_dist$density &lt;- eig_dist$Freq / freq_sum
@@ -944,16 +1011,16 @@ p_eig_fw &lt;- plot_eigenvector(f_wild_web, title=&quot;Wild fungal microbiome&q
 ggarrange(p_eig_bw, p_eig_fw + rremove(&quot;ylab&quot;), p_eig_w, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_eig_bw, p_eig_fw + rremove(&quot;ylab&quot;), p_eig_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria
 plot_log_eigenvector(b_wild_web, bin_interval=0.00005)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Fungi
 plot_log_eigenvector(f_wild_web, bin_interval=0.00005)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-3.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-3.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Wild Bacteria + fungi
 plot_log_eigenvector(wild_web, bin_interval=0.1)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-5.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-4.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated
 p_eig_d &lt;- plot_eigenvector(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
 p_eig_bd &lt;- plot_eigenvector(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
@@ -962,19 +1029,19 @@ p_eig_fd &lt;- plot_eigenvector(f_domestic_web, title=&quot;Domesticated fungal 
 ggarrange(p_eig_bd, p_eig_fd + rremove(&quot;ylab&quot;), p_eig_d, # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<pre><code>Error in ggarrange(p_eig_bd, p_eig_fd + rremove(&quot;ylab&quot;), p_eig_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-5.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria
 plot_log_eigenvector(b_domestic_web, bin_interval=0.00005)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-7.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-8.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-6.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated fungi
 plot_log_eigenvector(f_domestic_web, bin_interval=0.00005)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-9.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-10.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-7.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Domesticated Bacteria + fungi
 plot_log_eigenvector(domestic_web, bin_interval=0.1)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-5-11.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-12.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-8.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="plot-together" class="section level3">
-<h3>2.4. Plot together</h3>
+<div id="plot-together" class="section level2">
+<h2>2.4. Plot together</h2>
 <p>Wild rice seed microbiome</p>
 <pre class="r"><code># (1-1) Wild - only bacteria
 # Normalize
@@ -1034,8 +1101,8 @@ text(s3d$xyz.convert(df_cen_d), labels = rownames(df_cen_d),
      cex= 0.65, col = &quot;red&quot;)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-7-2.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="change-of-hub-species" class="section level3">
-<h3>2.5. Change of hub species</h3>
+<div id="change-of-hub-species" class="section level2">
+<h2>2.5. Change of hub species</h2>
 <p>Betweenness and degree centrality</p>
 <pre class="r"><code># 2D plotting with BT and Degree
 
@@ -1077,8 +1144,8 @@ plot_degree_betweenness(df_cen_db, title=&quot;Only Bacteria (Domesticated rice)
 <pre class="r"><code>plot_degree_betweenness(df_cen_d, title=&quot;Bacteria + Fungi (Domesticated rice)&quot;, label_thresh=0.35)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-8-4.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="comparison-of-each-centrality-before-vs-after-merging-kingdom" class="section level3">
-<h3>2.6. Comparison of each centrality (before vs after merging kingdom)</h3>
+<div id="comparison-of-each-centrality-before-vs-after-merging-kingdom" class="section level2">
+<h2>2.6. Comparison of each centrality (before vs after merging kingdom)</h2>
 <p>Degree</p>
 <pre class="r"><code># Investigate centrality for bacterial species before vs after merging kingdom
 # (1) Degree
@@ -1107,6 +1174,32 @@ plot_degree_change(df_cen_wb,df_cen_w, title = &quot;Change of degree (Wild)&quo
 <pre class="r"><code># Domesticated
 plot_degree_change(df_cen_db,df_cen_d, title = &quot;Change of degree (Domesticated)&quot;)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-9-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## Now plot the above 2 plots in 1 plot
+# Degree (Wild + dom)
+cen_wb &lt;- tibble::rownames_to_column(df_cen_wb, var=&quot;OTU&quot;)
+cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;OTU&quot;)
+cen_db &lt;- tibble::rownames_to_column(df_cen_db, var=&quot;OTU&quot;)
+cen_d &lt;- tibble::rownames_to_column(df_cen_d, var=&quot;OTU&quot;)
+# left join
+df_cen_w_comp &lt;- cen_wb %&gt;% left_join(cen_w, by=c(&quot;OTU&quot;=&quot;OTU&quot;)) %&gt;% mutate(Network=&quot;Wild&quot;)
+df_cen_d_comp &lt;- cen_db %&gt;% left_join(cen_d, by=c(&quot;OTU&quot;=&quot;OTU&quot;)) %&gt;% mutate(Network=&quot;Domesticated&quot;)
+df_cen_comp &lt;- rbind(df_cen_w_comp,df_cen_d_comp)
+df_cen_comp$Network &lt;- factor(df_cen_comp$Network, levels = c(&quot;Wild&quot;,&quot;Domesticated&quot;))
+
+# plot
+ggplot(df_cen_comp, aes(x=Degree.x, y=Degree.y)) + 
+  geom_point(aes(color = Network), shape = 16 ,size=2, alpha=0.9) +
+  scale_color_manual(values = c(&quot;red2&quot;, &#39;blue3&#39;))+
+  xlab(&#39;\n Degree in bacteria-only network&#39;)+
+  ylab(&quot;Degree in bacterial + fungal network \n&quot;) +
+  ggtitle(paste0(&quot;Change of degree&quot;,&quot; \n&quot;)) +
+  scale_x_continuous(limits = c(0, max(df_cen_comp$Degree.x))) +
+  scale_y_continuous(limits = c(0, max(df_cen_comp$Degree.y))) +
+  mytheme_2d +
+  stat_smooth(method=&quot;loess&quot;, aes(color=Network)) +
+  # stat_smooth(method=&#39;lm&#39;, se=FALSE, colour=&quot;orange&quot;) +
+  geom_abline(intercept=0, slope=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-9-3.png" width="1056" style="display: block; margin: auto;" /></p>
 <p>Betweenness</p>
 <pre class="r"><code># (2) Betweenness
 plot_betweenness_change &lt;- function(df_cen_wb,df_cen_w, title = &quot;Change of betweenness (Wild)&quot;){
@@ -1134,6 +1227,22 @@ plot_betweenness_change(df_cen_wb,df_cen_w, title = &quot;Change of betweenness 
 <pre class="r"><code># Domesticated
 plot_betweenness_change(df_cen_db,df_cen_d, title = &quot;Change of betweenness (Domesticated)&quot;)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-10-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## Now plot the above 2 plots in 1 plot
+# Betweenness (Wild + dom)
+# plot
+ggplot(df_cen_comp, aes(x=Betweenness.x, y=Betweenness.y)) + 
+  geom_point(aes(color = Network), shape = 16 ,size=2, alpha=0.9) +
+  scale_color_manual(values = c(&quot;red2&quot;, &#39;blue3&#39;))+
+  xlab(&#39;\n Betweenness in bacteria-only network&#39;)+
+  ylab(&quot;Betweenness in bacterial + fungal network \n&quot;) +
+  ggtitle(paste0(&quot;Change of Betweenness&quot;,&quot; \n&quot;)) +
+  # scale_x_continuous(limits = c(0, max(df_cen_comp$Degree.x))) +
+  scale_y_continuous(limits = c(0, max(df_cen_comp$Degree.y))) +
+  mytheme_2d +
+  stat_smooth(method=&quot;loess&quot;, aes(color=Network)) +
+  # stat_smooth(method=&#39;lm&#39;, se=FALSE, colour=&quot;orange&quot;) +
+  geom_abline(intercept=0, slope=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-10-3.png" width="1056" style="display: block; margin: auto;" /></p>
 <p>Eigenvector’s centrality</p>
 <pre class="r"><code># (3) Eigenvector&#39;s centrality
 plot_eigen_centrality_change &lt;- function(df_cen_wb,df_cen_w, title = &quot;Change of Eigen_centrality (Wild)&quot;){
@@ -1161,6 +1270,573 @@ plot_eigen_centrality_change(df_cen_wb,df_cen_w, title = &quot;Change of Eigen_c
 <pre class="r"><code># Domesticated
 plot_eigen_centrality_change(df_cen_db,df_cen_d, title = &quot;Change of Eigen_centrality (Domesticated)&quot;)</code></pre>
 <p><img src="figure/network_project.Rmd/unnamed-chunk-11-2.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="robustness-extinction-experiment" class="section level2">
+<h2>3. Robustness (Extinction experiment)</h2>
+<ul>
+<li>Is bacterial+fungal network more robust compared to bacterial only network?<br />
+</li>
+<li>Are the trends different for wild and domesticated networks?</li>
+</ul>
+<pre class="r"><code># (1) Extinction scheme in the order of highest Degree to lowest
+
+# function for getting largest connected component
+largest_component &lt;- function(wild_web){
+  components &lt;- igraph::clusters(wild_web)
+  biggest_cluster_id &lt;- which.max(components$csize)
+  # ids
+  vert_ids &lt;- V(wild_web)[components$membership == biggest_cluster_id]
+  # subgraph
+  largest_component &lt;- igraph::induced_subgraph(wild_web, vert_ids)
+  return(largest_component)
+}
+
+# largest component 
+lg_wild_web &lt;- largest_component(wild_web)
+# vertex count
+vcount(lg_wild_web)</code></pre>
+<pre><code>[1] 341</code></pre>
+<pre class="r"><code>plot(lg_wild_web, vertex.size=5, vertex.label=NA, vertex.color=&#39;lightblue&#39;, edge.arrow.width=0.3, edge.arrow.curve=0.5)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-12-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># get vertex list of the largest component and get the degree for those nodes
+lg_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;Node&quot;) %&gt;% filter(Node %in% V(lg_wild_web)$name)
+
+# Set extinction order
+set.seed(1)
+lg_cen_w &lt;- lg_cen_w[sample(1:dim(lg_cen_w)[1]),] # shuffling because there are nodes that have same degree
+ext_order &lt;- lg_cen_w %&gt;% arrange(desc(Degree)) %&gt;% dplyr::select(Node)
+ext_order &lt;- ext_order$Node
+
+# set vectors that will become x and y of the 2D plot
+lg_size_vec &lt;- c(vcount(lg_wild_web))
+remove_num_vec &lt;- 0:vcount(lg_wild_web)
+
+# Execute extinction
+for (i in 1:vcount(lg_wild_web)){
+  # print(i)
+  # print(ext_order[i])
+  # subtract the vertex in order one by one
+  subtracted_web &lt;- lg_wild_web - vertices(ext_order[1:i])
+  # calculate the largest component
+  subtracted_lg &lt;- largest_component(subtracted_web)
+  # print(paste0(&#39;size of largest component: &#39;,vcount(subtracted_lg)))
+  # append the size of largest component
+  # if the size of the largest component is 1, it is regarded as 0 because no links exist.
+  if (vcount(subtracted_lg) == 1){
+    lg_size_vec &lt;- c(lg_size_vec,0)
+  } else{
+    lg_size_vec &lt;- c(lg_size_vec,vcount(subtracted_lg))
+  }
+}
+
+lg_size_vec %&gt;% length()</code></pre>
+<pre><code>[1] 342</code></pre>
+<pre class="r"><code>remove_num_vec %&gt;% length()</code></pre>
+<pre><code>[1] 342</code></pre>
+<pre class="r"><code># create dataframe
+df_extinction &lt;- tibble(Removed= remove_num_vec/vcount(lg_wild_web), Lg_size = lg_size_vec/vcount(lg_wild_web))
+
+# plot 
+ggplot(df_extinction, aes(x=Removed, y=Lg_size))+ #, group=name)) +
+  geom_line(size=0.5) +
+  ggtitle(paste0(&quot;Degree-based attack (Wild bacterial + fungal network)&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Fraction of vertices removed&#39;)+
+  ylab(&quot;Fractional size of largest component  \n&quot;) +
+  mytheme_2d</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-12-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Now do this for 1000 times and plot. Then we can get average.</p>
+<pre class="r"><code># Start from the beginning
+# largest component 
+lg_wild_web &lt;- largest_component(wild_web)
+# vertex count
+vcount(lg_wild_web)</code></pre>
+<pre><code>[1] 341</code></pre>
+<pre class="r"><code># get vertex list of the largest component and get the degree for those nodes
+lg_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;Node&quot;) %&gt;% filter(Node %in% V(lg_wild_web)$name)
+
+# set vectors that will become x and y of the 2D plot
+lg_size_vec &lt;- c()  # Y axis
+remove_num_vec &lt;- c()  # X axis
+rand_num_vec &lt;- c()  # line group to plot in ggplot (rand below)
+
+# Loop 1000 times -&gt; takes too long.. 50 times
+for (rand in 1:50){
+  # print(rand)
+  # Set extinction order (shuffle and arrange from highest to lowest degree)
+  lg_cen_w_rand &lt;- lg_cen_w[sample(1:dim(lg_cen_w)[1]),] # shuffling because there are nodes that have same degree
+  ext_order &lt;- lg_cen_w_rand %&gt;% arrange(desc(Degree)) %&gt;% dplyr::select(Node)
+  ext_order &lt;- ext_order$Node
+  
+  # When no vertice is removed
+  lg_size_vec &lt;- c(lg_size_vec, vcount(lg_wild_web))
+  remove_num_vec &lt;- c(remove_num_vec, 0)
+  rand_num_vec &lt;- c(rand_num_vec, rand)
+  
+  # Execute extinction
+  for (i in 1:vcount(lg_wild_web)){
+    # Append rand_num_vec
+    rand_num_vec &lt;- c(rand_num_vec, rand)
+    # Update remove_num_vec
+    remove_num_vec &lt;- c(remove_num_vec,i)
+    
+    # subtract the vertex in order one by one
+    subtracted_web &lt;- lg_wild_web - vertices(ext_order[1:i])
+    # calculate the largest component
+    subtracted_lg &lt;- largest_component(subtracted_web)
+    # append the size of largest component
+      # if the size of the largest component is 1, it is regarded as 0 because no links exist.
+    if (vcount(subtracted_lg) == 1){
+      lg_size_vec &lt;- c(lg_size_vec,0)
+    } else{
+      lg_size_vec &lt;- c(lg_size_vec,vcount(subtracted_lg))
+    }
+  }
+}
+
+# create dataframe
+df_extinction &lt;- tibble(Removed= remove_num_vec/vcount(lg_wild_web), Lg_size = lg_size_vec/vcount(lg_wild_web), line_name = rand_num_vec)
+
+# plot 
+ggplot(df_extinction, aes(x=Removed, y=Lg_size, group=line_name)) +
+  geom_line(size=0.5) +
+  ggtitle(paste0(&quot;Degree-based attack (Wild bacterial + fungal network)&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Fraction of vertices removed&#39;)+
+  ylab(&quot;Fractional size of largest component  \n&quot;) +
+  mytheme_2d</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-13-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Now, wrap it into a function and implement.</p>
+<pre class="r"><code>get_extinction_df &lt;- function(wild_web, order=&quot;Degree&quot;, n_lines=10){ # order = &quot;Betweenness&quot;, &quot;Eigen_centrality&quot;, &quot;Random&quot;
+  # calculate centrality
+  D_w &lt;- igraph::degree(wild_web, normalized = T) 
+  BC_w &lt;- igraph::betweenness(wild_web, directed = F, normalized = T)
+  EC_w &lt;- igraph::eigen_centrality(wild_web, directed = F, scale = T)$vector
+  df_cen_w &lt;- data.frame(Degree=D_w, Betweenness=BC_w, Eigen_centrality=EC_w)
+  
+  # largest component 
+  lg_wild_web &lt;- largest_component(wild_web)
+  # vertex count
+  vcount(lg_wild_web)
+  # get vertex list of the largest component and get the degree for those nodes
+  lg_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;Node&quot;) %&gt;% filter(Node %in% V(lg_wild_web)$name)
+  
+  # set vectors that will become x and y of the 2D plot
+  lg_size_vec &lt;- c()  # Y axis
+  remove_num_vec &lt;- c()  # X axis
+  rand_num_vec &lt;- c()  # line group to plot in ggplot (rand below)
+  
+  # Loop 1000 times -&gt; takes too long.. 50 times
+  n = n_lines
+  for (rand in 1:n){
+    # print(rand)
+    # Set extinction order (shuffle and arrange from highest to lowest degree)
+    lg_cen_w_rand &lt;- lg_cen_w[sample(1:dim(lg_cen_w)[1]),] # shuffling because there are nodes that have same degree
+    lg_cen_w_rand$Random &lt;- 0
+    ext_order &lt;- lg_cen_w_rand %&gt;% arrange(desc(!!sym(order))) %&gt;% dplyr::select(Node)
+    ext_order &lt;- ext_order$Node
+    
+    # When no vertice is removed
+    lg_size_vec &lt;- c(lg_size_vec, vcount(lg_wild_web))
+    remove_num_vec &lt;- c(remove_num_vec, 0)
+    rand_num_vec &lt;- c(rand_num_vec, rand)
+    
+    # Execute extinction
+    for (i in 1:vcount(lg_wild_web)){
+      # Append rand_num_vec
+      rand_num_vec &lt;- c(rand_num_vec, rand)
+      # Update remove_num_vec
+      remove_num_vec &lt;- c(remove_num_vec,i)
+      
+      # subtract the vertex in order one by one
+      subtracted_web &lt;- lg_wild_web - vertices(ext_order[1:i])
+      # calculate the largest component
+      subtracted_lg &lt;- largest_component(subtracted_web)
+      # append the size of largest component
+        # if the size of the largest component is 1, it is regarded as 0 because no links exist.
+      if (vcount(subtracted_lg) == 1){
+        lg_size_vec &lt;- c(lg_size_vec,0)
+      } else{
+        lg_size_vec &lt;- c(lg_size_vec,vcount(subtracted_lg))
+      }
+    }
+  }
+  
+  # create dataframe
+  df_extinction &lt;- tibble(Removed= remove_num_vec/vcount(lg_wild_web), Lg_size = lg_size_vec/vcount(lg_wild_web), line_name = rand_num_vec)
+  return(df_extinction)
+}
+
+
+# plot function
+plot_robustness &lt;- function(df_extinction, title=&quot;Degree-based attack (Wild bacterial + fungal network)&quot;){
+  title = title
+  ggplot(df_extinction, aes(x=Removed, y=Lg_size, group=line_name)) +
+    geom_line(size=0.5, color=&quot;maroon&quot;) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    mytheme_2d
+}</code></pre>
+</div>
+<div id="generate-data-and-plot-robustness-for-each-network" class="section level2">
+<h2>3.1. Generate data and plot robustness for each network</h2>
+<pre class="r"><code># (1) Wild
+# (1-1) Degree
+df_ext_degree_wild &lt;- get_extinction_df(wild_web, order=&quot;Degree&quot;, n_lines=50)
+wd1 &lt;- plot_robustness(df_ext_degree_wild, title=&quot;Degree-based attack (Wild)&quot;)
+# (1-2) Betweenness
+df_ext_bt_wild &lt;- get_extinction_df(wild_web, order=&quot;Betweenness&quot;, n_lines=50)
+wd2 &lt;- plot_robustness(df_ext_bt_wild, title=&quot;Betweenness-based attack&quot;)
+# (1-3) Eigen_centrality
+df_ext_eigen_wild &lt;- get_extinction_df(wild_web, order=&quot;Eigen_centrality&quot;, n_lines=50)
+wd3 &lt;- plot_robustness(df_ext_eigen_wild, title=&quot;Eigen_centrality-based attack&quot;)
+# (1-4) Random
+df_ext_random_wild &lt;- get_extinction_df(wild_web, order=&quot;Random&quot;, n_lines=50)
+wd4 &lt;- plot_robustness(df_ext_random_wild, title=&quot;Random-based attack&quot;)
+# plot 4 in 1
+ggarrange(wd1, wd2 + rremove(&quot;ylab&quot;), wd3 + rremove(&quot;ylab&quot;), wd4 + rremove(&quot;ylab&quot;),# + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 4, nrow = 1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># (2) Wild - bacteria
+# (2-1) Degree
+df_ext_degree_wild_b &lt;- get_extinction_df(b_wild_web, order=&quot;Degree&quot;, n_lines=50)
+wb1 &lt;- plot_robustness(df_ext_degree_wild_b, title=&quot;Degree-based attack (Wild bacterial)&quot;)
+# (2-2) Betweenness
+df_ext_bt_wild_b &lt;- get_extinction_df(b_wild_web, order=&quot;Betweenness&quot;, n_lines=50)
+wb2 &lt;- plot_robustness(df_ext_bt_wild_b, title=&quot;Betweenness-based attack&quot;)
+# (2-3) Eigen_centrality
+df_ext_eigen_wild_b &lt;- get_extinction_df(b_wild_web, order=&quot;Eigen_centrality&quot;, n_lines=50)
+wb3 &lt;- plot_robustness(df_ext_eigen_wild_b, title=&quot;Eigen_centrality-based attack&quot;)
+# (2-4) Random
+df_ext_random_wild_b &lt;- get_extinction_df(b_wild_web, order=&quot;Random&quot;, n_lines=50)
+wb4 &lt;- plot_robustness(df_ext_random_wild_b, title=&quot;Random-based attack&quot;)
+# plot 4 in 1
+ggarrange(wb1, wb2 + rremove(&quot;ylab&quot;), wb3 + rremove(&quot;ylab&quot;), wb4 + rremove(&quot;ylab&quot;),# + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 4, nrow = 1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># (3) Domesticated
+# (3-1) Degree
+df_ext_degree_domestic &lt;- get_extinction_df(domestic_web, order=&quot;Degree&quot;, n_lines=50)
+dd1 &lt;- plot_robustness(df_ext_degree_domestic, title=&quot;Degree-based attack (Domesticated)&quot;)
+# (3-2) Betweenness
+df_ext_bt_domestic &lt;- get_extinction_df(domestic_web, order=&quot;Betweenness&quot;, n_lines=50)
+dd2 &lt;- plot_robustness(df_ext_bt_domestic, title=&quot;Betweenness-based attack&quot;)
+# (3-3) Eigen_centrality
+df_ext_eigen_domestic &lt;- get_extinction_df(domestic_web, order=&quot;Eigen_centrality&quot;, n_lines=50)
+dd3 &lt;- plot_robustness(df_ext_eigen_domestic, title=&quot;Eigen_centrality-based attack&quot;)
+# (3-4) Random
+df_ext_random_domestic &lt;- get_extinction_df(domestic_web, order=&quot;Random&quot;, n_lines=50)
+dd4 &lt;- plot_robustness(df_ext_random_domestic, title=&quot;Random-based attack&quot;)
+# plot 4 in 1
+ggarrange(dd1, dd2 + rremove(&quot;ylab&quot;), dd3 + rremove(&quot;ylab&quot;), dd4 + rremove(&quot;ylab&quot;),# + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 4, nrow = 1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># (4) Domesticated - bacteria
+# (4-1) Degree
+df_ext_degree_domestic_b &lt;- get_extinction_df(b_domestic_web, order=&quot;Degree&quot;, n_lines=50)
+db1 &lt;- plot_robustness(df_ext_degree_domestic_b, title=&quot;Degree-based attack (Domesticated bacterial)&quot;)
+# (4-2) Betweenness
+df_ext_bt_domestic_b &lt;- get_extinction_df(b_domestic_web, order=&quot;Betweenness&quot;, n_lines=50)
+db2 &lt;- plot_robustness(df_ext_bt_domestic_b, title=&quot;Betweenness-based attack&quot;)
+# (3-3) Eigen_centrality
+df_ext_eigen_domestic_b &lt;- get_extinction_df(b_domestic_web, order=&quot;Eigen_centrality&quot;, n_lines=50)
+db3 &lt;- plot_robustness(df_ext_eigen_domestic_b, title=&quot;Eigen_centrality-based attack&quot;)
+# (3-4) Random
+df_ext_random_domestic_b &lt;- get_extinction_df(b_domestic_web, order=&quot;Random&quot;, n_lines=50)
+db4 &lt;- plot_robustness(df_ext_random_domestic_b, title=&quot;Random-based attack&quot;)
+# plot 4 in 1
+ggarrange(db1, db2 + rremove(&quot;ylab&quot;), db3 + rremove(&quot;ylab&quot;), db4 + rremove(&quot;ylab&quot;),# + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 4, nrow = 1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># plot the average in 1 plot
+plot_robustness_by_attack &lt;- function(df_ext_degree_wild, df_ext_bt_wild, df_ext_eigen_wild, df_ext_random_wild, title = &quot;Wild&quot;){
+  # 1. degree
+  df_ext1 &lt;- df_ext_degree_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Attack = &quot;Degree&quot;)
+  # 2. Bt
+  df_ext2 &lt;- df_ext_bt_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Attack = &quot;Betweenness&quot;)
+  # 3. Eigen
+  df_ext3 &lt;- df_ext_eigen_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Attack = &quot;Eigen_centrality&quot;)
+  # 4. Random
+  df_ext4 &lt;- df_ext_random_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Attack = &quot;Random&quot;)
+  
+  df_ext_wild &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_wild$Attack &lt;- factor(df_ext_wild$Attack, levels = c(&#39;Degree&#39;,&#39;Betweenness&#39;,&#39;Eigen_centrality&#39;,&quot;Random&quot;))
+  
+  ggplot(df_ext_wild, aes(x=Removed, y=Lg_size_median, group=Attack, color=Attack)) +
+    geom_line(size=1) +
+    ggtitle(paste0(&quot;Robustness curves (&quot;,title,&quot;) \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    mytheme_2d
+}
+
+# Wild
+plot_robustness_by_attack(df_ext_degree_wild, df_ext_bt_wild, df_ext_eigen_wild, df_ext_random_wild, title=&quot;Wild&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-5.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild -bac
+plot_robustness_by_attack(df_ext_degree_wild_b, df_ext_bt_wild_b, df_ext_eigen_wild_b, df_ext_random_wild_b, title=&quot;Wild bacterial&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+plot_robustness_by_attack(df_ext_degree_domestic, df_ext_bt_domestic, df_ext_eigen_domestic, df_ext_random_domestic, title=&quot;Domesticated&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-7.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated -bac
+plot_robustness_by_attack(df_ext_degree_domestic_b, df_ext_bt_domestic_b, df_ext_eigen_domestic_b, df_ext_random_domestic_b, title=&quot;Domesticated bacterial&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-15-8.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-robustness-for-all-network" class="section level2">
+<h2>3.2. Plot robustness for all network</h2>
+<p>Degree</p>
+<pre class="r"><code># 1. Degree
+# plot different networks in 1 plot
+plot_robustness_degree &lt;- function(df_ext_degree_wild, df_ext_degree_wild_b, df_ext_degree_domestic, df_ext_degree_domestic_b, title = &quot;Degree-based attack&quot;){
+  # Wild
+  df_ext1 &lt;- df_ext_degree_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+  # Wild-bac
+  df_ext2 &lt;- df_ext_degree_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+  # Domesticated
+  df_ext3 &lt;- df_ext_degree_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+  # Domesticated-bac
+  df_ext4 &lt;- df_ext_degree_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+  
+  df_ext_degree &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_degree$Network &lt;- factor(df_ext_degree$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+  
+  ggplot(df_ext_degree, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    # scale_fill_manual(labels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Fungi&#39;), values = c(&#39;Bacteria&#39;= &quot;#FF8300&quot;, &#39;Fungi&#39;=&#39;#BF4AFF&#39;))+
+    scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c(&quot;right&quot;, &quot;top&quot;),
+    legend.title  = element_blank(),
+    legend.box.just = &quot;right&quot;,
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_degree(df_ext_degree_wild, df_ext_degree_wild_b, df_ext_degree_domestic, df_ext_degree_domestic_b, title = &quot;Degree-based attack&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-16-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Betweenness</p>
+<pre class="r"><code># 2. Betweenness
+# plot different networks in 1 plot
+plot_robustness_bt &lt;- function(df_ext_bt_wild, df_ext_bt_wild_b, df_ext_bt_domestic, df_ext_bt_domestic_b, title = &quot;Betweenness-based attack&quot;){
+  # Wild
+  df_ext1 &lt;- df_ext_bt_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+  # Wild-bac
+  df_ext2 &lt;- df_ext_bt_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+  # Domesticated
+  df_ext3 &lt;- df_ext_bt_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+  # Domesticated-bac
+  df_ext4 &lt;- df_ext_bt_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+  
+  df_ext_bt &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_bt$Network &lt;- factor(df_ext_bt$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+  
+  ggplot(df_ext_bt, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    # scale_fill_manual(labels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Fungi&#39;), values = c(&#39;Bacteria&#39;= &quot;#FF8300&quot;, &#39;Fungi&#39;=&#39;#BF4AFF&#39;))+
+    scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c(&quot;right&quot;, &quot;top&quot;),
+    legend.title  = element_blank(),
+    legend.box.just = &quot;right&quot;,
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_bt(df_ext_bt_wild, df_ext_bt_wild_b, df_ext_bt_domestic, df_ext_bt_domestic_b, title = &quot;Betweenness-based attack&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-17-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Eigen_centrality</p>
+<pre class="r"><code># 3. Eigen_centrality
+# plot different networks in 1 plot
+plot_robustness_eigen &lt;- function(df_ext_eigen_wild, df_ext_eigen_wild_b, df_ext_eigen_domestic, df_ext_eigen_domestic_b, title = &quot;Eigen centrality-based attack&quot;){
+  # Wild
+  df_ext1 &lt;- df_ext_eigen_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+  # Wild-bac
+  df_ext2 &lt;- df_ext_eigen_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+  # Domesticated
+  df_ext3 &lt;- df_ext_eigen_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+  # Domesticated-bac
+  df_ext4 &lt;- df_ext_eigen_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+  
+  df_ext_eigen &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_eigen$Network &lt;- factor(df_ext_eigen$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+  
+  ggplot(df_ext_eigen, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    # scale_fill_manual(labels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Fungi&#39;), values = c(&#39;Bacteria&#39;= &quot;#FF8300&quot;, &#39;Fungi&#39;=&#39;#BF4AFF&#39;))+
+    scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c(&quot;right&quot;, &quot;top&quot;),
+    legend.title  = element_blank(),
+    legend.box.just = &quot;right&quot;,
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_eigen(df_ext_eigen_wild, df_ext_eigen_wild_b, df_ext_eigen_domestic, df_ext_eigen_domestic_b, title = &quot;Eigen centrality-based attack&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Random</p>
+<pre class="r"><code># 4. Random
+# plot different networks in 1 plot
+plot_robustness_random &lt;- function(df_ext_random_wild, df_ext_random_wild_b, df_ext_random_domestic, df_ext_random_domestic_b, title = &quot;Random-based attack&quot;){
+  # Wild
+  df_ext1 &lt;- df_ext_random_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+  # Wild-bac
+  df_ext2 &lt;- df_ext_random_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+  # Domesticated
+  df_ext3 &lt;- df_ext_random_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+  # Domesticated-bac
+  df_ext4 &lt;- df_ext_random_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+  
+  df_ext_random &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_random$Network &lt;- factor(df_ext_random$Network, levels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Wild-Bacterial&#39;,&#39;Domesticated-Bacterial-Fungal&#39;,&quot;Domesticated-Bacterial&quot;))
+  
+  ggplot(df_ext_random, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    xlab(&#39;\n Fraction of vertices removed&#39;)+
+    ylab(&quot;Fractional size of largest component  \n&quot;) +
+    # scale_fill_manual(labels = c(&#39;Wild-Bacterial-Fungal&#39;,&#39;Fungi&#39;), values = c(&#39;Bacteria&#39;= &quot;#FF8300&quot;, &#39;Fungi&#39;=&#39;#BF4AFF&#39;))+
+    scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c(&quot;right&quot;, &quot;top&quot;),
+    legend.title  = element_blank(),
+    legend.box.just = &quot;right&quot;,
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_random(df_ext_random_wild, df_ext_random_wild_b, df_ext_random_domestic, df_ext_random_domestic_b, title = &quot;Random-based attack&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-19-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calculate-area-under-curve" class="section level2">
+<h2>3.3. Calculate area under curve</h2>
+<pre class="r"><code>library(DescTools)
+
+AUC(x=x, y=sin(x))</code></pre>
+<pre><code>Error in AUC(x = x, y = sin(x)): object &#39;x&#39; not found</code></pre>
+<pre class="r"><code># Getting the data ready
+## Degree - Wild
+df_ext1 &lt;- df_ext_degree_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+# Wild-bac
+df_ext2 &lt;- df_ext_degree_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+# Domesticated
+df_ext3 &lt;- df_ext_degree_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+# Domesticated-bac
+df_ext4 &lt;- df_ext_degree_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+# bind
+df_ext_degree &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %&gt;% mutate(Attack=&quot;Degree&quot;)
+
+## BT - Wild
+df_ext1 &lt;- df_ext_bt_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+# Wild-bac
+df_ext2 &lt;- df_ext_bt_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+# Domesticated
+df_ext3 &lt;- df_ext_bt_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+# Domesticated-bac
+df_ext4 &lt;- df_ext_bt_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+# bind
+df_ext_bt &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %&gt;% mutate(Attack=&quot;Betweenness&quot;)
+
+## Eigenvector - Wild
+df_ext1 &lt;- df_ext_eigen_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+# Wild-bac
+df_ext2 &lt;- df_ext_eigen_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+# Domesticated
+df_ext3 &lt;- df_ext_eigen_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+# Domesticated-bac
+df_ext4 &lt;- df_ext_eigen_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+# bind
+df_ext_eigen &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %&gt;% mutate(Attack=&quot;Eigen_centrality&quot;)
+
+## Random - Wild
+df_ext1 &lt;- df_ext_random_wild %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial-Fungal&quot;)
+# Wild-bac
+df_ext2 &lt;- df_ext_random_wild_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Wild-Bacterial&quot;)
+# Domesticated
+df_ext3 &lt;- df_ext_random_domestic %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial-Fungal&quot;)
+# Domesticated-bac
+df_ext4 &lt;- df_ext_random_domestic_b %&gt;% group_by(Removed) %&gt;% summarize(Lg_size_median = median(Lg_size)) %&gt;% ungroup() %&gt;% mutate(Network = &quot;Domesticated-Bacterial&quot;)
+# bind
+df_ext_random &lt;- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %&gt;% mutate(Attack=&quot;Random&quot;)
+
+df_ext &lt;- rbind(df_ext_degree, df_ext_bt, df_ext_eigen, df_ext_random)
+
+# get AUC value (Area under curve)
+mat_AUC &lt;- matrix(rep(0,16),nrow=4, ncol=4)
+row_vec = c(&quot;Wild-Bacterial-Fungal&quot;, &quot;Wild-Bacterial&quot;, &quot;Domesticated-Bacterial-Fungal&quot;, &quot;Domesticated-Bacterial&quot;)
+col_vec = c(&quot;Degree&quot;,&quot;Betweenness&quot;,&quot;Eigen_centrality&quot;,&quot;Random&quot;)
+
+# Loop through col, row
+for (i in 1:length(row_vec)){
+  for (j in 1:length(col_vec)){
+    # filter the points by the row(Network type) and column(Attack type) 
+    df_ext_subset &lt;- df_ext[(df_ext$Network==row_vec[i]) &amp; (df_ext$Attack==col_vec[j]),]
+    mat_AUC[i,j] = AUC(df_ext_subset$Removed,df_ext_subset$Lg_size_median)
+  }
+}
+
+df_AUC &lt;- data.frame(mat_AUC, row.names = row_vec)
+colnames(df_AUC) &lt;- col_vec
+
+df_AUC</code></pre>
+<pre><code>                                 Degree Betweenness Eigen_centrality    Random
+Wild-Bacterial-Fungal         0.1320680   0.1225824        0.3545592 0.3249284
+Wild-Bacterial                0.1656805   0.1893491        0.3165680 0.2847633
+Domesticated-Bacterial-Fungal 0.1206717   0.1507964        0.2517313 0.3060076
+Domesticated-Bacterial        0.2116528   0.1860880        0.2895363 0.3537455</code></pre>
+<pre class="r"><code>openxlsx::write.xlsx(df_AUC,&quot;df_AUC.xlsx&quot;,row.names = T )
+
+# Confirming everything is right
+ext_w_degree &lt;- df_ext %&gt;% filter(Network == &quot;Wild-Bacterial-Fungal&quot;, Attack==&quot;Degree&quot;)
+AUC(ext_w_degree$Removed,ext_w_degree$Lg_size_median)</code></pre>
+<pre><code>[1] 0.132068</code></pre>
+<pre class="r"><code>ext_wb_degree &lt;- df_ext %&gt;% filter(Network == &quot;Wild-Bacterial&quot;, Attack==&quot;Degree&quot;)
+AUC(ext_wb_degree$Removed,ext_wb_degree$Lg_size_median)</code></pre>
+<pre><code>[1] 0.1656805</code></pre>
+<pre class="r"><code>ext_w_bt &lt;- df_ext %&gt;% filter(Network == &quot;Wild-Bacterial-Fungal&quot;, Attack==&quot;Betweenness&quot;)
+AUC(ext_w_bt$Removed,ext_w_bt$Lg_size_median)</code></pre>
+<pre><code>[1] 0.1225824</code></pre>
+<pre class="r"><code>ext_wb_bt &lt;- df_ext %&gt;% filter(Network == &quot;Wild-Bacterial&quot;, Attack==&quot;Betweenness&quot;)
+AUC(ext_wb_bt$Removed,ext_wb_bt$Lg_size_median)</code></pre>
+<pre><code>[1] 0.1893491</code></pre>
+<pre class="r"><code># Plotting for visualiztion
+colnames(mat_AUC) &lt;- col_vec
+rownames(mat_AUC) &lt;- row_vec
+
+melt_AUC &lt;- melt(mat_AUC)
+colnames(melt_AUC) &lt;- c(&quot;Network&quot;,&quot;Attack&quot;,&quot;AUC&quot;)
+
+ggplot(melt_AUC, aes(x=Attack, y=AUC, group=Network, color=Network)) +
+  geom_point(size =4) +
+  geom_line(size=1.5) +
+  ggtitle(paste0(&quot;Area under Robustness curve&quot;,&quot; \n&quot;)) +
+  xlab(&#39;\n Attack order&#39;)+
+  ylab(&quot;AUC  \n&quot;) +
+  scale_color_manual(values = c(&quot;red2&quot;,&#39;gold1&#39;,&#39;blue3&#39;,&#39;cyan2&#39;))+
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family=&quot;serif&quot;))</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="metrics-comparison" class="section level2">
+<h2>4. Metrics comparison</h2>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1186,41 +1862,46 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] scatterplot3d_0.3-41 MASS_7.3-53          devtools_2.4.0      
- [4] usethis_2.0.1        gtools_3.8.2         reshape2_1.4.4      
- [7] readxl_1.3.1         magrittr_2.0.1       forcats_0.5.1       
-[10] stringr_1.4.0        purrr_0.3.4          readr_1.4.0         
-[13] tidyr_1.1.3          tibble_3.0.4         tidyverse_1.3.1     
-[16] RColorBrewer_1.1-2   ggrepel_0.9.1        ggplot2_3.3.3       
-[19] dplyr_1.0.5          bipartite_2.16       sna_2.6             
-[22] network_1.16.1       statnet.common_4.4.1 vegan_2.5-7         
-[25] lattice_0.20-41      permute_0.9-5        igraph_1.2.6        
-[28] workflowr_1.6.2     
+ [1] DescTools_0.99.41    scatterplot3d_0.3-41 MASS_7.3-53         
+ [4] ggpubr_0.4.0         devtools_2.4.0       usethis_2.0.1       
+ [7] gtools_3.8.2         reshape2_1.4.4       magrittr_2.0.1      
+[10] forcats_0.5.1        stringr_1.4.0        purrr_0.3.4         
+[13] readr_1.4.0          tidyr_1.1.3          tibble_3.0.4        
+[16] tidyverse_1.3.1      RColorBrewer_1.1-2   ggrepel_0.9.1       
+[19] ggplot2_3.3.3        dplyr_1.0.5          bipartite_2.16      
+[22] sna_2.6              network_1.16.1       statnet.common_4.4.1
+[25] vegan_2.5-7          lattice_0.20-41      permute_0.9-5       
+[28] igraph_1.2.6         workflowr_1.6.2     
 
 loaded via a namespace (and not attached):
- [1] colorspace_2.0-0  ggsignif_0.6.1    ellipsis_0.3.1    rprojroot_2.0.2  
- [5] fs_1.5.0          rstudioapi_0.13   farver_2.1.0      remotes_2.3.0    
- [9] fansi_0.4.2       lubridate_1.7.10  xml2_1.3.2        splines_4.0.3    
-[13] cachem_1.0.4      knitr_1.33        pkgload_1.2.1     spam_2.6-0       
-[17] jsonlite_1.7.2    broom_0.7.6       cluster_2.1.0     dbplyr_2.1.1     
-[21] compiler_4.0.3    httr_1.4.2        backports_1.2.1   assertthat_0.2.1 
-[25] Matrix_1.2-18     fastmap_1.1.0     cli_2.5.0         later_1.2.0      
-[29] htmltools_0.5.1.1 prettyunits_1.1.1 tools_4.0.3       dotCall64_1.0-1  
-[33] coda_0.19-4       gtable_0.3.0      glue_1.4.2        maps_3.3.0       
-[37] Rcpp_1.0.5        rle_0.9.2         cellranger_1.1.0  jquerylib_0.1.4  
-[41] vctrs_0.3.6       nlme_3.1-149      xfun_0.22         ps_1.6.0         
-[45] testthat_3.0.2    rvest_1.0.0       lifecycle_1.0.0   scales_1.1.1     
-[49] hms_1.0.0         promises_1.2.0.1  parallel_4.0.3    fields_11.6      
-[53] yaml_2.2.1        memoise_2.0.0     sass_0.3.1        stringi_1.5.3    
-[57] highr_0.9         desc_1.3.0        pkgbuild_1.2.0    rlang_0.4.10     
-[61] pkgconfig_2.0.3   evaluate_0.14     labeling_0.4.2    tidyselect_1.1.1 
-[65] processx_3.5.1    plyr_1.8.6        R6_2.5.0          generics_0.1.0   
-[69] DBI_1.1.1         pillar_1.6.0      haven_2.4.1       whisker_0.4      
-[73] withr_2.4.2       mgcv_1.8-33       modelr_0.1.8      crayon_1.4.1     
-[77] utf8_1.1.4        rmarkdown_2.7     grid_4.0.3        callr_3.7.0      
-[81] git2r_0.28.0      reprex_2.0.0      digest_0.6.27     httpuv_1.6.0     
-[85] munsell_0.5.0     bslib_0.2.4       sessioninfo_1.1.1</code></pre>
-</div>
+  [1] readxl_1.3.1      backports_1.2.1   spam_2.6-0        plyr_1.8.6       
+  [5] splines_4.0.3     digest_0.6.27     htmltools_0.5.1.1 fansi_0.4.2      
+  [9] memoise_2.0.0     rle_0.9.2         cluster_2.1.0     openxlsx_4.2.3   
+ [13] remotes_2.3.0     modelr_0.1.8      prettyunits_1.1.1 colorspace_2.0-0 
+ [17] rvest_1.0.0       haven_2.4.1       xfun_0.22         callr_3.7.0      
+ [21] crayon_1.4.1      jsonlite_1.7.2    Exact_2.1         glue_1.4.2       
+ [25] gtable_0.3.0      car_3.0-10        pkgbuild_1.2.0    maps_3.3.0       
+ [29] abind_1.4-5       scales_1.1.1      mvtnorm_1.1-1     DBI_1.1.1        
+ [33] rstatix_0.7.0     Rcpp_1.0.5        foreign_0.8-80    proxy_0.4-25     
+ [37] dotCall64_1.0-1   httr_1.4.2        ellipsis_0.3.1    pkgconfig_2.0.3  
+ [41] farver_2.1.0      sass_0.3.1        dbplyr_2.1.1      utf8_1.1.4       
+ [45] tidyselect_1.1.1  labeling_0.4.2    rlang_0.4.10      later_1.2.0      
+ [49] munsell_0.5.0     cellranger_1.1.0  tools_4.0.3       cachem_1.0.4     
+ [53] cli_2.5.0         generics_0.1.0    broom_0.7.6       evaluate_0.14    
+ [57] fastmap_1.1.0     yaml_2.2.1        processx_3.5.1    knitr_1.33       
+ [61] fs_1.5.0          zip_2.1.1         rootSolve_1.8.2.1 nlme_3.1-149     
+ [65] whisker_0.4       xml2_1.3.2        compiler_4.0.3    rstudioapi_0.13  
+ [69] curl_4.3.1        e1071_1.7-6       testthat_3.0.2    ggsignif_0.6.1   
+ [73] reprex_2.0.0      bslib_0.2.4       stringi_1.5.3     highr_0.9        
+ [77] ps_1.6.0          desc_1.3.0        fields_11.6       Matrix_1.2-18    
+ [81] vctrs_0.3.6       pillar_1.6.0      lifecycle_1.0.0   jquerylib_0.1.4  
+ [85] data.table_1.14.0 cowplot_1.1.1     lmom_2.8          httpuv_1.6.0     
+ [89] R6_2.5.0          promises_1.2.0.1  rio_0.5.26        gld_2.6.2        
+ [93] sessioninfo_1.1.1 boot_1.3-25       assertthat_0.2.1  pkgload_1.2.1    
+ [97] rprojroot_2.0.2   withr_2.4.2       mgcv_1.8-33       expm_0.999-6     
+[101] parallel_4.0.3    hms_1.0.0         grid_4.0.3        coda_0.19-4      
+[105] class_7.3-17      rmarkdown_2.7     carData_3.0-4     git2r_0.28.0     
+[109] lubridate_1.7.10 </code></pre>
 </div>
 </div>
 
