@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="KiseokUchicago" />
+
+<meta name="date" content="2021-05-28" />
+
+<title>network_project</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Networks_HW_S2021</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/KiseokUchicago/Networks_HW_S2021">
+    <span class="fas fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">network_project</h1>
+<h4 class="author">KiseokUchicago</h4>
+<h4 class="date">2021-05-28</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-05-29
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Networks_HW_S2021/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20210409code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20210409)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20210409code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20210409)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea5ee1bc402d35183ef218fe6377787c85babae82targetblanka5ee1bca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a5ee1bc402d35183ef218fe6377787c85babae82" target="_blank">a5ee1bc</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treea5ee1bc402d35183ef218fe6377787c85babae82targetblanka5ee1bca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/a5ee1bc402d35183ef218fe6377787c85babae82" target="_blank">a5ee1bc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  Betweenness_dom.pdf
+    Untracked:  Betweenness_wild.pdf
+    Untracked:  Change_BT_dom.pdf
+    Untracked:  Change_BT_wild.pdf
+    Untracked:  Change_Eigen_dom.pdf
+    Untracked:  Change_Eigen_wild.pdf
+    Untracked:  Change_degree_dom.pdf
+    Untracked:  Change_degree_wild.pdf
+    Untracked:  Degree_dom.pdf
+    Untracked:  Degree_wild.pdf
+    Untracked:  Eigen_dom.pdf
+    Untracked:  Eigen_wild.pdf
+    Untracked:  Hub_dom_bac.pdf
+    Untracked:  Hub_dom_both.pdf
+    Untracked:  Hub_wild_bac.pdf
+    Untracked:  Hub_wild_both.pdf
+    Untracked:  analysis/infomap
+    Untracked:  data/1_0.3_edge_mer.css.ss.5.tsv
+    Untracked:  data/1_0.3_node_mer.css.ss.5.tsv
+    Untracked:  data/2_0.3_edge_dom.css.ss.5.tsv
+    Untracked:  data/2_0.3_node_dom.css.ss.5.tsv
+    Untracked:  data/3_0.3_edge_wil.css.ss.5.tsv
+    Untracked:  data/3_0.3_node_wil.css.ss.5.tsv
+    Untracked:  data/4_0.3_edge_phy.css.ss.5.tsv
+    Untracked:  data/5_0.3_edge_dom.phy.ss.5.tsv
+    Untracked:  data/6_0.3_edge_wil.phy.ss.5.tsv
+    Untracked:  data/7_0.3_edge_fun.css.ss.5.tsv
+    Untracked:  data/8_0.3_edge_dom.fun.ss.5.tsv
+    Untracked:  data/9_0.3_edge_wil.fun.ss.5.tsv
+    Untracked:  data/Chesapeake_bay_links.csv
+    Untracked:  data/Chesapeake_bay_nodes.csv
+    Untracked:  data/Dunne2013PBioSupData.xlsx
+    Untracked:  data/M_PA_003.csv
+    Untracked:  data/NEE2017_nodes.csv
+    Untracked:  data/Otago_Data_Links.csv
+    Untracked:  data/Otago_Data_Nodes.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_hosts.csv
+    Untracked:  data/Pilosof_2017NEE_interlayer_parasites.csv
+    Untracked:  data/Pilosof_etal_NEE2017_1.csv
+    Untracked:  data/Pilosof_etal_NEE2017_2.csv
+    Untracked:  data/Pilosof_etal_NEE2017_3.csv
+    Untracked:  data/Pilosof_etal_NEE2017_4.csv
+    Untracked:  data/Pilosof_etal_NEE2017_5.csv
+    Untracked:  data/Pilosof_etal_NEE2017_6.csv
+    Untracked:  data/Tur2016.csv
+    Untracked:  data/Ural_valley_A_HP_048.csv
+    Untracked:  data/chilean_NTIneg.txt
+    Untracked:  data/chilean_NTIpos.txt
+    Untracked:  data/chilean_TI.txt
+    Untracked:  data/chilean_metadata.xls
+    Untracked:  data/kongsfjorden_links.RData
+    Untracked:  data/kongsfjorden_nodes.RData
+    Untracked:  data/siberia1982_7_links.RData
+    Untracked:  data/siberia1982_7_nodes.RData
+    Untracked:  data/vizentin-bugoni_et_al_2016_complementary.xlsx
+    Untracked:  infomap-script.py
+    Untracked:  infomap.exe
+
+Unstaged changes:
+    Deleted:    analysis/Infomap_HW.Rmd
+    Modified:   analysis/Networks_HW3.Rmd
+    Modified:   analysis/network_project.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/network_project.Rmd</code>) and HTML (<code>docs/network_project.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/a5ee1bc402d35183ef218fe6377787c85babae82/analysis/network_project.Rmd" target="_blank">a5ee1bc</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-29
+</td>
+<td>
+project_start
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="final-project-analysis" class="section level2">
+<h2>Final project analysis</h2>
+</div>
+<div id="project-for-ecev-44500-networks-in-ecology-and-evolution" class="section level2">
+<h2>Project for ECEV 44500 Networks in Ecology and Evolution</h2>
+<p>Professor: <strong>Mercedes Pascual</strong>, <strong>Sergio A. Alcala Corona</strong><br />
+Student: <strong>Kiseok Lee</strong></p>
+<pre class="r"><code># libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(ggrepel)
+library(RColorBrewer)
+library(vegan)
+library(tidyverse)
+library(magrittr)
+library(readxl)
+library(reshape2)
+library(gtools)
+library(devtools)
+library(ggpubr)</code></pre>
+<pre><code>Error: package or namespace load failed for &#39;ggpubr&#39; in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]):
+ there is no package called &#39;rstatix&#39;</code></pre>
+<pre class="r"><code>library(MASS)
+
+## theme for ggplot
+mytheme &lt;- theme_bw() + 
+  theme(plot.title = element_text(size = 19,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.title.x = element_text(size = 17,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.title.y = element_text(size = 17,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=13, family=&quot;serif&quot;))+
+  theme(axis.text.y = element_text(size=10, family=&quot;serif&quot;))+
+  theme(panel.grid.major = element_blank()) +
+  theme(panel.grid.minor = element_blank(),panel.background=element_blank(),panel.border=element_blank(),plot.background=element_blank()) +
+  theme(axis.ticks = element_line(size = 1.1))
+  
+mytheme_2d &lt;- theme_bw() + 
+  theme(plot.title = element_text(size = 19,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.title.x = element_text(size = 17,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.title.y = element_text(size = 17,hjust = 0.5, family=&quot;serif&quot;)) + 
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=13, family=&quot;serif&quot;))+
+  theme(axis.text.y = element_text(size=13, family=&quot;serif&quot;))+
+  theme(panel.grid.major = element_blank()) +
+  theme(panel.grid.minor = element_blank(),panel.background=element_blank(),plot.background=element_blank()) +
+  theme(axis.ticks = element_line(size = 1.1))
+
+
+# color collection
+my_color_collection &lt;- c(
+  &quot;#CBD588&quot;, &quot;#5F7FC7&quot;, &quot;orange&quot;, &quot;#AD6F3B&quot;, &quot;#673770&quot;, 
+  &quot;#D14285&quot;, &quot;#652926&quot;, &quot;#C84248&quot;, &quot;#8569D5&quot;, &quot;#5E738F&quot;,
+  &quot;#D1A33D&quot;, &quot;#8A7C64&quot;, &quot;#599861&quot;,&quot;#616163&quot;, &quot;#FFCDB2&quot;,
+  &quot;#6D9F71&quot;, &quot;#242F40&quot;,
+   &quot;#CCA43B&quot;, &quot;#F92A82&quot;, &quot;#ED7B84&quot;, &quot;#7EB77F&quot;, 
+  &quot;#DEC4A1&quot;, &quot;#E5D1D0&quot;, &#39;#0E8482&#39;, &#39;#C9DAEA&#39;, &#39;#337357&#39;, 
+  &#39;#95C623&#39;, &#39;#E55812&#39;, &#39;#04471C&#39;, &#39;#F2D7EE&#39;, &#39;#D3BCC0&#39;, 
+  &#39;#A5668B&#39;, &#39;#69306D&#39;, &#39;#0E103D&#39;, &#39;#1A535C&#39;, &#39;#4ECDC4&#39;, 
+  &#39;#F7FFF7&#39;, &#39;#FF6B6B&#39;, &#39;#FFE66D&#39;, &#39;#6699CC&#39;, &#39;#FFF275&#39;, 
+  &#39;#FF8C42&#39;, &#39;#FF3C38&#39;, &#39;#A23E48&#39;, &#39;#000000&#39;, &#39;#CF5C36&#39;, 
+  &#39;#EEE5E9&#39;, &#39;#7C7C7C&#39;, &#39;#EFC88B&#39;, &#39;#2E5266&#39;, &#39;#6E8898&#39;, 
+  &#39;#9FB1BC&#39;, &#39;#D3D0CB&#39;, &#39;#E2C044&#39;, &#39;#5BC0EB&#39;, &#39;#FDE74C&#39;, 
+  &#39;#9BC53D&#39;, &#39;#E55934&#39;, &#39;#FA7921&#39;, &quot;#CD9BCD&quot;, &quot;#508578&quot;, &quot;#DA5724&quot;)</code></pre>
+</div>
+<div id="import-data" class="section level2">
+<h2>1. Import data</h2>
+<p>Microbiome sequence of domesticated/wild rice seed (bacteria &amp; Fungi) (<a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00805-0" class="uri">https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00805-0</a>)</p>
+<pre class="r"><code># domesticated rice seed microbiome
+domestic_links &lt;- read.csv(&#39;data/2_0.3_edge_dom.css.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T)
+b_domestic_links &lt;- read.csv(&#39;data/5_0.3_edge_dom.phy.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T)
+f_domestic_links &lt;- read.csv(&#39;data/8_0.3_edge_dom.fun.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T)
+
+# wild rice seed microbiome
+wild_links &lt;- read.csv(&#39;data/3_0.3_edge_wil.css.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T)
+b_wild_links &lt;- read.csv(&#39;data/6_0.3_edge_wil.phy.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T) # bacteria
+f_wild_links &lt;- read.csv(&#39;data/9_0.3_edge_wil.fun.ss.5.tsv&#39;,sep=&quot;\t&quot;, header=T) # fungi
+
+# microbial network of wild rice seed endophytes
+domestic_web &lt;- graph.data.frame(domestic_links, directed = F)
+b_domestic_web &lt;- graph.data.frame(b_domestic_links, directed = F) # bacteria
+f_domestic_web &lt;- graph.data.frame(f_domestic_links, directed = F) # fungi
+
+# microbial network of wild rice seed endophytes
+wild_web &lt;- graph.data.frame(wild_links, directed = F)
+b_wild_web &lt;- graph.data.frame(b_wild_links, directed = F) # bacteria
+f_wild_web &lt;- graph.data.frame(f_wild_links, directed = F) # fungi
+
+plot(wild_web, vertex.size=5, vertex.label=NA, main=&quot;Bacteria &amp; Fungi-Wild rice&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-2-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(b_wild_web, vertex.size=5, vertex.label=NA, main=&quot;Bacteria-Wild rice&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-2-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(f_wild_web, vertex.size=5, vertex.label=NA, main=&quot;Fungi-Wild rice&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-2-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Detect communities, note the as.undirected command
+wild_unweighted &lt;- wild_web
+wild_unweighted &lt;- as.undirected(wild_unweighted)
+E(wild_unweighted)$weight &lt;- 1
+
+# implementing Louvain method
+cl &lt;- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities</code></pre>
+<pre><code>[1] &quot;communities&quot;</code></pre>
+<pre class="r"><code># module membership &amp; visualization
+module_membership &lt;- membership(cl)
+table(module_membership)</code></pre>
+<pre><code>module_membership
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 
+22  5  8 22 10 14 29 44  2  3  4 18 15  3 21 19 23 31 33 15 20 </code></pre>
+<pre class="r"><code># color
+cols &lt;- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
+V(wild_unweighted)$module_membership &lt;- module_membership
+V(wild_unweighted)$color &lt;- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
+
+# shape: triangle fungi / circle bacteria
+V(wild_unweighted)$shape &lt;- ifelse(substr(V(wild_unweighted)$name,1,1)==&quot;B&quot;,&quot;circle&quot;,&quot;csquare&quot;)
+
+# plot network
+plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-2-4.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="centrality-distribution" class="section level2">
+<h2>2. Centrality distribution</h2>
+<p>We are doing centrality analysis to see if there is descriptive difference.</p>
+<div id="degree" class="section level3">
+<h3>2.1. Degree</h3>
+<pre class="r"><code>## Degree histogram
+plot_degree &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
+  d.wild &lt;- igraph::degree(wild_web)
+  ggplot(as.data.frame(d.wild), aes(d.wild)) + geom_bar(fill=&#39;lightblue&#39;) +
+    ylab(&quot;frequency \n&quot;) +
+    xlab(&quot;\n Degree&quot;) +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    mytheme
+}
+
+# log-log degree distributions
+plot_log_degree &lt;- function(wild_web){
+  dd.wild &lt;- degree.distribution(wild_web)
+  d.wild &lt;- igraph::degree(wild_web)
+  d &lt;- 1:max(d.wild)-1
+  ind &lt;- (dd.wild != 0)
+  plot(d[ind],dd.wild[ind], log=&#39;xy&#39;, col=&#39;blue&#39;,
+       xlab=&quot;Log-Degree&quot;, ylab=&quot;Log-Intensity&quot;,
+       main=&quot;Log-Log degree distribution&quot;)
+}
+
+# Wild
+p_w &lt;- plot_degree(wild_web, title=&quot;Wild microbiome (Bacteria+Fungi)&quot;)
+p_bw &lt;- plot_degree(b_wild_web, title=&quot;Wild bacterial microbiome&quot;)
+p_fw &lt;- plot_degree(f_wild_web, title=&quot;Wild fungal microbiome&quot;)
+
+ggarrange(p_bw, p_fw + rremove(&quot;ylab&quot;), p_w, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_bw, p_fw + rremove(&quot;ylab&quot;), p_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Wild Bacteria
+plot_log_degree(b_wild_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Fungi
+plot_log_degree(f_wild_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Bacteria + fungi
+plot_log_degree(wild_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+p_d &lt;- plot_degree(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
+p_bd &lt;- plot_degree(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
+p_fd &lt;- plot_degree(f_domestic_web, title=&quot;Domesticated fungal microbiome&quot;)
+
+ggarrange(p_bd, p_fd + rremove(&quot;ylab&quot;), p_d, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_bd, p_fd + rremove(&quot;ylab&quot;), p_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Domesticated Bacteria
+plot_log_degree(b_domestic_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated fungi
+plot_log_degree(f_domestic_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-5.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated Bacteria + fungi
+plot_log_degree(domestic_web)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-3-6.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="betweenness-centrality" class="section level3">
+<h3>2.2. Betweenness centrality</h3>
+<pre class="r"><code>## Betweenness histogram
+plot_betweenness &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
+  bt.wild &lt;- igraph::betweenness(wild_web)
+  df_wild &lt;- as.data.frame(bt.wild)
+  ggplot(df_wild, aes(bt.wild)) + geom_bar(stat=&quot;bin&quot;,fill=&#39;lightblue&#39;,bins=40) +
+    ylab(&quot;frequency \n&quot;) +
+    xlab(&quot;\n Betweenness&quot;) +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    mytheme
+}
+
+# log-log betweenness distributions
+plot_log_betweenness &lt;- function(wild_web, bin_interval=500){
+  bt.wild &lt;- igraph::betweenness(wild_web)
+  bin_interval = bin_interval
+  bt_dist &lt;- as.data.frame(table(cut(bt.wild, breaks=seq(0,max(bt.wild), by=bin_interval))))
+  hist(bt_dist$Freq)
+  colnames(bt_dist)
+  freq_sum = sum(bt_dist$Freq)
+  bt_dist$density &lt;- bt_dist$Freq / freq_sum
+  btd.wild &lt;- bt_dist$density # betweenness centrality distribution
+  bt &lt;- seq(0,max(bt.wild),bin_interval)[-length(seq(0,max(bt.wild),bin_interval))] # x axis
+  ind &lt;- (btd.wild != 0)
+  plot(bt[ind], btd.wild[ind], log=&#39;xy&#39;, col=&#39;blue&#39;,
+       xlab=&quot;Log-Betweenness&quot;, ylab=&quot;Log-Intensity&quot;,
+       main=&quot;Log-Log betweenness distribution&quot;)
+}
+
+# Wild
+p_bt_w &lt;- plot_betweenness(wild_web, title=&quot;Wild microbiome (Bacteria+Fungi)&quot;)
+p_bt_bw &lt;- plot_betweenness(b_wild_web, title=&quot;Wild bacterial microbiome&quot;)
+p_bt_fw &lt;- plot_betweenness(f_wild_web, title=&quot;Wild fungal microbiome&quot;)
+
+ggarrange(p_bt_bw, p_bt_fw + rremove(&quot;ylab&quot;), p_bt_w, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_bt_bw, p_bt_fw + rremove(&quot;ylab&quot;), p_bt_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Wild Bacteria
+plot_log_betweenness(b_wild_web, bin_interval=10)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Fungi
+plot_log_betweenness(f_wild_web, bin_interval=200)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-3.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Bacteria + fungi
+plot_log_betweenness(wild_web, bin_interval=500)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-5.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+p_bt_d &lt;- plot_betweenness(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
+p_bt_bd &lt;- plot_betweenness(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
+p_bt_fd &lt;- plot_betweenness(f_domestic_web, title=&quot;Domesticated fungal microbiome&quot;)
+
+ggarrange(p_bt_bd, p_bt_fd + rremove(&quot;ylab&quot;), p_bt_d, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_bt_bd, p_bt_fd + rremove(&quot;ylab&quot;), p_bt_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Domesticated Bacteria
+plot_log_betweenness(b_domestic_web, bin_interval=10)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-7.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-8.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated fungi
+plot_log_betweenness(f_domestic_web, bin_interval=1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-9.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-10.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated Bacteria + fungi
+plot_log_betweenness(domestic_web, bin_interval=70)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-4-11.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-4-12.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="eigenvectors-centrality" class="section level3">
+<h3>2.3. Eigenvector’s centrality</h3>
+<pre class="r"><code>## Eigenvector centrality histogram
+plot_eigenvector &lt;- function(wild_web, title=&quot;Wild rice seed microbiome&quot;){
+  eig.wild &lt;- igraph::eigen_centrality(wild_web)$vector
+  df_wild &lt;- as.data.frame(eig.wild)
+  ggplot(df_wild, aes(eig.wild)) + geom_bar(stat=&quot;bin&quot;,fill=&#39;lightblue&#39;,bins=40) +
+    ylab(&quot;frequency \n&quot;) +
+    xlab(&quot;\n Eigenvector centrality&quot;) +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    mytheme
+}
+
+# log-log eigenvector distributions
+plot_log_eigenvector &lt;- function(wild_web, bin_interval=0.00005){
+  eig.wild &lt;- igraph::eigen_centrality(wild_web)$vector
+  bin_interval = bin_interval
+  eig_dist &lt;- as.data.frame(table(cut(eig.wild, breaks=seq(0,max(eig.wild), by=bin_interval))))
+  hist(eig_dist$Freq)
+  colnames(eig_dist)
+  freq_sum = sum(eig_dist$Freq)
+  eig_dist$density &lt;- eig_dist$Freq / freq_sum
+  eigd.wild &lt;- eig_dist$density # eigenvector centrality distribution
+  eig &lt;- seq(0,max(eig.wild),bin_interval)[-length(seq(0,max(eig.wild),bin_interval))] # x axis
+  ind &lt;- (eigd.wild != 0)
+  plot(eig[ind], eigd.wild[ind], log=&#39;xy&#39;, col=&#39;blue&#39;,
+       xlab=&quot;Log-Eigenvector centrality&quot;, ylab=&quot;Log-Intensity&quot;,
+       main=&quot;Log-Log eigenvector distribution&quot;)
+}
+
+# Wild
+p_eig_w &lt;- plot_eigenvector(wild_web, title=&quot;Wild microbiome (Bacteria+Fungi)&quot;)
+p_eig_bw &lt;- plot_eigenvector(b_wild_web, title=&quot;Wild bacterial microbiome&quot;)
+p_eig_fw &lt;- plot_eigenvector(f_wild_web, title=&quot;Wild fungal microbiome&quot;)
+
+ggarrange(p_eig_bw, p_eig_fw + rremove(&quot;ylab&quot;), p_eig_w, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_eig_bw, p_eig_fw + rremove(&quot;ylab&quot;), p_eig_w, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Wild Bacteria
+plot_log_eigenvector(b_wild_web, bin_interval=0.00005)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-1.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Fungi
+plot_log_eigenvector(f_wild_web, bin_interval=0.00005)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-3.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-4.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Wild Bacteria + fungi
+plot_log_eigenvector(wild_web, bin_interval=0.1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-5.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-6.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+p_eig_d &lt;- plot_eigenvector(domestic_web, title=&quot;Domesticated microbiome (Bacteria+Fungi)&quot;)
+p_eig_bd &lt;- plot_eigenvector(b_domestic_web, title=&quot;Domesticated bacterial microbiome&quot;)
+p_eig_fd &lt;- plot_eigenvector(f_domestic_web, title=&quot;Domesticated fungal microbiome&quot;)
+
+ggarrange(p_eig_bd, p_eig_fd + rremove(&quot;ylab&quot;), p_eig_d, # + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<pre><code>Error in ggarrange(p_eig_bd, p_eig_fd + rremove(&quot;ylab&quot;), p_eig_d, labels = c(&quot;A&quot;, : could not find function &quot;ggarrange&quot;</code></pre>
+<pre class="r"><code># Domesticated Bacteria
+plot_log_eigenvector(b_domestic_web, bin_interval=0.00005)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-7.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-8.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated fungi
+plot_log_eigenvector(f_domestic_web, bin_interval=0.00005)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-9.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-10.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated Bacteria + fungi
+plot_log_eigenvector(domestic_web, bin_interval=0.1)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-5-11.png" width="1056" style="display: block; margin: auto;" /><img src="figure/network_project.Rmd/unnamed-chunk-5-12.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-together" class="section level3">
+<h3>2.4. Plot together</h3>
+<p>Wild rice seed microbiome</p>
+<pre class="r"><code># (1-1) Wild - only bacteria
+# Normalize
+D_wb &lt;- igraph::degree(b_wild_web, normalized = T) 
+BC_wb &lt;- igraph::betweenness(b_wild_web, directed = F, normalized = T)
+EC_wb &lt;- igraph::eigen_centrality(b_wild_web, directed = F, scale = T)$vector
+
+df_cen_wb &lt;- data.frame(Degree=D_wb, Betweenness=BC_wb, Eigen_centrality=EC_wb)
+
+library(scatterplot3d)
+# scatterplot3d(df_cen_wb, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+s3d &lt;- scatterplot3d(df_cen_wb, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+text(s3d$xyz.convert(df_cen_wb), labels = rownames(df_cen_wb),
+     cex= 0.65, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-6-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># (1-2) Wild - bacteria + fungi
+# Normalize
+D_w &lt;- igraph::degree(wild_web, normalized = T) 
+BC_w &lt;- igraph::betweenness(wild_web, directed = F, normalized = T)
+EC_w &lt;- igraph::eigen_centrality(wild_web, directed = F, scale = T)$vector
+
+df_cen_w &lt;- data.frame(Degree=D_w, Betweenness=BC_w, Eigen_centrality=EC_w)
+
+library(scatterplot3d)
+# scatterplot3d(df_cen_w, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+s3d &lt;- scatterplot3d(df_cen_w, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+text(s3d$xyz.convert(df_cen_w), labels = rownames(df_cen_w),
+     cex= 0.65, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-6-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Domesticated rice seed microbiome</p>
+<pre class="r"><code># (1-1) Domesticated - only bacteria
+# Normalize
+D_db &lt;- igraph::degree(b_domestic_web, normalized = T) 
+BC_db &lt;- igraph::betweenness(b_domestic_web, directed = F, normalized = T)
+EC_db &lt;- igraph::eigen_centrality(b_domestic_web, directed = F, scale = T)$vector
+
+df_cen_db &lt;- data.frame(Degree=D_db, Betweenness=BC_db, Eigen_centrality=EC_db)
+
+library(scatterplot3d)
+scatterplot3d(df_cen_db, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+s3d &lt;- scatterplot3d(df_cen_db, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+text(s3d$xyz.convert(df_cen_db), labels = rownames(df_cen_db),
+     cex= 0.65, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-7-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># (1-2) Domesticated - bacteria + fungi
+# Normalize
+D_d &lt;- igraph::degree(domestic_web, normalized = T) 
+BC_d &lt;- igraph::betweenness(domestic_web, directed = F, normalized = T)
+EC_d &lt;- igraph::eigen_centrality(domestic_web, directed = F, scale = T)$vector
+
+df_cen_d &lt;- data.frame(Degree=D_d, Betweenness=BC_d, Eigen_centrality=EC_d)
+
+library(scatterplot3d)
+scatterplot3d(df_cen_d, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+s3d &lt;- scatterplot3d(df_cen_d, pch = 16, color=&quot;steelblue&quot;, angle = 29, type=&quot;h&quot;)
+text(s3d$xyz.convert(df_cen_d), labels = rownames(df_cen_d),
+     cex= 0.65, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-7-2.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="change-of-hub-species" class="section level3">
+<h3>2.5. Change of hub species</h3>
+<p>Betweenness and degree centrality</p>
+<pre class="r"><code># 2D plotting with BT and Degree
+
+plot_degree_betweenness &lt;- function(df_cen_wb, title=&quot;Only Bacteria (Wild rice)&quot;, label_thresh=0.5){
+  # Label bacteria and fungi to differ color
+  df_cen_wb$Bacteria &lt;- ifelse( substr(rownames(df_cen_wb),1,1)==&quot;B&quot;,&quot;Bacteria&quot;,&quot;Fungi&quot;)
+  # Label subset higher that top 50% in both Degree and Betweenness centrality
+  label_thresh = label_thresh
+  label_cen_wb &lt;- subset(df_cen_wb, (Degree &gt;= max(df_cen_wb$Degree)*label_thresh) &amp; (Betweenness &gt;= max(df_cen_wb$Betweenness)*label_thresh))
+  # Plot only bacteria
+  ggplot(df_cen_wb, aes(x=Degree, y=Betweenness)) +
+    xlab(&#39;\n Degree (Normalized)&#39;)+
+    ylab(&quot;Betweenness (Normalized) \n&quot;) +
+    geom_point(aes(fill = Bacteria), shape = 21 ,size=5, alpha=0.9) +
+    scale_fill_manual(labels = c(&#39;Bacteria&#39;,&#39;Fungi&#39;), values = c(&#39;Bacteria&#39;= &quot;#FF8300&quot;, &#39;Fungi&#39;=&#39;#BF4AFF&#39;))+
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    scale_x_continuous(limits = c(0, max(df_cen_wb$Degree))) +
+    scale_y_continuous(limits = c(0, max(df_cen_wb$Betweenness))) +
+    theme(legend.text=element_text(size=13)) + 
+
+    geom_hline(yintercept=max(df_cen_wb$Betweenness)*0.5, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;)+
+    geom_vline(xintercept=max(df_cen_wb$Degree)*0.5, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;)+
+    # theme(legend.position=&quot;top&quot;) +
+    # theme(legend.title=element_blank()) +
+    guides(colour = guide_legend(override.aes = list(size=8), reverse = TRUE))+
+    guides(size=FALSE) +
+    mytheme_2d +
+    geom_text_repel(data=label_cen_wb ,aes(label=rownames(label_cen_wb)), size=4, family=&quot;serif&quot;)
+}
+
+# wild
+plot_degree_betweenness(df_cen_wb, title=&quot;Only Bacteria (Wild rice)&quot;, label_thresh=0.4)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-8-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_degree_betweenness(df_cen_w, title=&quot;Bacteria + Fungi (Wild rice)&quot;, label_thresh=0.4)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-8-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># domesticated
+plot_degree_betweenness(df_cen_db, title=&quot;Only Bacteria (Domesticated rice)&quot;, label_thresh=0.35)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-8-3.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_degree_betweenness(df_cen_d, title=&quot;Bacteria + Fungi (Domesticated rice)&quot;, label_thresh=0.35)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-8-4.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="comparison-of-each-centrality-before-vs-after-merging-kingdom" class="section level3">
+<h3>2.6. Comparison of each centrality (before vs after merging kingdom)</h3>
+<p>Degree</p>
+<pre class="r"><code># Investigate centrality for bacterial species before vs after merging kingdom
+# (1) Degree
+plot_degree_change &lt;- function(df_cen_wb,df_cen_w, title = &quot;Wild&quot;){
+  # make rownames to column for left join
+  df_cen_wb &lt;- tibble::rownames_to_column(df_cen_wb, var=&quot;OTU&quot;)
+  df_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;OTU&quot;)
+  # left join
+  df_cen_w_comp &lt;- df_cen_wb %&gt;% left_join(df_cen_w, by=c(&quot;OTU&quot;=&quot;OTU&quot;))
+    
+  ggplot(df_cen_w_comp, aes(x=Degree.x, y=Degree.y)) + geom_point() +
+    xlab(&#39;\n Degree in bacteria-only network&#39;)+
+    ylab(&quot;Degree in bacterial + fungal network \n&quot;) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Degree.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Degree.y))) +
+    mytheme_2d +
+    stat_smooth(method=&quot;loess&quot;, colour=&quot;red&quot;) +
+    # stat_smooth(method=&#39;lm&#39;, se=FALSE, colour=&quot;orange&quot;) +
+    geom_abline(intercept=0, slope=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1 )
+}
+
+# Wild
+plot_degree_change(df_cen_wb,df_cen_w, title = &quot;Change of degree (Wild)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-9-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+plot_degree_change(df_cen_db,df_cen_d, title = &quot;Change of degree (Domesticated)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-9-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Betweenness</p>
+<pre class="r"><code># (2) Betweenness
+plot_betweenness_change &lt;- function(df_cen_wb,df_cen_w, title = &quot;Change of betweenness (Wild)&quot;){
+  # make rownames to column for left join
+  df_cen_wb &lt;- tibble::rownames_to_column(df_cen_wb, var=&quot;OTU&quot;)
+  df_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;OTU&quot;)
+  # left join
+  df_cen_w_comp &lt;- df_cen_wb %&gt;% left_join(df_cen_w, by=c(&quot;OTU&quot;=&quot;OTU&quot;))
+    
+  ggplot(df_cen_w_comp, aes(x=Betweenness.x, y=Betweenness.y)) + geom_point() +
+    xlab(&#39;\n Betweenness in bacteria-only network&#39;)+
+    ylab(&quot;Betweenness in bacterial + fungal network \n&quot;) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Betweenness.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Betweenness.y))) +
+    mytheme_2d +
+    stat_smooth(method=&quot;loess&quot;, colour=&quot;red&quot;) +
+    # stat_smooth(method=&#39;lm&#39;, se=FALSE, colour=&quot;orange&quot;) +
+    geom_abline(intercept=0, slope=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1 )
+}
+
+# Wild
+plot_betweenness_change(df_cen_wb,df_cen_w, title = &quot;Change of betweenness (Wild)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-10-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+plot_betweenness_change(df_cen_db,df_cen_d, title = &quot;Change of betweenness (Domesticated)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-10-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Eigenvector’s centrality</p>
+<pre class="r"><code># (3) Eigenvector&#39;s centrality
+plot_eigen_centrality_change &lt;- function(df_cen_wb,df_cen_w, title = &quot;Change of Eigen_centrality (Wild)&quot;){
+  # make rownames to column for left join
+  df_cen_wb &lt;- tibble::rownames_to_column(df_cen_wb, var=&quot;OTU&quot;)
+  df_cen_w &lt;- tibble::rownames_to_column(df_cen_w, var=&quot;OTU&quot;)
+  # left join
+  df_cen_w_comp &lt;- df_cen_wb %&gt;% left_join(df_cen_w, by=c(&quot;OTU&quot;=&quot;OTU&quot;))
+    
+  ggplot(df_cen_w_comp, aes(x=Eigen_centrality.x, y=Eigen_centrality.y)) + geom_point() +
+    xlab(&#39;\n Eigen_centrality in bacteria-only network&#39;)+
+    ylab(&quot;Eigen_centrality in bacterial + fungal network \n&quot;) +
+    ggtitle(paste0(title,&quot; \n&quot;)) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.y))) +
+    mytheme_2d +
+    # stat_smooth(method=&quot;loess&quot;, colour=&quot;red&quot;) +
+    # stat_smooth(method=&#39;lm&#39;, se=FALSE, colour=&quot;orange&quot;) +
+    geom_abline(intercept=0, slope=1, color=&quot;maroon4&quot;, linetype=&#39;dotted&#39;, size=1.1 )
+}
+
+# Wild
+plot_eigen_centrality_change(df_cen_wb,df_cen_w, title = &quot;Change of Eigen_centrality (Wild)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-11-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Domesticated
+plot_eigen_centrality_change(df_cen_db,df_cen_d, title = &quot;Change of Eigen_centrality (Domesticated)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-11-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19042)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_United States.1252 
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scatterplot3d_0.3-41 MASS_7.3-53          devtools_2.4.0      
+ [4] usethis_2.0.1        gtools_3.8.2         reshape2_1.4.4      
+ [7] readxl_1.3.1         magrittr_2.0.1       forcats_0.5.1       
+[10] stringr_1.4.0        purrr_0.3.4          readr_1.4.0         
+[13] tidyr_1.1.3          tibble_3.0.4         tidyverse_1.3.1     
+[16] RColorBrewer_1.1-2   ggrepel_0.9.1        ggplot2_3.3.3       
+[19] dplyr_1.0.5          bipartite_2.16       sna_2.6             
+[22] network_1.16.1       statnet.common_4.4.1 vegan_2.5-7         
+[25] lattice_0.20-41      permute_0.9-5        igraph_1.2.6        
+[28] workflowr_1.6.2     
+
+loaded via a namespace (and not attached):
+ [1] colorspace_2.0-0  ggsignif_0.6.1    ellipsis_0.3.1    rprojroot_2.0.2  
+ [5] fs_1.5.0          rstudioapi_0.13   farver_2.1.0      remotes_2.3.0    
+ [9] fansi_0.4.2       lubridate_1.7.10  xml2_1.3.2        splines_4.0.3    
+[13] cachem_1.0.4      knitr_1.33        pkgload_1.2.1     spam_2.6-0       
+[17] jsonlite_1.7.2    broom_0.7.6       cluster_2.1.0     dbplyr_2.1.1     
+[21] compiler_4.0.3    httr_1.4.2        backports_1.2.1   assertthat_0.2.1 
+[25] Matrix_1.2-18     fastmap_1.1.0     cli_2.5.0         later_1.2.0      
+[29] htmltools_0.5.1.1 prettyunits_1.1.1 tools_4.0.3       dotCall64_1.0-1  
+[33] coda_0.19-4       gtable_0.3.0      glue_1.4.2        maps_3.3.0       
+[37] Rcpp_1.0.5        rle_0.9.2         cellranger_1.1.0  jquerylib_0.1.4  
+[41] vctrs_0.3.6       nlme_3.1-149      xfun_0.22         ps_1.6.0         
+[45] testthat_3.0.2    rvest_1.0.0       lifecycle_1.0.0   scales_1.1.1     
+[49] hms_1.0.0         promises_1.2.0.1  parallel_4.0.3    fields_11.6      
+[53] yaml_2.2.1        memoise_2.0.0     sass_0.3.1        stringi_1.5.3    
+[57] highr_0.9         desc_1.3.0        pkgbuild_1.2.0    rlang_0.4.10     
+[61] pkgconfig_2.0.3   evaluate_0.14     labeling_0.4.2    tidyselect_1.1.1 
+[65] processx_3.5.1    plyr_1.8.6        R6_2.5.0          generics_0.1.0   
+[69] DBI_1.1.1         pillar_1.6.0      haven_2.4.1       whisker_0.4      
+[73] withr_2.4.2       mgcv_1.8-33       modelr_0.1.8      crayon_1.4.1     
+[77] utf8_1.1.4        rmarkdown_2.7     grid_4.0.3        callr_3.7.0      
+[81] git2r_0.28.0      reprex_2.0.0      digest_0.6.27     httpuv_1.6.0     
+[85] munsell_0.5.0     bslib_0.2.4       sessioninfo_1.1.1</code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
