@@ -518,25 +518,6 @@ plot_eigen_centrality_change(df_cen_db,df_cen_d, title = "Change of Eigen_centra
 
 
 
-```{r}
-##
-wild_web
-b_wild_web
-f_wild_web
-
-domestic_web
-b_domestic_web
-f_domestic_web
-
-igraph::degree(wild_web, directed = F, normalized = T) 
-igraph::betweenness(wild_web, directed = F, normalized = T)
-igraph::eigen_centrality(wild_web, directed = F, scale = T)$vector
-
-```
-
-
-
-
 
 
 
