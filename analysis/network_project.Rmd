@@ -21,6 +21,8 @@ Student: **Kiseok Lee**
 ```{r}
 # libraries
 library(igraph)
+library(tidygraph)
+library(ggraph)
 library(bipartite)
 library(dplyr)
 library(ggplot2)
@@ -102,30 +104,6 @@ f_wild_web <- graph.data.frame(f_wild_links, directed = F) # fungi
 plot(wild_web, vertex.size=5, vertex.label=NA, main="Bacteria & Fungi-Wild rice")
 plot(b_wild_web, vertex.size=5, vertex.label=NA, main="Bacteria-Wild rice")
 plot(f_wild_web, vertex.size=5, vertex.label=NA, main="Fungi-Wild rice")
-
-# Detect communities, note the as.undirected command
-wild_unweighted <- wild_web
-wild_unweighted <- as.undirected(wild_unweighted)
-E(wild_unweighted)$weight <- 1
-
-# implementing Louvain method
-cl <- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
-class(cl) # the result is of class communities
-
-# module membership & visualization
-module_membership <- membership(cl)
-table(module_membership)
-
-# color
-cols <- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
-V(wild_unweighted)$module_membership <- module_membership
-V(wild_unweighted)$color <- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
-
-# shape: triangle fungi / circle bacteria
-V(wild_unweighted)$shape <- ifelse(substr(V(wild_unweighted)$name,1,1)=="B","circle","csquare")
-
-# plot network
-plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)
 ```
 
 ## 2. Centrality distribution
@@ -1139,7 +1117,541 @@ ggplot(melt_AUC, aes(x=Attack, y=AUC, group=Network, color=Network)) +
 
 ```
 
-## 4. Metrics comparison
+## 4. Various Metrics comparison
+
+## 4.1. Connectance
+
+```{r}
+# connectance
+ecount(wild_web)*2/(vcount(wild_web)^2) # multiply by 2 because undirected.
+
+# install_github("clementviolet/omnivor")
+library(omnivor)
+omnivor::connectance(wild_web, loops = F, directed = F) # checking whether my calculation is correct
+
+# store it in a vector
+connectance_vec <- c()
+row_vec
+connectance_vec[1] <- omnivor::connectance(wild_web, loops = F, directed = F)
+connectance_vec[2] <- omnivor::connectance(b_wild_web, loops = F, directed = F)
+connectance_vec[3] <- omnivor::connectance(domestic_web, loops = F, directed = F)
+connectance_vec[4] <- omnivor::connectance(b_domestic_web, loops = F, directed = F)
+connectance_vec
+
+# Randomization and null model to normalize summary metrics
+
+# Use the connectance function below
+connectance <- function(m){
+  d <- sum(m>0)/(nrow(m)*ncol(m))
+  return(d)
+}
+  
+null_curveball_simulation <- function(wild_web, connectance, num_iterations = 1000){
+  null_model_curveball <- vegan::nullmodel(as_adjacency_matrix(wild_web), method = 'curveball')
+  shuffled_curveball <- simulate(null_model_curveball, nsim = num_iterations, burnin = 1000) #Shuffle adjacency matrix
+  connectance_curveball <- apply(shuffled_curveball, MARGIN = 3, connectance) # apply metric
+  # P-value: Which proportion of the simulations have a Q value larger than the observed?
+  P_value <- sum(connectance_vec[1] < connectance_curveball)/length(connectance_curveball)
+  # if P-value is larger than 0.5, subtract it from 1
+  if (P_value > 0.5){
+    print("observed value is bigger than null value (did not say significant)")
+    P_value <- 1 - P_value
+  }
+  print(paste0("P-value is: ",P_value))
+  print(paste0("mean is: ", mean(connectance_curveball)))
+  print(paste0("sd is: ", sd(connectance_curveball)))
+  return(connectance_curveball)
+}
+
+connectance_sim1 <- null_curveball_simulation(wild_web, connectance, num_iterations = 1000)
+connectance_sim2 <- null_curveball_simulation(b_wild_web, connectance, num_iterations = 1000)
+connectance_sim3 <- null_curveball_simulation(domestic_web, connectance, num_iterations = 1000)
+connectance_sim4 <- null_curveball_simulation(b_domestic_web, connectance, num_iterations = 1000)
+
+# now save the normalized (x / mean) value
+# store it in a vector
+connectance_norm <- c()
+row_vec
+connectance_norm[1] <- (omnivor::connectance(wild_web, loops = F, directed = F) / mean(connectance_sim1))
+connectance_norm[2] <- (omnivor::connectance(b_wild_web, loops = F, directed = F) / mean(connectance_sim2))
+connectance_norm[3] <- (omnivor::connectance(domestic_web, loops = F, directed = F) / mean(connectance_sim3))
+connectance_norm[4] <- (omnivor::connectance(b_domestic_web, loops = F, directed = F) / mean(connectance_sim4))
+connectance_norm
 
 
+```
+Connectance decreases when fungi is added.
+
+## 4.2. Clustering coefficient (transitivity)
+```{r}
+# The ratio of the triangles connected to the vertex and the triples centered on the vertex.
+transitivity(wild_web, type = 'local')
+histogram(transitivity(wild_web, type = 'local'), col = 'pink')
+
+# The ratio of the triangles and the connected triples in the whole graph
+transitivity(wild_web, type = 'global') 
+
+# store it in a vector
+transitivity_vec <- c()
+row_vec
+transitivity_vec[1] <- transitivity(wild_web, type = 'global')
+transitivity_vec[2] <- transitivity(b_wild_web, type = 'global')
+transitivity_vec[3] <- transitivity(domestic_web, type = 'global')
+transitivity_vec[4] <- transitivity(b_domestic_web, type = 'global')
+transitivity_vec
+
+
+# Randomization and null model to normalize summary metrics
+# Use this transitivity function for simulation below
+transitivity_in_matrix <- function(wild_mat){
+  wild_web <- igraph::graph.adjacency(wild_mat, mode = 'undirected')
+  trans <- transitivity(wild_web, type="global")
+  return(trans)
+}
+
+transitivity_sim1 <- null_curveball_simulation(wild_web, transitivity_in_matrix, num_iterations = 1000)
+transitivity_sim2 <- null_curveball_simulation(b_wild_web, transitivity_in_matrix, num_iterations = 1000)
+transitivity_sim3 <- null_curveball_simulation(domestic_web, transitivity_in_matrix, num_iterations = 1000)
+transitivity_sim4 <- null_curveball_simulation(b_domestic_web, transitivity_in_matrix, num_iterations = 1000)
+
+# now save the normalized (x - mean / sd) value = zscore
+# store it in a vector
+transitivity_zscore <- c()
+row_vec
+transitivity_zscore[1] <- (transitivity(wild_web, type = 'global') - mean(transitivity_sim1)) / sd(transitivity_sim1)
+transitivity_zscore[2] <- (transitivity(b_wild_web, type = 'global') - mean(transitivity_sim2)) / sd(transitivity_sim2)
+transitivity_zscore[3] <- (transitivity(domestic_web, type = 'global') - mean(transitivity_sim3)) / sd(transitivity_sim3)
+transitivity_zscore[4] <- (transitivity(b_domestic_web, type = 'global') - mean(transitivity_sim4)) / sd(transitivity_sim4)
+transitivity_zscore
+
+# too high...
+
+# now save the normalized (x / mean) value
+# store it in a vector
+transitivity_norm <- c()
+row_vec
+transitivity_norm[1] <- (transitivity(wild_web, type = 'global') / mean(transitivity_sim1))
+transitivity_norm[2] <- (transitivity(b_wild_web, type = 'global') / mean(transitivity_sim2))
+transitivity_norm[3] <- (transitivity(domestic_web, type = 'global') / mean(transitivity_sim3))
+transitivity_norm[4] <- (transitivity(b_domestic_web, type = 'global') / mean(transitivity_sim4))
+transitivity_norm
+
+```
+Transitivity decreases when fungi is added.
+
+## 4.3. Modularity
+
+Let's plot modular structure
+```{r}
+# Detect communities, note the as.undirected command
+wild_unweighted <- wild_web
+wild_unweighted <- as.undirected(wild_unweighted)
+E(wild_unweighted)$weight <- 1
+
+# implementing Louvain method
+cl <- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities
+
+# module membership & visualization
+module_membership <- membership(cl)
+table(module_membership)
+
+# color
+cols <- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
+V(wild_unweighted)$module_membership <- module_membership
+V(wild_unweighted)$color <- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
+
+# shape: triangle fungi / circle bacteria
+V(wild_unweighted)$shape <- ifelse(substr(V(wild_unweighted)$name,1,1)=="B","circle","csquare")
+
+# plot network
+plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)
+
+```
+
+Calculate modularity and use tidygraph
+- Adapted from this resource: https://dgarcia-eu.github.io/SocialDataScience/5_SocialNetworkPhenomena/057_Tidygraph2/tidygraph2.html \
+```{r}
+library(ggraph)
+library(tidygraph)
+
+# convert igraph to tidygraph object
+wild_tbl <- as_tbl_graph(wild_web)
+
+# Louvain clustering
+wild_tbl %<>%
+  tidygraph::activate(nodes) %>% 
+  mutate(community=as.character(group_louvain()))
+
+# Modules / add bacteria or fungi info
+wild_tbl %<>% 
+  activate(nodes) %>% 
+  mutate(Bacteria = ifelse(substr(name,1,1)=="B","Bacteria","Fungi") )
+
+# plot again with ggraph
+wild_tbl %>% 
+  ggraph("fr")  + geom_edge_link()  + geom_node_point(aes(color=community, shape=Bacteria), size=4) + theme_graph()
+
+# Modularity Q
+wild_tbl %>% 
+  activate(nodes) %>% 
+  mutate(modularity = graph_modularity(group=community)) %>% 
+  pull(modularity) %>% 
+  head(1)
+
+modularity_Q <- function(wild_web){
+  # convert object
+  wild_tbl <- as_tbl_graph(wild_web)
+  # Louvain clustering
+  wild_tbl %<>%
+    tidygraph::activate(nodes) %>% 
+    mutate(community=as.character(group_louvain()))
+  # Modularity Q
+  wild_tbl %>% 
+    activate(nodes) %>% 
+    mutate(modularity = graph_modularity(group=community)) %>% 
+    pull(modularity) %>% 
+    head(1)
+}
+
+# store Modularity Q in a vector
+modularity_vec <- c()
+row_vec
+modularity_vec[1] <- modularity_Q(wild_web)
+modularity_vec[2] <- modularity_Q(b_wild_web)
+modularity_vec[3] <- modularity_Q(domestic_web)
+modularity_vec[4] <- modularity_Q(b_domestic_web)
+modularity_vec
+
+
+# Randomization and null model to normalize summary metrics
+# Use this transitivity function for simulation below
+modularity_in_matrix <- function(wild_mat){
+  wild_web <- igraph::graph.adjacency(wild_mat, mode = 'undirected')
+  mod <- modularity_Q(wild_web)
+  return(mod)
+}
+
+modularity_sim1 <- null_curveball_simulation(wild_web, modularity_in_matrix, num_iterations = 1000)
+modularity_sim2 <- null_curveball_simulation(b_wild_web, modularity_in_matrix, num_iterations = 1000)
+modularity_sim3 <- null_curveball_simulation(domestic_web, modularity_in_matrix, num_iterations = 1000)
+modularity_sim4 <- null_curveball_simulation(b_domestic_web, modularity_in_matrix, num_iterations = 1000)
+
+# now save the normalized (x - mean / sd) value = zscore
+# store it in a vector
+modularity_zscore <- c()
+row_vec
+modularity_zscore[1] <- (modularity_Q(wild_web) - mean(modularity_sim1)) / sd(modularity_sim1)
+modularity_zscore[2] <- (modularity_Q(b_wild_web) - mean(modularity_sim2)) / sd(modularity_sim2)
+modularity_zscore[3] <- (modularity_Q(domestic_web) - mean(modularity_sim3)) / sd(modularity_sim3)
+modularity_zscore[4] <- (modularity_Q(b_domestic_web) - mean(modularity_sim4)) / sd(modularity_sim4)
+modularity_zscore
+# too high...
+
+# now save the normalized (x / mean) value
+# store it in a vector
+modularity_norm <- c()
+row_vec
+modularity_norm[1] <- (modularity_Q(wild_web) / mean(modularity_sim1))
+modularity_norm[2] <- (modularity_Q(b_wild_web) / mean(modularity_sim2))
+modularity_norm[3] <- (modularity_Q(domestic_web) / mean(modularity_sim3))
+modularity_norm[4] <- (modularity_Q(b_domestic_web) / mean(modularity_sim4))
+modularity_norm
+
+```
+
+## 4.4. Plot normalized summary statistics
+
+```{r}
+# make dataframe
+df_summary <- tibble(Network = row_vec, Connectance = connectance_norm, Transitivity= transitivity_norm, Modularity= modularity_norm)
+
+# Melt for plotting
+melt_summary <- melt(df_summary)
+colnames(melt_summary) <- c("Network","Stat","Normalized_metric")
+melt_summary$Network <- factor(melt_summary$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+
+# Plotting for visualiztion
+ggplot(melt_summary, aes(x=Stat, y=Normalized_metric, group=Network, color=Network)) +
+  geom_point(size =3.5, shape=16) +
+  geom_line(size=0.5) +
+  ggtitle(paste0("Network metrics comparison"," \n")) +
+  xlab('\n Metric')+
+  ylab("Normalized metric (x / mean(null_model)) \n") +
+  scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+  scale_y_continuous(limits = c(0, max(melt_summary$Normalized_metric)), breaks=seq(0, max(melt_summary$Normalized_metric), 1)) +
+  geom_hline(yintercept=1, color="maroon4", linetype='dotted', size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family="serif"))
+
+```
+
+Just in case, plotting the metrics without normalization
+```{r}
+# make dataframe
+df_summary_no_norm <- tibble(Network = row_vec, Connectance = connectance_vec, Transitivity= transitivity_vec, Modularity= modularity_vec)
+
+# Melt for plotting
+melt_summary_no_norm <- melt(df_summary_no_norm)
+colnames(melt_summary_no_norm) <- c("Network","Stat","Metric")
+melt_summary_no_norm$Network <- factor(melt_summary_no_norm$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+
+# Plotting for visualiztion
+ggplot(melt_summary_no_norm, aes(x=Stat, y=Metric, group=Network, color=Network)) +
+  geom_point(size =3.5) +
+  geom_line(size=0.5) +
+  ggtitle(paste0("Network metrics comparison"," \n")) +
+  xlab('\n Metric')+
+  ylab("Non-normalized metric \n") +
+  scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+  scale_y_continuous(limits = c(0, max(melt_summary_no_norm$Metric)), breaks=seq(0, max(melt_summary_no_norm$Metric), 0.1)) +
+  # geom_hline(yintercept=1, color="maroon4", linetype='dotted', size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family="serif"))
+
+```
+
+Just in case, plotting the zscore normalized metric.
+- Warning: connectance is not zscore normalized due to sd(null) being 0. It is just divided by mean(null).
+```{r}
+# make dataframe
+df_summary_zscore <- tibble(Network = row_vec, Connectance = connectance_norm, Transitivity= transitivity_zscore, Modularity= modularity_zscore)
+
+# Melt for plotting
+melt_summary_zscore <- melt(df_summary_zscore)
+colnames(melt_summary_zscore) <- c("Network","Stat","Metric")
+melt_summary_zscore$Network <- factor(melt_summary_zscore$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+
+# Plotting for visualiztion
+ggplot(melt_summary_zscore, aes(x=Stat, y=Metric, group=Network, color=Network)) +
+  geom_point(size =3.5) +
+  geom_line(size=0.5) +
+  ggtitle(paste0("Network metrics comparison"," \n")) +
+  xlab('\n Metric')+
+  ylab("Zscore-normalized metric \n") +
+  scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+  scale_y_continuous(limits = c(0, max(melt_summary_zscore$Metric)), breaks=seq(0, max(melt_summary_zscore$Metric), 10)) +
+  # geom_hline(yintercept=1, color="maroon4", linetype='dotted', size=1.1) +
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family="serif"))
+
+```
+
+## 5. Bacterial-fungal Bipartite network and Nestedness
+- Exclude all the Bacterial-bacterial interaction \
+- Exclude all the Fungal-Fungal interaction \
+- Only leave Bacterial-Fungal interaction \
+- Convert to bipartite matrix
+```{r}
+# Prune and make it into Bipartite
+get.edgelist(wild_web) %>% dim()
+wild_edge <- get.edgelist(wild_web) 
+class(wild_edge)
+wild_edge <- data.frame(wild_edge)
+dim(wild_edge) # 673
+
+# classify the edge type
+wild_edge$type <- paste0(substr(wild_edge$X1,1,1), substr(wild_edge$X2,1,1))
+
+# filter out BB (bac-bac interaction) and FF (Fungal-Fungal interaction)
+wild_edge_BF <- wild_edge %>% filter(type %in% c("FB","BF")) # 303/673 = 45%
+
+# need to put bacteria to the left column, and fungi to the right column
+wild_edge_new <- wild_edge_BF
+for (i in 1:dim(wild_edge_BF)[1]){
+  if (wild_edge_BF$type[i] == "FB"){
+    wild_edge_new[i,1] <- wild_edge_BF[i,2]
+    wild_edge_new[i,2] <- wild_edge_BF[i,1]
+  }
+}
+# remove type column
+wild_edge_BFn <- wild_edge_new %>% select(-type)
+colnames(wild_edge_BFn)
+
+# bipartite adjacency network
+wild_bipartite_mat <- table(wild_edge_BFn$X1,wild_edge_BFn$X2)
+dim(wild_bipartite_mat)
+class(wild_bipartite_mat)
+
+# Compute metrics
+nl_metrics <- networklevel(wild_bipartite_mat)
+nl_metrics[7]
+nl_metrics[8]
+```
+
+Function and apply to all networks
+```{r}
+# get nestedness
+
+get_nestedness <- function(wild_web){
+  # Prune and make it into Bipartite
+  get.edgelist(wild_web) %>% dim()
+  wild_edge <- get.edgelist(wild_web) 
+  class(wild_edge)
+  wild_edge <- data.frame(wild_edge)
+  dim(wild_edge) # 673
+  
+  # classify the edge type
+  wild_edge$type <- paste0(substr(wild_edge$X1,1,1), substr(wild_edge$X2,1,1))
+  
+  # filter out BB (bac-bac interaction) and FF (Fungal-Fungal interaction)
+  wild_edge_BF <- wild_edge %>% filter(type %in% c("FB","BF")) # 303/673 = 45%
+  
+  # need to put bacteria to the left column, and fungi to the right column
+  wild_edge_new <- wild_edge_BF
+  for (i in 1:dim(wild_edge_BF)[1]){
+    if (wild_edge_BF$type[i] == "FB"){
+      wild_edge_new[i,1] <- wild_edge_BF[i,2]
+      wild_edge_new[i,2] <- wild_edge_BF[i,1]
+    }
+  }
+  # remove type column
+  wild_edge_BFn <- wild_edge_new %>% select(-type)
+  colnames(wild_edge_BFn)
+  
+  # bipartite adjacency network
+  wild_bipartite_mat <- table(wild_edge_BFn$X1,wild_edge_BFn$X2)
+  dim(wild_bipartite_mat)
+  class(wild_bipartite_mat)
+  
+  # Compute metrics
+  nl_metrics <- networklevel(wild_bipartite_mat)
+  print(nl_metrics[7])
+  print(nl_metrics[8])
+  return(nl_metrics)
+}
+
+wild_nest <- get_nestedness(wild_web)
+dom_nest <- get_nestedness(domestic_web)
+
+wild_nest[c(7,8)]
+dom_nest[c(7,8)]
+
+```
+
+Bipartite and modularity
+```{r}
+# modularity
+# mod <- computeModules(wild_bipartite_mat)
+slotNames(mod)
+mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).
+module_list <- listModuleInformation(mod) # The output is rather cumbersome...
+par(mfrow=c(1,1))
+plotModuleWeb(mod)
+```
+
+
+
+```{r}
+# Visualization
+
+plot_web_trophic <- function(g){
+  basal <- which(igraph::degree(g, mode = 'in') == 0) # Basal species do not have ingoing links
+  top <- which(igraph::degree(g, mode = 'out') == 0) # Top species do not have outgoing links
+  interm <- V(g)[which(!V(g) %in% c(basal,top))] # Intermediate are all the rest
+  
+  V(g)$troph_pos <- rep(0,length(V(g)))
+  V(g)$troph_pos[which(V(g)$name %in% basal)] <- 1
+  V(g)$troph_pos[which(V(g)$name %in% top)] <- 3
+  V(g)$troph_pos[which(V(g)$name %in% interm)] <- 2
+  # create a matrix forthe layout coordinates.
+  coords <- matrix(nrow=length(V(g)), ncol=2) #
+  # The x positions are randomly selected
+  coords[,1] <- runif(length(V(g)))
+  # The y positions are the trophoc positions
+  coords[,2] <- V(g)$troph_pos
+  par(mar=c(0,0,0,0))
+  plot(g,layout=coords,
+              vertex.color=V(g)$troph_pos,
+              vertex.label=NA,
+              vertex.size=8,
+              edge.color='black',
+              edge.arrow.size=.3,
+              edge.width=.5)
+}
+
+```
+
+
+## 6. Motif
+
+```{r}
+par(mfrow=c(4,4), mar=c(.75,.75,.75,.75))
+for (i in 0:15){ # note that counting starts at 0
+  plot(graph_from_isomorphism_class(size = 3, number = i),
+       edge.arrow.size = 0.4,
+       edge.color='black',
+       main = i + 1)
+  box(col='red')
+}
+dev.off()
+
+motifs(wild_web) # absolute numbers
+motifs(wild_web)/count_motifs(wild_web) # Proportion
+
+# plotting motif function
+
+plot_motif <- function(wild_web, title = "Motif relative abundance (Wild)"){
+  df_motif <- data.frame(relative_abun=motifs(wild_web)/count_motifs(wild_web))
+  df_motif <- tibble::rownames_to_column(df_motif, var='motif_n')
+  ggplot(data=df_motif, aes(x=motif_n, y=relative_abun)) +
+    geom_bar(stat="identity") +
+    ggtitle(paste0(title," \n")) +
+    xlab('\n Motif number')+
+    ylab("Relative abundance  \n") +
+    mytheme
+}
+
+plot_motif(wild_web, title = "Motif relative abundance (Wild)")
+plot_motif(b_wild_web, title = "Motif relative abundance (Wild)")
+# plot_motif(f_wild_web, title = "Motif relative abundance (Wild)")
+
+plot_motif(domestic_web, title = "Motif relative abundance (Wild)")
+plot_motif(b_domestic_web, title = "Motif relative abundance (Wild)")
+# plot_motif(f_domestic_web, title = "Motif relative abundance (Wild)")
+```
+Nothing noteworthy.
+
+## 7. Module further analysis
+Maybe more module analysis could be done.
+Modularity visualization
+```{r}
+
+plot_graph_module <- function(wild_web){
+  # convert igraph to tidygraph object
+  wild_tbl <- as_tbl_graph(wild_web)
+  # Louvain clustering
+  wild_tbl %<>%
+    tidygraph::activate(nodes) %>% 
+    mutate(community=as.character(group_louvain()))
+  
+  # Modules / add bacteria or fungi info
+  wild_tbl %<>% 
+    activate(nodes) %>% 
+    mutate(Bacteria = ifelse(substr(name,1,1)=="B","Bacteria","Fungi") )
+  # plot again with ggraph
+  wild_tbl %>% 
+    ggraph("fr")  + geom_edge_link()  + geom_node_point(aes(color=community, shape=Bacteria), size=3) + theme_graph() 
+}
+
+# plot
+ggr1 <- plot_graph_module(wild_web)
+ggr2 <- plot_graph_module(b_wild_web)
+# plot_graph_module(f_wild_web)
+ggr3 <- plot_graph_module(domestic_web)
+ggr4 <- plot_graph_module(b_domestic_web)
+# plot_graph_module(f_domestic_web)
+
+ggarrange(ggr1 + rremove("legend"), ggr2 + rremove("legend"), ggr3 + rremove("legend"), ggr4 + rremove("legend"), # + rremove("x.text") 
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2)
+
+ggarrange(ggr1, ggr2, ggr3, ggr4,
+          labels = c("A", "B", "C","D"),
+          ncol = 2, nrow = 2)
+
+```
 
