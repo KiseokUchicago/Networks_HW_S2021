@@ -1,0 +1,542 @@
+---
+title: "network_project"
+author: "KiseokUchicago"
+date: "2021-05-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=11, fig.height=9,
+                      error=TRUE, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE)
+```
+
+## Final project analysis
+## Project for ECEV 44500 Networks in Ecology and Evolution
+Professor: **Mercedes Pascual**, **Sergio A. Alcala Corona** \
+Student: **Kiseok Lee**
+
+```{r}
+# libraries
+library(igraph)
+library(bipartite)
+library(dplyr)
+library(ggplot2)
+library(ggrepel)
+library(RColorBrewer)
+library(vegan)
+library(tidyverse)
+library(magrittr)
+library(readxl)
+library(reshape2)
+library(gtools)
+library(devtools)
+library(ggpubr)
+library(MASS)
+
+## theme for ggplot
+mytheme <- theme_bw() + 
+  theme(plot.title = element_text(size = 19,hjust = 0.5, family="serif")) + 
+  theme(axis.title.x = element_text(size = 17,hjust = 0.5, family="serif")) + 
+  theme(axis.title.y = element_text(size = 17,hjust = 0.5, family="serif")) + 
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=13, family="serif"))+
+  theme(axis.text.y = element_text(size=10, family="serif"))+
+  theme(panel.grid.major = element_blank()) +
+  theme(panel.grid.minor = element_blank(),panel.background=element_blank(),panel.border=element_blank(),plot.background=element_blank()) +
+  theme(axis.ticks = element_line(size = 1.1))
+  
+mytheme_2d <- theme_bw() + 
+  theme(plot.title = element_text(size = 19,hjust = 0.5, family="serif")) + 
+  theme(axis.title.x = element_text(size = 17,hjust = 0.5, family="serif")) + 
+  theme(axis.title.y = element_text(size = 17,hjust = 0.5, family="serif")) + 
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=13, family="serif"))+
+  theme(axis.text.y = element_text(size=13, family="serif"))+
+  theme(panel.grid.major = element_blank()) +
+  theme(panel.grid.minor = element_blank(),panel.background=element_blank(),plot.background=element_blank()) +
+  theme(axis.ticks = element_line(size = 1.1))
+
+
+# color collection
+my_color_collection <- c(
+  "#CBD588", "#5F7FC7", "orange", "#AD6F3B", "#673770", 
+  "#D14285", "#652926", "#C84248", "#8569D5", "#5E738F",
+  "#D1A33D", "#8A7C64", "#599861","#616163", "#FFCDB2",
+  "#6D9F71", "#242F40",
+   "#CCA43B", "#F92A82", "#ED7B84", "#7EB77F", 
+  "#DEC4A1", "#E5D1D0", '#0E8482', '#C9DAEA', '#337357', 
+  '#95C623', '#E55812', '#04471C', '#F2D7EE', '#D3BCC0', 
+  '#A5668B', '#69306D', '#0E103D', '#1A535C', '#4ECDC4', 
+  '#F7FFF7', '#FF6B6B', '#FFE66D', '#6699CC', '#FFF275', 
+  '#FF8C42', '#FF3C38', '#A23E48', '#000000', '#CF5C36', 
+  '#EEE5E9', '#7C7C7C', '#EFC88B', '#2E5266', '#6E8898', 
+  '#9FB1BC', '#D3D0CB', '#E2C044', '#5BC0EB', '#FDE74C', 
+  '#9BC53D', '#E55934', '#FA7921', "#CD9BCD", "#508578", "#DA5724")
+
+```
+
+
+
+
+## 1. Import data
+Microbiome sequence of domesticated/wild rice seed (bacteria & Fungi) (https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00805-0)
+```{r}
+# domesticated rice seed microbiome
+domestic_links <- read.csv('data/2_0.3_edge_dom.css.ss.5.tsv',sep="\t", header=T)
+b_domestic_links <- read.csv('data/5_0.3_edge_dom.phy.ss.5.tsv',sep="\t", header=T)
+f_domestic_links <- read.csv('data/8_0.3_edge_dom.fun.ss.5.tsv',sep="\t", header=T)
+
+# wild rice seed microbiome
+wild_links <- read.csv('data/3_0.3_edge_wil.css.ss.5.tsv',sep="\t", header=T)
+b_wild_links <- read.csv('data/6_0.3_edge_wil.phy.ss.5.tsv',sep="\t", header=T) # bacteria
+f_wild_links <- read.csv('data/9_0.3_edge_wil.fun.ss.5.tsv',sep="\t", header=T) # fungi
+
+# microbial network of wild rice seed endophytes
+domestic_web <- graph.data.frame(domestic_links, directed = F)
+b_domestic_web <- graph.data.frame(b_domestic_links, directed = F) # bacteria
+f_domestic_web <- graph.data.frame(f_domestic_links, directed = F) # fungi
+
+# microbial network of wild rice seed endophytes
+wild_web <- graph.data.frame(wild_links, directed = F)
+b_wild_web <- graph.data.frame(b_wild_links, directed = F) # bacteria
+f_wild_web <- graph.data.frame(f_wild_links, directed = F) # fungi
+
+plot(wild_web, vertex.size=5, vertex.label=NA, main="Bacteria & Fungi-Wild rice")
+plot(b_wild_web, vertex.size=5, vertex.label=NA, main="Bacteria-Wild rice")
+plot(f_wild_web, vertex.size=5, vertex.label=NA, main="Fungi-Wild rice")
+
+# Detect communities, note the as.undirected command
+wild_unweighted <- wild_web
+wild_unweighted <- as.undirected(wild_unweighted)
+E(wild_unweighted)$weight <- 1
+
+# implementing Louvain method
+cl <- cluster_louvain(wild_unweighted) # Can also use the weights = NULL argument
+class(cl) # the result is of class communities
+
+# module membership & visualization
+module_membership <- membership(cl)
+table(module_membership)
+
+# color
+cols <- data.frame(mem=unique(module_membership), col= my_color_collection[1:length(unique(module_membership))])
+V(wild_unweighted)$module_membership <- module_membership
+V(wild_unweighted)$color <- cols$col[match(V(wild_unweighted)$module_membership, cols$mem)]
+
+# shape: triangle fungi / circle bacteria
+V(wild_unweighted)$shape <- ifelse(substr(V(wild_unweighted)$name,1,1)=="B","circle","csquare")
+
+# plot network
+plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge.arrow.width=0.3, edge.arrow.curve=0.5, vertex.shape=V(wild_unweighted)$shape, vertex.label=NA)
+```
+
+## 2. Centrality distribution
+We are doing centrality analysis to see if there is descriptive difference.
+
+### 2.1. Degree
+```{r}
+## Degree histogram
+plot_degree <- function(wild_web, title="Wild rice seed microbiome"){
+  d.wild <- igraph::degree(wild_web)
+  ggplot(as.data.frame(d.wild), aes(d.wild)) + geom_bar(fill='lightblue') +
+    ylab("frequency \n") +
+    xlab("\n Degree") +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title," \n")) +
+    mytheme
+}
+
+# log-log degree distributions
+plot_log_degree <- function(wild_web){
+  dd.wild <- degree.distribution(wild_web)
+  d.wild <- igraph::degree(wild_web)
+  d <- 1:max(d.wild)-1
+  ind <- (dd.wild != 0)
+  plot(d[ind],dd.wild[ind], log='xy', col='blue',
+       xlab="Log-Degree", ylab="Log-Intensity",
+       main="Log-Log degree distribution")
+}
+
+# Wild
+p_w <- plot_degree(wild_web, title="Wild microbiome (Bacteria+Fungi)")
+p_bw <- plot_degree(b_wild_web, title="Wild bacterial microbiome")
+p_fw <- plot_degree(f_wild_web, title="Wild fungal microbiome")
+
+ggarrange(p_bw, p_fw + rremove("ylab"), p_w, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Wild Bacteria
+plot_log_degree(b_wild_web)
+# Wild Fungi
+plot_log_degree(f_wild_web)
+# Wild Bacteria + fungi
+plot_log_degree(wild_web)
+
+# Domesticated
+p_d <- plot_degree(domestic_web, title="Domesticated microbiome (Bacteria+Fungi)")
+p_bd <- plot_degree(b_domestic_web, title="Domesticated bacterial microbiome")
+p_fd <- plot_degree(f_domestic_web, title="Domesticated fungal microbiome")
+
+ggarrange(p_bd, p_fd + rremove("ylab"), p_d, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Domesticated Bacteria
+plot_log_degree(b_domestic_web)
+# Domesticated fungi
+plot_log_degree(f_domestic_web)
+# Domesticated Bacteria + fungi
+plot_log_degree(domestic_web)
+
+```
+
+### 2.2. Betweenness centrality
+
+```{r}
+## Betweenness histogram
+plot_betweenness <- function(wild_web, title="Wild rice seed microbiome"){
+  bt.wild <- igraph::betweenness(wild_web)
+  df_wild <- as.data.frame(bt.wild)
+  ggplot(df_wild, aes(bt.wild)) + geom_bar(stat="bin",fill='lightblue',bins=40) +
+    ylab("frequency \n") +
+    xlab("\n Betweenness") +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title," \n")) +
+    mytheme
+}
+
+# log-log betweenness distributions
+plot_log_betweenness <- function(wild_web, bin_interval=500){
+  bt.wild <- igraph::betweenness(wild_web)
+  bin_interval = bin_interval
+  bt_dist <- as.data.frame(table(cut(bt.wild, breaks=seq(0,max(bt.wild), by=bin_interval))))
+  hist(bt_dist$Freq)
+  colnames(bt_dist)
+  freq_sum = sum(bt_dist$Freq)
+  bt_dist$density <- bt_dist$Freq / freq_sum
+  btd.wild <- bt_dist$density # betweenness centrality distribution
+  bt <- seq(0,max(bt.wild),bin_interval)[-length(seq(0,max(bt.wild),bin_interval))] # x axis
+  ind <- (btd.wild != 0)
+  plot(bt[ind], btd.wild[ind], log='xy', col='blue',
+       xlab="Log-Betweenness", ylab="Log-Intensity",
+       main="Log-Log betweenness distribution")
+}
+
+# Wild
+p_bt_w <- plot_betweenness(wild_web, title="Wild microbiome (Bacteria+Fungi)")
+p_bt_bw <- plot_betweenness(b_wild_web, title="Wild bacterial microbiome")
+p_bt_fw <- plot_betweenness(f_wild_web, title="Wild fungal microbiome")
+
+ggarrange(p_bt_bw, p_bt_fw + rremove("ylab"), p_bt_w, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Wild Bacteria
+plot_log_betweenness(b_wild_web, bin_interval=10)
+# Wild Fungi
+plot_log_betweenness(f_wild_web, bin_interval=200)
+# Wild Bacteria + fungi
+plot_log_betweenness(wild_web, bin_interval=500)
+
+# Domesticated
+p_bt_d <- plot_betweenness(domestic_web, title="Domesticated microbiome (Bacteria+Fungi)")
+p_bt_bd <- plot_betweenness(b_domestic_web, title="Domesticated bacterial microbiome")
+p_bt_fd <- plot_betweenness(f_domestic_web, title="Domesticated fungal microbiome")
+
+ggarrange(p_bt_bd, p_bt_fd + rremove("ylab"), p_bt_d, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Domesticated Bacteria
+plot_log_betweenness(b_domestic_web, bin_interval=10)
+# Domesticated fungi
+plot_log_betweenness(f_domestic_web, bin_interval=1)
+# Domesticated Bacteria + fungi
+plot_log_betweenness(domestic_web, bin_interval=70)
+```
+
+
+### 2.3. Eigenvector's centrality
+
+```{r}
+## Eigenvector centrality histogram
+plot_eigenvector <- function(wild_web, title="Wild rice seed microbiome"){
+  eig.wild <- igraph::eigen_centrality(wild_web)$vector
+  df_wild <- as.data.frame(eig.wild)
+  ggplot(df_wild, aes(eig.wild)) + geom_bar(stat="bin",fill='lightblue',bins=40) +
+    ylab("frequency \n") +
+    xlab("\n Eigenvector centrality") +
+    # scale_x_continuous(breaks=seq(1,8,1))+
+    ggtitle(paste0(title," \n")) +
+    mytheme
+}
+
+# log-log eigenvector distributions
+plot_log_eigenvector <- function(wild_web, bin_interval=0.00005){
+  eig.wild <- igraph::eigen_centrality(wild_web)$vector
+  bin_interval = bin_interval
+  eig_dist <- as.data.frame(table(cut(eig.wild, breaks=seq(0,max(eig.wild), by=bin_interval))))
+  hist(eig_dist$Freq)
+  colnames(eig_dist)
+  freq_sum = sum(eig_dist$Freq)
+  eig_dist$density <- eig_dist$Freq / freq_sum
+  eigd.wild <- eig_dist$density # eigenvector centrality distribution
+  eig <- seq(0,max(eig.wild),bin_interval)[-length(seq(0,max(eig.wild),bin_interval))] # x axis
+  ind <- (eigd.wild != 0)
+  plot(eig[ind], eigd.wild[ind], log='xy', col='blue',
+       xlab="Log-Eigenvector centrality", ylab="Log-Intensity",
+       main="Log-Log eigenvector distribution")
+}
+
+# Wild
+p_eig_w <- plot_eigenvector(wild_web, title="Wild microbiome (Bacteria+Fungi)")
+p_eig_bw <- plot_eigenvector(b_wild_web, title="Wild bacterial microbiome")
+p_eig_fw <- plot_eigenvector(f_wild_web, title="Wild fungal microbiome")
+
+ggarrange(p_eig_bw, p_eig_fw + rremove("ylab"), p_eig_w, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Wild Bacteria
+plot_log_eigenvector(b_wild_web, bin_interval=0.00005)
+# Wild Fungi
+plot_log_eigenvector(f_wild_web, bin_interval=0.00005)
+# Wild Bacteria + fungi
+plot_log_eigenvector(wild_web, bin_interval=0.1)
+
+# Domesticated
+p_eig_d <- plot_eigenvector(domestic_web, title="Domesticated microbiome (Bacteria+Fungi)")
+p_eig_bd <- plot_eigenvector(b_domestic_web, title="Domesticated bacterial microbiome")
+p_eig_fd <- plot_eigenvector(f_domestic_web, title="Domesticated fungal microbiome")
+
+ggarrange(p_eig_bd, p_eig_fd + rremove("ylab"), p_eig_d, # + rremove("x.text") 
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2)
+
+# Domesticated Bacteria
+plot_log_eigenvector(b_domestic_web, bin_interval=0.00005)
+# Domesticated fungi
+plot_log_eigenvector(f_domestic_web, bin_interval=0.00005)
+# Domesticated Bacteria + fungi
+plot_log_eigenvector(domestic_web, bin_interval=0.1)
+```
+
+### 2.4. Plot together
+
+Wild rice seed microbiome
+```{r}
+# (1-1) Wild - only bacteria
+# Normalize
+D_wb <- igraph::degree(b_wild_web, normalized = T) 
+BC_wb <- igraph::betweenness(b_wild_web, directed = F, normalized = T)
+EC_wb <- igraph::eigen_centrality(b_wild_web, directed = F, scale = T)$vector
+
+df_cen_wb <- data.frame(Degree=D_wb, Betweenness=BC_wb, Eigen_centrality=EC_wb)
+
+library(scatterplot3d)
+# scatterplot3d(df_cen_wb, pch = 16, color="steelblue", angle = 29, type="h")
+s3d <- scatterplot3d(df_cen_wb, pch = 16, color="steelblue", angle = 29, type="h")
+text(s3d$xyz.convert(df_cen_wb), labels = rownames(df_cen_wb),
+     cex= 0.65, col = "red")
+
+# (1-2) Wild - bacteria + fungi
+# Normalize
+D_w <- igraph::degree(wild_web, normalized = T) 
+BC_w <- igraph::betweenness(wild_web, directed = F, normalized = T)
+EC_w <- igraph::eigen_centrality(wild_web, directed = F, scale = T)$vector
+
+df_cen_w <- data.frame(Degree=D_w, Betweenness=BC_w, Eigen_centrality=EC_w)
+
+library(scatterplot3d)
+# scatterplot3d(df_cen_w, pch = 16, color="steelblue", angle = 29, type="h")
+s3d <- scatterplot3d(df_cen_w, pch = 16, color="steelblue", angle = 29, type="h")
+text(s3d$xyz.convert(df_cen_w), labels = rownames(df_cen_w),
+     cex= 0.65, col = "red")
+```
+
+Domesticated rice seed microbiome
+```{r}
+# (1-1) Domesticated - only bacteria
+# Normalize
+D_db <- igraph::degree(b_domestic_web, normalized = T) 
+BC_db <- igraph::betweenness(b_domestic_web, directed = F, normalized = T)
+EC_db <- igraph::eigen_centrality(b_domestic_web, directed = F, scale = T)$vector
+
+df_cen_db <- data.frame(Degree=D_db, Betweenness=BC_db, Eigen_centrality=EC_db)
+
+library(scatterplot3d)
+scatterplot3d(df_cen_db, pch = 16, color="steelblue", angle = 29, type="h")
+s3d <- scatterplot3d(df_cen_db, pch = 16, color="steelblue", angle = 29, type="h")
+text(s3d$xyz.convert(df_cen_db), labels = rownames(df_cen_db),
+     cex= 0.65, col = "red")
+
+# (1-2) Domesticated - bacteria + fungi
+# Normalize
+D_d <- igraph::degree(domestic_web, normalized = T) 
+BC_d <- igraph::betweenness(domestic_web, directed = F, normalized = T)
+EC_d <- igraph::eigen_centrality(domestic_web, directed = F, scale = T)$vector
+
+df_cen_d <- data.frame(Degree=D_d, Betweenness=BC_d, Eigen_centrality=EC_d)
+
+library(scatterplot3d)
+scatterplot3d(df_cen_d, pch = 16, color="steelblue", angle = 29, type="h")
+s3d <- scatterplot3d(df_cen_d, pch = 16, color="steelblue", angle = 29, type="h")
+text(s3d$xyz.convert(df_cen_d), labels = rownames(df_cen_d),
+     cex= 0.65, col = "red")
+```
+
+### 2.5. Change of hub species
+
+Betweenness and degree centrality
+```{r}
+# 2D plotting with BT and Degree
+
+plot_degree_betweenness <- function(df_cen_wb, title="Only Bacteria (Wild rice)", label_thresh=0.5){
+  # Label bacteria and fungi to differ color
+  df_cen_wb$Bacteria <- ifelse( substr(rownames(df_cen_wb),1,1)=="B","Bacteria","Fungi")
+  # Label subset higher that top 50% in both Degree and Betweenness centrality
+  label_thresh = label_thresh
+  label_cen_wb <- subset(df_cen_wb, (Degree >= max(df_cen_wb$Degree)*label_thresh) & (Betweenness >= max(df_cen_wb$Betweenness)*label_thresh))
+  # Plot only bacteria
+  ggplot(df_cen_wb, aes(x=Degree, y=Betweenness)) +
+    xlab('\n Degree (Normalized)')+
+    ylab("Betweenness (Normalized) \n") +
+    geom_point(aes(fill = Bacteria), shape = 21 ,size=5, alpha=0.9) +
+    scale_fill_manual(labels = c('Bacteria','Fungi'), values = c('Bacteria'= "#FF8300", 'Fungi'='#BF4AFF'))+
+    ggtitle(paste0(title," \n")) +
+    scale_x_continuous(limits = c(0, max(df_cen_wb$Degree))) +
+    scale_y_continuous(limits = c(0, max(df_cen_wb$Betweenness))) +
+    theme(legend.text=element_text(size=13)) + 
+
+    geom_hline(yintercept=max(df_cen_wb$Betweenness)*0.5, color="maroon4", linetype='dotted')+
+    geom_vline(xintercept=max(df_cen_wb$Degree)*0.5, color="maroon4", linetype='dotted')+
+    # theme(legend.position="top") +
+    # theme(legend.title=element_blank()) +
+    guides(colour = guide_legend(override.aes = list(size=8), reverse = TRUE))+
+    guides(size=FALSE) +
+    mytheme_2d +
+    geom_text_repel(data=label_cen_wb ,aes(label=rownames(label_cen_wb)), size=4, family="serif")
+}
+
+# wild
+plot_degree_betweenness(df_cen_wb, title="Only Bacteria (Wild rice)", label_thresh=0.4)
+plot_degree_betweenness(df_cen_w, title="Bacteria + Fungi (Wild rice)", label_thresh=0.4)
+# domesticated
+plot_degree_betweenness(df_cen_db, title="Only Bacteria (Domesticated rice)", label_thresh=0.35)
+plot_degree_betweenness(df_cen_d, title="Bacteria + Fungi (Domesticated rice)", label_thresh=0.35)
+
+```
+
+### 2.6. Comparison of each centrality (before vs after merging kingdom)
+Degree
+```{r}
+# Investigate centrality for bacterial species before vs after merging kingdom
+# (1) Degree
+plot_degree_change <- function(df_cen_wb,df_cen_w, title = "Wild"){
+  # make rownames to column for left join
+  df_cen_wb <- tibble::rownames_to_column(df_cen_wb, var="OTU")
+  df_cen_w <- tibble::rownames_to_column(df_cen_w, var="OTU")
+  # left join
+  df_cen_w_comp <- df_cen_wb %>% left_join(df_cen_w, by=c("OTU"="OTU"))
+    
+  ggplot(df_cen_w_comp, aes(x=Degree.x, y=Degree.y)) + geom_point() +
+    xlab('\n Degree in bacteria-only network')+
+    ylab("Degree in bacterial + fungal network \n") +
+    ggtitle(paste0(title," \n")) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Degree.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Degree.y))) +
+    mytheme_2d +
+    stat_smooth(method="loess", colour="red") +
+    # stat_smooth(method='lm', se=FALSE, colour="orange") +
+    geom_abline(intercept=0, slope=1, color="maroon4", linetype='dotted', size=1.1 )
+}
+
+# Wild
+plot_degree_change(df_cen_wb,df_cen_w, title = "Change of degree (Wild)")
+# Domesticated
+plot_degree_change(df_cen_db,df_cen_d, title = "Change of degree (Domesticated)")
+```
+
+Betweenness
+```{r}
+# (2) Betweenness
+plot_betweenness_change <- function(df_cen_wb,df_cen_w, title = "Change of betweenness (Wild)"){
+  # make rownames to column for left join
+  df_cen_wb <- tibble::rownames_to_column(df_cen_wb, var="OTU")
+  df_cen_w <- tibble::rownames_to_column(df_cen_w, var="OTU")
+  # left join
+  df_cen_w_comp <- df_cen_wb %>% left_join(df_cen_w, by=c("OTU"="OTU"))
+    
+  ggplot(df_cen_w_comp, aes(x=Betweenness.x, y=Betweenness.y)) + geom_point() +
+    xlab('\n Betweenness in bacteria-only network')+
+    ylab("Betweenness in bacterial + fungal network \n") +
+    ggtitle(paste0(title," \n")) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Betweenness.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Betweenness.y))) +
+    mytheme_2d +
+    stat_smooth(method="loess", colour="red") +
+    # stat_smooth(method='lm', se=FALSE, colour="orange") +
+    geom_abline(intercept=0, slope=1, color="maroon4", linetype='dotted', size=1.1 )
+}
+
+# Wild
+plot_betweenness_change(df_cen_wb,df_cen_w, title = "Change of betweenness (Wild)")
+# Domesticated
+plot_betweenness_change(df_cen_db,df_cen_d, title = "Change of betweenness (Domesticated)")
+```
+
+Eigenvector's centrality
+```{r}
+# (3) Eigenvector's centrality
+plot_eigen_centrality_change <- function(df_cen_wb,df_cen_w, title = "Change of Eigen_centrality (Wild)"){
+  # make rownames to column for left join
+  df_cen_wb <- tibble::rownames_to_column(df_cen_wb, var="OTU")
+  df_cen_w <- tibble::rownames_to_column(df_cen_w, var="OTU")
+  # left join
+  df_cen_w_comp <- df_cen_wb %>% left_join(df_cen_w, by=c("OTU"="OTU"))
+    
+  ggplot(df_cen_w_comp, aes(x=Eigen_centrality.x, y=Eigen_centrality.y)) + geom_point() +
+    xlab('\n Eigen_centrality in bacteria-only network')+
+    ylab("Eigen_centrality in bacterial + fungal network \n") +
+    ggtitle(paste0(title," \n")) +
+    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.x))) +
+    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.y))) +
+    mytheme_2d +
+    # stat_smooth(method="loess", colour="red") +
+    # stat_smooth(method='lm', se=FALSE, colour="orange") +
+    geom_abline(intercept=0, slope=1, color="maroon4", linetype='dotted', size=1.1 )
+}
+
+# Wild
+plot_eigen_centrality_change(df_cen_wb,df_cen_w, title = "Change of Eigen_centrality (Wild)")
+# Domesticated
+plot_eigen_centrality_change(df_cen_db,df_cen_d, title = "Change of Eigen_centrality (Domesticated)")
+```
+
+
+
+
+```{r}
+##
+wild_web
+b_wild_web
+f_wild_web
+
+domestic_web
+b_domestic_web
+f_domestic_web
+
+igraph::degree(wild_web, directed = F, normalized = T) 
+igraph::betweenness(wild_web, directed = F, normalized = T)
+igraph::eigen_centrality(wild_web, directed = F, scale = T)$vector
+
+```
+
+
+
+
+
+
+
