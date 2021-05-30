@@ -131,7 +131,7 @@ plot(wild_unweighted, vertex.color=V(wild_unweighted)$color, vertex.size=6, edge
 ## 2. Centrality distribution
 We are doing centrality analysis to see if there is descriptive difference.
 
-### 2.1. Degree
+## 2.1. Degree
 ```{r}
 ## Degree histogram
 plot_degree <- function(wild_web, title="Wild rice seed microbiome"){
@@ -189,7 +189,7 @@ plot_log_degree(domestic_web)
 
 ```
 
-### 2.2. Betweenness centrality
+## 2.2. Betweenness centrality
 
 ```{r}
 ## Betweenness histogram
@@ -255,7 +255,7 @@ plot_log_betweenness(domestic_web, bin_interval=70)
 ```
 
 
-### 2.3. Eigenvector's centrality
+## 2.3. Eigenvector's centrality
 
 ```{r}
 ## Eigenvector centrality histogram
@@ -320,7 +320,7 @@ plot_log_eigenvector(f_domestic_web, bin_interval=0.00005)
 plot_log_eigenvector(domestic_web, bin_interval=0.1)
 ```
 
-### 2.4. Plot together
+## 2.4. Plot together
 
 Wild rice seed microbiome
 ```{r}
@@ -384,7 +384,7 @@ text(s3d$xyz.convert(df_cen_d), labels = rownames(df_cen_d),
      cex= 0.65, col = "red")
 ```
 
-### 2.5. Change of hub species
+## 2.5. Change of hub species
 
 Betweenness and degree centrality
 ```{r}
@@ -426,7 +426,8 @@ plot_degree_betweenness(df_cen_d, title="Bacteria + Fungi (Domesticated rice)", 
 
 ```
 
-### 2.6. Comparison of each centrality (before vs after merging kingdom)
+
+## 2.6. Comparison of each centrality (before vs after merging kingdom)
 Degree
 ```{r}
 # Investigate centrality for bacterial species before vs after merging kingdom
@@ -454,6 +455,33 @@ plot_degree_change <- function(df_cen_wb,df_cen_w, title = "Wild"){
 plot_degree_change(df_cen_wb,df_cen_w, title = "Change of degree (Wild)")
 # Domesticated
 plot_degree_change(df_cen_db,df_cen_d, title = "Change of degree (Domesticated)")
+
+## Now plot the above 2 plots in 1 plot
+# Degree (Wild + dom)
+cen_wb <- tibble::rownames_to_column(df_cen_wb, var="OTU")
+cen_w <- tibble::rownames_to_column(df_cen_w, var="OTU")
+cen_db <- tibble::rownames_to_column(df_cen_db, var="OTU")
+cen_d <- tibble::rownames_to_column(df_cen_d, var="OTU")
+# left join
+df_cen_w_comp <- cen_wb %>% left_join(cen_w, by=c("OTU"="OTU")) %>% mutate(Network="Wild")
+df_cen_d_comp <- cen_db %>% left_join(cen_d, by=c("OTU"="OTU")) %>% mutate(Network="Domesticated")
+df_cen_comp <- rbind(df_cen_w_comp,df_cen_d_comp)
+df_cen_comp$Network <- factor(df_cen_comp$Network, levels = c("Wild","Domesticated"))
+
+# plot
+ggplot(df_cen_comp, aes(x=Degree.x, y=Degree.y)) + 
+  geom_point(aes(color = Network), shape = 16 ,size=2, alpha=0.9) +
+  scale_color_manual(values = c("red2", 'blue3'))+
+  xlab('\n Degree in bacteria-only network')+
+  ylab("Degree in bacterial + fungal network \n") +
+  ggtitle(paste0("Change of degree"," \n")) +
+  scale_x_continuous(limits = c(0, max(df_cen_comp$Degree.x))) +
+  scale_y_continuous(limits = c(0, max(df_cen_comp$Degree.y))) +
+  mytheme_2d +
+  stat_smooth(method="loess", aes(color=Network)) +
+  # stat_smooth(method='lm', se=FALSE, colour="orange") +
+  geom_abline(intercept=0, slope=1, color="maroon4", linetype='dotted', size=1.1)
+
 ```
 
 Betweenness
@@ -482,6 +510,24 @@ plot_betweenness_change <- function(df_cen_wb,df_cen_w, title = "Change of betwe
 plot_betweenness_change(df_cen_wb,df_cen_w, title = "Change of betweenness (Wild)")
 # Domesticated
 plot_betweenness_change(df_cen_db,df_cen_d, title = "Change of betweenness (Domesticated)")
+
+
+## Now plot the above 2 plots in 1 plot
+# Betweenness (Wild + dom)
+# plot
+ggplot(df_cen_comp, aes(x=Betweenness.x, y=Betweenness.y)) + 
+  geom_point(aes(color = Network), shape = 16 ,size=2, alpha=0.9) +
+  scale_color_manual(values = c("red2", 'blue3'))+
+  xlab('\n Betweenness in bacteria-only network')+
+  ylab("Betweenness in bacterial + fungal network \n") +
+  ggtitle(paste0("Change of Betweenness"," \n")) +
+  # scale_x_continuous(limits = c(0, max(df_cen_comp$Degree.x))) +
+  scale_y_continuous(limits = c(0, max(df_cen_comp$Degree.y))) +
+  mytheme_2d +
+  stat_smooth(method="loess", aes(color=Network)) +
+  # stat_smooth(method='lm', se=FALSE, colour="orange") +
+  geom_abline(intercept=0, slope=1, color="maroon4", linetype='dotted', size=1.1)
+
 ```
 
 Eigenvector's centrality
@@ -511,6 +557,7 @@ plot_eigen_centrality_change(df_cen_wb,df_cen_w, title = "Change of Eigen_centra
 # Domesticated
 plot_eigen_centrality_change(df_cen_db,df_cen_d, title = "Change of Eigen_centrality (Domesticated)")
 ```
+
 
 ## 3. Robustness (Extinction experiment)
 - Is bacterial+fungal network more robust compared to bacterial only network? \
@@ -578,8 +625,6 @@ df_extinction <- tibble(Removed= remove_num_vec/vcount(lg_wild_web), Lg_size = l
 ggplot(df_extinction, aes(x=Removed, y=Lg_size))+ #, group=name)) +
   geom_line(size=0.5) +
   ggtitle(paste0("Degree-based attack (Wild bacterial + fungal network)"," \n")) +
-  scale_x_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.x))) +
-  scale_y_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.y))) +
   xlab('\n Fraction of vertices removed')+
   ylab("Fractional size of largest component  \n") +
   mytheme_2d
@@ -641,8 +686,6 @@ df_extinction <- tibble(Removed= remove_num_vec/vcount(lg_wild_web), Lg_size = l
 ggplot(df_extinction, aes(x=Removed, y=Lg_size, group=line_name)) +
   geom_line(size=0.5) +
   ggtitle(paste0("Degree-based attack (Wild bacterial + fungal network)"," \n")) +
-  scale_x_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.x))) +
-  scale_y_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.y))) +
   xlab('\n Fraction of vertices removed')+
   ylab("Fractional size of largest component  \n") +
   mytheme_2d
@@ -717,10 +760,8 @@ get_extinction_df <- function(wild_web, order="Degree", n_lines=10){ # order = "
 plot_robustness <- function(df_extinction, title="Degree-based attack (Wild bacterial + fungal network)"){
   title = title
   ggplot(df_extinction, aes(x=Removed, y=Lg_size, group=line_name)) +
-    geom_line(size=0.5) +
+    geom_line(size=0.5, color="maroon") +
     ggtitle(paste0(title," \n")) +
-    scale_x_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.x))) +
-    scale_y_continuous(limits = c(0, max(df_cen_w_comp$Eigen_centrality.y))) +
     xlab('\n Fraction of vertices removed')+
     ylab("Fractional size of largest component  \n") +
     mytheme_2d
@@ -729,31 +770,376 @@ plot_robustness <- function(df_extinction, title="Degree-based attack (Wild bact
 
 ```
 
-Generate data and plot
+## 3.1. Generate data and plot robustness for each network
 ```{r}
 
 # (1) Wild
 # (1-1) Degree
 df_ext_degree_wild <- get_extinction_df(wild_web, order="Degree", n_lines=50)
-plot_robustness(df_ext_degree_wild, title="Degree-based attack (Wild bacterial + fungal network)")
+wd1 <- plot_robustness(df_ext_degree_wild, title="Degree-based attack (Wild)")
 # (1-2) Betweenness
 df_ext_bt_wild <- get_extinction_df(wild_web, order="Betweenness", n_lines=50)
-plot_robustness(df_ext_bt_wild, title="Betweenness-based attack (Wild bacterial + fungal network)")
+wd2 <- plot_robustness(df_ext_bt_wild, title="Betweenness-based attack")
 # (1-3) Eigen_centrality
 df_ext_eigen_wild <- get_extinction_df(wild_web, order="Eigen_centrality", n_lines=50)
-plot_robustness(df_ext_eigen_wild, title="Eigen_centrality-based attack (Wild bacterial + fungal network)")
+wd3 <- plot_robustness(df_ext_eigen_wild, title="Eigen_centrality-based attack")
 # (1-4) Random
 df_ext_random_wild <- get_extinction_df(wild_web, order="Random", n_lines=50)
-plot_robustness(df_ext_random_wild, title="Random-based attack (Wild bacterial + fungal network)")
+wd4 <- plot_robustness(df_ext_random_wild, title="Random-based attack")
+# plot 4 in 1
+ggarrange(wd1, wd2 + rremove("ylab"), wd3 + rremove("ylab"), wd4 + rremove("ylab"),# + rremove("x.text") 
+          labels = c("A", "B", "C", "D"),
+          ncol = 4, nrow = 1)
+
+# (2) Wild - bacteria
+# (2-1) Degree
+df_ext_degree_wild_b <- get_extinction_df(b_wild_web, order="Degree", n_lines=50)
+wb1 <- plot_robustness(df_ext_degree_wild_b, title="Degree-based attack (Wild bacterial)")
+# (2-2) Betweenness
+df_ext_bt_wild_b <- get_extinction_df(b_wild_web, order="Betweenness", n_lines=50)
+wb2 <- plot_robustness(df_ext_bt_wild_b, title="Betweenness-based attack")
+# (2-3) Eigen_centrality
+df_ext_eigen_wild_b <- get_extinction_df(b_wild_web, order="Eigen_centrality", n_lines=50)
+wb3 <- plot_robustness(df_ext_eigen_wild_b, title="Eigen_centrality-based attack")
+# (2-4) Random
+df_ext_random_wild_b <- get_extinction_df(b_wild_web, order="Random", n_lines=50)
+wb4 <- plot_robustness(df_ext_random_wild_b, title="Random-based attack")
+# plot 4 in 1
+ggarrange(wb1, wb2 + rremove("ylab"), wb3 + rremove("ylab"), wb4 + rremove("ylab"),# + rremove("x.text") 
+          labels = c("A", "B", "C", "D"),
+          ncol = 4, nrow = 1)
+
+# (3) Domesticated
+# (3-1) Degree
+df_ext_degree_domestic <- get_extinction_df(domestic_web, order="Degree", n_lines=50)
+dd1 <- plot_robustness(df_ext_degree_domestic, title="Degree-based attack (Domesticated)")
+# (3-2) Betweenness
+df_ext_bt_domestic <- get_extinction_df(domestic_web, order="Betweenness", n_lines=50)
+dd2 <- plot_robustness(df_ext_bt_domestic, title="Betweenness-based attack")
+# (3-3) Eigen_centrality
+df_ext_eigen_domestic <- get_extinction_df(domestic_web, order="Eigen_centrality", n_lines=50)
+dd3 <- plot_robustness(df_ext_eigen_domestic, title="Eigen_centrality-based attack")
+# (3-4) Random
+df_ext_random_domestic <- get_extinction_df(domestic_web, order="Random", n_lines=50)
+dd4 <- plot_robustness(df_ext_random_domestic, title="Random-based attack")
+# plot 4 in 1
+ggarrange(dd1, dd2 + rremove("ylab"), dd3 + rremove("ylab"), dd4 + rremove("ylab"),# + rremove("x.text") 
+          labels = c("A", "B", "C", "D"),
+          ncol = 4, nrow = 1)
+
+# (4) Domesticated - bacteria
+# (4-1) Degree
+df_ext_degree_domestic_b <- get_extinction_df(b_domestic_web, order="Degree", n_lines=50)
+db1 <- plot_robustness(df_ext_degree_domestic_b, title="Degree-based attack (Domesticated bacterial)")
+# (4-2) Betweenness
+df_ext_bt_domestic_b <- get_extinction_df(b_domestic_web, order="Betweenness", n_lines=50)
+db2 <- plot_robustness(df_ext_bt_domestic_b, title="Betweenness-based attack")
+# (3-3) Eigen_centrality
+df_ext_eigen_domestic_b <- get_extinction_df(b_domestic_web, order="Eigen_centrality", n_lines=50)
+db3 <- plot_robustness(df_ext_eigen_domestic_b, title="Eigen_centrality-based attack")
+# (3-4) Random
+df_ext_random_domestic_b <- get_extinction_df(b_domestic_web, order="Random", n_lines=50)
+db4 <- plot_robustness(df_ext_random_domestic_b, title="Random-based attack")
+# plot 4 in 1
+ggarrange(db1, db2 + rremove("ylab"), db3 + rremove("ylab"), db4 + rremove("ylab"),# + rremove("x.text") 
+          labels = c("A", "B", "C", "D"),
+          ncol = 4, nrow = 1)
 
 # plot the average in 1 plot
-colnames(df_ext_degree_wild)
-df_ext_degree_wild %>% group_by(Removed)
+plot_robustness_by_attack <- function(df_ext_degree_wild, df_ext_bt_wild, df_ext_eigen_wild, df_ext_random_wild, title = "Wild"){
+  # 1. degree
+  df_ext1 <- df_ext_degree_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Attack = "Degree")
+  # 2. Bt
+  df_ext2 <- df_ext_bt_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Attack = "Betweenness")
+  # 3. Eigen
+  df_ext3 <- df_ext_eigen_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Attack = "Eigen_centrality")
+  # 4. Random
+  df_ext4 <- df_ext_random_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Attack = "Random")
+  
+  df_ext_wild <- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_wild$Attack <- factor(df_ext_wild$Attack, levels = c('Degree','Betweenness','Eigen_centrality',"Random"))
+  
+  ggplot(df_ext_wild, aes(x=Removed, y=Lg_size_median, group=Attack, color=Attack)) +
+    geom_line(size=1) +
+    ggtitle(paste0("Robustness curves (",title,") \n")) +
+    xlab('\n Fraction of vertices removed')+
+    ylab("Fractional size of largest component  \n") +
+    mytheme_2d
+}
 
+# Wild
+plot_robustness_by_attack(df_ext_degree_wild, df_ext_bt_wild, df_ext_eigen_wild, df_ext_random_wild, title="Wild")
+# Wild -bac
+plot_robustness_by_attack(df_ext_degree_wild_b, df_ext_bt_wild_b, df_ext_eigen_wild_b, df_ext_random_wild_b, title="Wild bacterial")
+
+# Domesticated
+plot_robustness_by_attack(df_ext_degree_domestic, df_ext_bt_domestic, df_ext_eigen_domestic, df_ext_random_domestic, title="Domesticated")
+# Domesticated -bac
+plot_robustness_by_attack(df_ext_degree_domestic_b, df_ext_bt_domestic_b, df_ext_eigen_domestic_b, df_ext_random_domestic_b, title="Domesticated bacterial")
 
 ```
 
+## 3.2. Plot robustness for all network
 
+Degree
+```{r}
+# 1. Degree
+# plot different networks in 1 plot
+plot_robustness_degree <- function(df_ext_degree_wild, df_ext_degree_wild_b, df_ext_degree_domestic, df_ext_degree_domestic_b, title = "Degree-based attack"){
+  # Wild
+  df_ext1 <- df_ext_degree_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+  # Wild-bac
+  df_ext2 <- df_ext_degree_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+  # Domesticated
+  df_ext3 <- df_ext_degree_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+  # Domesticated-bac
+  df_ext4 <- df_ext_degree_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+  
+  df_ext_degree <- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_degree$Network <- factor(df_ext_degree$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+  
+  ggplot(df_ext_degree, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title," \n")) +
+    xlab('\n Fraction of vertices removed')+
+    ylab("Fractional size of largest component  \n") +
+    # scale_fill_manual(labels = c('Wild-Bacterial-Fungal','Fungi'), values = c('Bacteria'= "#FF8300", 'Fungi'='#BF4AFF'))+
+    scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c("right", "top"),
+    legend.title  = element_blank(),
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_degree(df_ext_degree_wild, df_ext_degree_wild_b, df_ext_degree_domestic, df_ext_degree_domestic_b, title = "Degree-based attack")
+
+```
+
+Betweenness
+```{r}
+# 2. Betweenness
+# plot different networks in 1 plot
+plot_robustness_bt <- function(df_ext_bt_wild, df_ext_bt_wild_b, df_ext_bt_domestic, df_ext_bt_domestic_b, title = "Betweenness-based attack"){
+  # Wild
+  df_ext1 <- df_ext_bt_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+  # Wild-bac
+  df_ext2 <- df_ext_bt_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+  # Domesticated
+  df_ext3 <- df_ext_bt_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+  # Domesticated-bac
+  df_ext4 <- df_ext_bt_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+  
+  df_ext_bt <- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_bt$Network <- factor(df_ext_bt$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+  
+  ggplot(df_ext_bt, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title," \n")) +
+    xlab('\n Fraction of vertices removed')+
+    ylab("Fractional size of largest component  \n") +
+    # scale_fill_manual(labels = c('Wild-Bacterial-Fungal','Fungi'), values = c('Bacteria'= "#FF8300", 'Fungi'='#BF4AFF'))+
+    scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c("right", "top"),
+    legend.title  = element_blank(),
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_bt(df_ext_bt_wild, df_ext_bt_wild_b, df_ext_bt_domestic, df_ext_bt_domestic_b, title = "Betweenness-based attack")
+
+```
+
+Eigen_centrality
+```{r}
+# 3. Eigen_centrality
+# plot different networks in 1 plot
+plot_robustness_eigen <- function(df_ext_eigen_wild, df_ext_eigen_wild_b, df_ext_eigen_domestic, df_ext_eigen_domestic_b, title = "Eigen centrality-based attack"){
+  # Wild
+  df_ext1 <- df_ext_eigen_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+  # Wild-bac
+  df_ext2 <- df_ext_eigen_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+  # Domesticated
+  df_ext3 <- df_ext_eigen_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+  # Domesticated-bac
+  df_ext4 <- df_ext_eigen_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+  
+  df_ext_eigen <- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_eigen$Network <- factor(df_ext_eigen$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+  
+  ggplot(df_ext_eigen, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title," \n")) +
+    xlab('\n Fraction of vertices removed')+
+    ylab("Fractional size of largest component  \n") +
+    # scale_fill_manual(labels = c('Wild-Bacterial-Fungal','Fungi'), values = c('Bacteria'= "#FF8300", 'Fungi'='#BF4AFF'))+
+    scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c("right", "top"),
+    legend.title  = element_blank(),
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_eigen(df_ext_eigen_wild, df_ext_eigen_wild_b, df_ext_eigen_domestic, df_ext_eigen_domestic_b, title = "Eigen centrality-based attack")
+
+```
+
+Random
+```{r}
+# 4. Random
+# plot different networks in 1 plot
+plot_robustness_random <- function(df_ext_random_wild, df_ext_random_wild_b, df_ext_random_domestic, df_ext_random_domestic_b, title = "Random-based attack"){
+  # Wild
+  df_ext1 <- df_ext_random_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+  # Wild-bac
+  df_ext2 <- df_ext_random_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+  # Domesticated
+  df_ext3 <- df_ext_random_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+  # Domesticated-bac
+  df_ext4 <- df_ext_random_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+  
+  df_ext_random <- rbind(df_ext1, df_ext2, df_ext3, df_ext4)
+  df_ext_random$Network <- factor(df_ext_random$Network, levels = c('Wild-Bacterial-Fungal','Wild-Bacterial','Domesticated-Bacterial-Fungal',"Domesticated-Bacterial"))
+  
+  ggplot(df_ext_random, aes(x=Removed, y=Lg_size_median, group=Network, color=Network)) +
+    geom_line(size=1.5) +
+    ggtitle(paste0(title," \n")) +
+    xlab('\n Fraction of vertices removed')+
+    ylab("Fractional size of largest component  \n") +
+    # scale_fill_manual(labels = c('Wild-Bacterial-Fungal','Fungi'), values = c('Bacteria'= "#FF8300", 'Fungi'='#BF4AFF'))+
+    scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+    mytheme_2d +
+    theme(legend.position = c(.97, .97),
+    legend.justification = c("right", "top"),
+    legend.title  = element_blank(),
+    legend.box.just = "right",
+    legend.margin = margin(6, 6, 6, 6))
+}
+
+# Plot
+plot_robustness_random(df_ext_random_wild, df_ext_random_wild_b, df_ext_random_domestic, df_ext_random_domestic_b, title = "Random-based attack")
+
+```
+
+## 3.3. Calculate area under curve
+
+```{r}
+library(DescTools)
+
+AUC(x=x, y=sin(x))
+
+
+# Getting the data ready
+## Degree - Wild
+df_ext1 <- df_ext_degree_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+# Wild-bac
+df_ext2 <- df_ext_degree_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+# Domesticated
+df_ext3 <- df_ext_degree_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+# Domesticated-bac
+df_ext4 <- df_ext_degree_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+# bind
+df_ext_degree <- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %>% mutate(Attack="Degree")
+
+## BT - Wild
+df_ext1 <- df_ext_bt_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+# Wild-bac
+df_ext2 <- df_ext_bt_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+# Domesticated
+df_ext3 <- df_ext_bt_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+# Domesticated-bac
+df_ext4 <- df_ext_bt_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+# bind
+df_ext_bt <- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %>% mutate(Attack="Betweenness")
+
+## Eigenvector - Wild
+df_ext1 <- df_ext_eigen_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+# Wild-bac
+df_ext2 <- df_ext_eigen_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+# Domesticated
+df_ext3 <- df_ext_eigen_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+# Domesticated-bac
+df_ext4 <- df_ext_eigen_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+# bind
+df_ext_eigen <- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %>% mutate(Attack="Eigen_centrality")
+
+## Random - Wild
+df_ext1 <- df_ext_random_wild %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial-Fungal")
+# Wild-bac
+df_ext2 <- df_ext_random_wild_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Wild-Bacterial")
+# Domesticated
+df_ext3 <- df_ext_random_domestic %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial-Fungal")
+# Domesticated-bac
+df_ext4 <- df_ext_random_domestic_b %>% group_by(Removed) %>% summarize(Lg_size_median = median(Lg_size)) %>% ungroup() %>% mutate(Network = "Domesticated-Bacterial")
+# bind
+df_ext_random <- rbind(df_ext1, df_ext2, df_ext3, df_ext4) %>% mutate(Attack="Random")
+
+df_ext <- rbind(df_ext_degree, df_ext_bt, df_ext_eigen, df_ext_random)
+
+# get AUC value (Area under curve)
+mat_AUC <- matrix(rep(0,16),nrow=4, ncol=4)
+row_vec = c("Wild-Bacterial-Fungal", "Wild-Bacterial", "Domesticated-Bacterial-Fungal", "Domesticated-Bacterial")
+col_vec = c("Degree","Betweenness","Eigen_centrality","Random")
+
+# Loop through col, row
+for (i in 1:length(row_vec)){
+  for (j in 1:length(col_vec)){
+    # filter the points by the row(Network type) and column(Attack type) 
+    df_ext_subset <- df_ext[(df_ext$Network==row_vec[i]) & (df_ext$Attack==col_vec[j]),]
+    mat_AUC[i,j] = AUC(df_ext_subset$Removed,df_ext_subset$Lg_size_median)
+  }
+}
+
+df_AUC <- data.frame(mat_AUC, row.names = row_vec)
+colnames(df_AUC) <- col_vec
+
+df_AUC
+openxlsx::write.xlsx(df_AUC,"df_AUC.xlsx",row.names = T )
+
+# Confirming everything is right
+ext_w_degree <- df_ext %>% filter(Network == "Wild-Bacterial-Fungal", Attack=="Degree")
+AUC(ext_w_degree$Removed,ext_w_degree$Lg_size_median)
+
+ext_wb_degree <- df_ext %>% filter(Network == "Wild-Bacterial", Attack=="Degree")
+AUC(ext_wb_degree$Removed,ext_wb_degree$Lg_size_median)
+
+ext_w_bt <- df_ext %>% filter(Network == "Wild-Bacterial-Fungal", Attack=="Betweenness")
+AUC(ext_w_bt$Removed,ext_w_bt$Lg_size_median)
+
+ext_wb_bt <- df_ext %>% filter(Network == "Wild-Bacterial", Attack=="Betweenness")
+AUC(ext_wb_bt$Removed,ext_wb_bt$Lg_size_median)
+
+
+
+# Plotting for visualiztion
+colnames(mat_AUC) <- col_vec
+rownames(mat_AUC) <- row_vec
+
+melt_AUC <- melt(mat_AUC)
+colnames(melt_AUC) <- c("Network","Attack","AUC")
+
+ggplot(melt_AUC, aes(x=Attack, y=AUC, group=Network, color=Network)) +
+  geom_point(size =4) +
+  geom_line(size=1.5) +
+  ggtitle(paste0("Area under Robustness curve"," \n")) +
+  xlab('\n Attack order')+
+  ylab("AUC  \n") +
+  scale_color_manual(values = c("red2",'gold1','blue3','cyan2'))+
+  mytheme_2d +
+  theme(legend.title  = element_blank())+
+  theme(axis.text.x = element_text(hjust = 0.5, vjust=0.3,size=17, family="serif"))
+
+```
+
+## 4. Metrics comparison
 
 
 
