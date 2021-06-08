@@ -385,7 +385,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-05-30
+<strong>Last updated:</strong> 2021-06-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -476,16 +476,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeaddb92156c8a874794c97b5c3e4f76db7e7af9ddtargetblankaddb921a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/addb92156c8a874794c97b5c3e4f76db7e7af9dd" target="_blank">addb921</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treed9f2242dfecfe6ccac12221d37af861ab663c8bdtargetblankd9f2242a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/d9f2242dfecfe6ccac12221d37af861ab663c8bd" target="_blank">d9f2242</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treeaddb92156c8a874794c97b5c3e4f76db7e7af9ddtargetblankaddb921a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomKiseokUchicagoNetworksHWS2021treed9f2242dfecfe6ccac12221d37af861ab663c8bdtargetblankd9f2242a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/addb92156c8a874794c97b5c3e4f76db7e7af9dd" target="_blank">addb921</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/KiseokUchicago/Networks_HW_S2021/tree/d9f2242dfecfe6ccac12221d37af861ab663c8bd" target="_blank">d9f2242</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -519,6 +519,9 @@ Untracked files:
     Untracked:  Metric_zscore.pdf
     Untracked:  Metrics_norm.pdf
     Untracked:  Module_visualization.pdf
+    Untracked:  Motif_4by4.pdf
+    Untracked:  Nestedness_dom.pdf
+    Untracked:  Nestedness_wild.pdf
     Untracked:  Robustenss_50lines_dom_bac.pdf
     Untracked:  Robustness_50lines_dom.pdf
     Untracked:  Robustness_50lines_wild.pdf
@@ -574,7 +577,7 @@ Untracked files:
     Untracked:  df_AUC.xlsx
     Untracked:  infomap-script.py
     Untracked:  infomap.exe
-    Untracked:  ~$df_AUC.xlsx
+    Untracked:  motif_class.pdf
 
 Unstaged changes:
     Deleted:    analysis/Infomap_HW.Rmd
@@ -617,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/KiseokUchicago/Networks_HW_S2021/blob/d9f2242dfecfe6ccac12221d37af861ab663c8bd/analysis/network_project.Rmd" target="_blank">d9f2242</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+complete
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/KiseokUchicago/Networks_HW_S2021/f4dcc3fc2770feb838411491d503baf17ef434cb/docs/network_project.html" target="_blank">f4dcc3f</a>
+</td>
+<td>
+KiseokUchicago
+</td>
+<td>
+2021-05-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1879,7 +1916,8 @@ connectance &lt;- function(m){
   d &lt;- sum(m&gt;0)/(nrow(m)*ncol(m))
   return(d)
 }
-  
+
+# curveball randomization  
 null_curveball_simulation &lt;- function(wild_web, connectance, num_iterations = 1000){
   null_model_curveball &lt;- vegan::nullmodel(as_adjacency_matrix(wild_web), method = &#39;curveball&#39;)
   shuffled_curveball &lt;- simulate(null_model_curveball, nsim = num_iterations, burnin = 1000) #Shuffle adjacency matrix
@@ -1916,7 +1954,30 @@ connectance_sim1 &lt;- null_curveball_simulation(wild_web, connectance, num_iter
 [1] &quot;P-value is: 0&quot;
 [1] &quot;mean is: 0.0770975056689342&quot;
 [1] &quot;sd is: 0&quot;</code></pre>
-<pre class="r"><code># now save the normalized (x / mean) value
+<pre class="r"><code># r00 randomization
+null_r00_simulation &lt;- function(wild_web, connectance, num_iterations = 1000){
+  null_model_r00 &lt;- vegan::nullmodel(as_adjacency_matrix(wild_web), method = &#39;r00&#39;)
+  shuffled_r00 &lt;- simulate(null_model_r00, nsim = num_iterations, burnin = 1000) #Shuffle adjacency matrix
+  connectance_r00 &lt;- apply(shuffled_r00, MARGIN = 3, connectance) # apply metric
+  # P-value: Which proportion of the simulations have a Q value larger than the observed?
+  P_value &lt;- sum(connectance_vec[1] &lt; connectance_r00)/length(connectance_r00)
+  # if P-value is larger than 0.5, subtract it from 1
+  if (P_value &gt; 0.5){
+    print(&quot;observed value is bigger than null value (did not say significant)&quot;)
+    P_value &lt;- 1 - P_value
+  }
+  print(paste0(&quot;P-value is: &quot;,P_value))
+  print(paste0(&quot;mean is: &quot;, mean(connectance_r00)))
+  print(paste0(&quot;sd is: &quot;, sd(connectance_r00)))
+  return(connectance_r00)
+}
+
+# connectance_sim1 &lt;- null_r00_simulation(wild_web, connectance, num_iterations = 1000)
+# connectance_sim2 &lt;- null_r00_simulation(b_wild_web, connectance, num_iterations = 1000)
+# connectance_sim3 &lt;- null_r00_simulation(domestic_web, connectance, num_iterations = 1000)
+# connectance_sim4 &lt;- null_r00_simulation(b_domestic_web, connectance, num_iterations = 1000)
+
+# now save the normalized (x / mean) value
 # store it in a vector
 connectance_norm &lt;- c()
 row_vec</code></pre>
@@ -2019,6 +2080,7 @@ transitivity_in_matrix &lt;- function(wild_mat){
   return(trans)
 }
 
+# curveball
 transitivity_sim1 &lt;- null_curveball_simulation(wild_web, transitivity_in_matrix, num_iterations = 1000)</code></pre>
 <pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
 [1] &quot;P-value is: 0&quot;
@@ -2039,7 +2101,13 @@ transitivity_sim1 &lt;- null_curveball_simulation(wild_web, transitivity_in_matr
 [1] &quot;P-value is: 0&quot;
 [1] &quot;mean is: 0.255341665653182&quot;
 [1] &quot;sd is: 0.0206789199009135&quot;</code></pre>
-<pre class="r"><code># now save the normalized (x - mean / sd) value = zscore
+<pre class="r"><code># r00
+# transitivity_sim1 &lt;- null_r00_simulation(wild_web, transitivity_in_matrix, num_iterations = 1000)
+# transitivity_sim2 &lt;- null_r00_simulation(b_wild_web, transitivity_in_matrix, num_iterations = 1000)
+# transitivity_sim3 &lt;- null_r00_simulation(domestic_web, transitivity_in_matrix, num_iterations = 1000)
+# transitivity_sim4 &lt;- null_r00_simulation(b_domestic_web, transitivity_in_matrix, num_iterations = 1000)
+
+# now save the normalized (x - mean / sd) value = zscore
 # store it in a vector
 transitivity_zscore &lt;- c()
 row_vec</code></pre>
@@ -2159,6 +2227,7 @@ modularity_in_matrix &lt;- function(wild_mat){
   return(mod)
 }
 
+# curveball
 modularity_sim1 &lt;- null_curveball_simulation(wild_web, modularity_in_matrix, num_iterations = 1000)</code></pre>
 <pre><code>[1] &quot;observed value is bigger than null value (did not say significant)&quot;
 [1] &quot;P-value is: 0&quot;
@@ -2179,7 +2248,13 @@ modularity_sim1 &lt;- null_curveball_simulation(wild_web, modularity_in_matrix, 
 [1] &quot;P-value is: 0&quot;
 [1] &quot;mean is: 0.292559441782375&quot;
 [1] &quot;sd is: 0.0150004565721355&quot;</code></pre>
-<pre class="r"><code># now save the normalized (x - mean / sd) value = zscore
+<pre class="r"><code># r00
+# modularity_sim1 &lt;- null_r00_simulation(wild_web, modularity_in_matrix, num_iterations = 1000)
+# modularity_sim2 &lt;- null_r00_simulation(b_wild_web, modularity_in_matrix, num_iterations = 1000)
+# modularity_sim3 &lt;- null_r00_simulation(domestic_web, modularity_in_matrix, num_iterations = 1000)
+# modularity_sim4 &lt;- null_r00_simulation(b_domestic_web, modularity_in_matrix, num_iterations = 1000)
+
+# now save the normalized (x - mean / sd) value = zscore
 # store it in a vector
 modularity_zscore &lt;- c()
 row_vec</code></pre>
@@ -2312,28 +2387,27 @@ for (i in 1:dim(wild_edge_BF)[1]){
   }
 }
 # remove type column
-wild_edge_BFn &lt;- wild_edge_new %&gt;% select(-type)</code></pre>
-<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
-<pre class="r"><code>colnames(wild_edge_BFn)</code></pre>
-<pre><code>Error in is.data.frame(x): object &#39;wild_edge_BFn&#39; not found</code></pre>
+wild_edge_BFn &lt;- wild_edge_new %&gt;% dplyr::select(-type)
+colnames(wild_edge_BFn)</code></pre>
+<pre><code>[1] &quot;X1&quot; &quot;X2&quot;</code></pre>
 <pre class="r"><code># bipartite adjacency network
-wild_bipartite_mat &lt;- table(wild_edge_BFn$X1,wild_edge_BFn$X2)</code></pre>
-<pre><code>Error in table(wild_edge_BFn$X1, wild_edge_BFn$X2): object &#39;wild_edge_BFn&#39; not found</code></pre>
-<pre class="r"><code>dim(wild_bipartite_mat)</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_bipartite_mat&#39; not found</code></pre>
+wild_bipartite_mat &lt;- table(wild_edge_BFn$X1,wild_edge_BFn$X2)
+dim(wild_bipartite_mat)</code></pre>
+<pre><code>[1] 143 121</code></pre>
 <pre class="r"><code>class(wild_bipartite_mat)</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_bipartite_mat&#39; not found</code></pre>
+<pre><code>[1] &quot;table&quot;</code></pre>
 <pre class="r"><code># Compute metrics
-nl_metrics &lt;- networklevel(wild_bipartite_mat)</code></pre>
-<pre><code>Error in empty(web): object &#39;wild_bipartite_mat&#39; not found</code></pre>
-<pre class="r"><code>nl_metrics[7]</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;nl_metrics&#39; not found</code></pre>
+nl_metrics &lt;- networklevel(wild_bipartite_mat)
+nl_metrics[7]</code></pre>
+<pre><code>nestedness 
+  2.389666 </code></pre>
 <pre class="r"><code>nl_metrics[8]</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;nl_metrics&#39; not found</code></pre>
+<pre><code>    NODF 
+2.012479 </code></pre>
 <p>Function and apply to all networks</p>
 <pre class="r"><code># get nestedness
 
-get_nestedness &lt;- function(wild_web){
+get_bipartite &lt;- function(wild_web){
   # Prune and make it into Bipartite
   get.edgelist(wild_web) %&gt;% dim()
   wild_edge &lt;- get.edgelist(wild_web) 
@@ -2356,7 +2430,7 @@ get_nestedness &lt;- function(wild_web){
     }
   }
   # remove type column
-  wild_edge_BFn &lt;- wild_edge_new %&gt;% select(-type)
+  wild_edge_BFn &lt;- wild_edge_new %&gt;% dplyr::select(-type)
   colnames(wild_edge_BFn)
   
   # bipartite adjacency network
@@ -2364,57 +2438,43 @@ get_nestedness &lt;- function(wild_web){
   dim(wild_bipartite_mat)
   class(wild_bipartite_mat)
   
-  # Compute metrics
-  nl_metrics &lt;- networklevel(wild_bipartite_mat)
-  print(nl_metrics[7])
-  print(nl_metrics[8])
-  return(nl_metrics)
+  return(wild_bipartite_mat)
 }
 
-wild_nest &lt;- get_nestedness(wild_web)</code></pre>
-<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
-<pre class="r"><code>dom_nest &lt;- get_nestedness(domestic_web)</code></pre>
-<pre><code>Error in select(., -type): unused argument (-type)</code></pre>
-<pre class="r"><code>wild_nest[c(7,8)]</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;wild_nest&#39; not found</code></pre>
-<pre class="r"><code>dom_nest[c(7,8)]</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): object &#39;dom_nest&#39; not found</code></pre>
-<p>Bipartite and modularity</p>
-<pre class="r"><code># modularity
-# mod &lt;- computeModules(wild_bipartite_mat)
-slotNames(mod)</code></pre>
-<pre><code>NULL</code></pre>
-<pre class="r"><code>mod@likelihood # This is the value of the modularity function Q. NOTICE THE @ SIGN (instead of $).</code></pre>
-<pre><code>Error in eval(expr, envir, enclos): trying to get slot &quot;likelihood&quot; from an object of a basic class (&quot;function&quot;) with no slots</code></pre>
-<pre class="r"><code>module_list &lt;- listModuleInformation(mod) # The output is rather cumbersome...
-par(mfrow=c(1,1))
-plotModuleWeb(mod)</code></pre>
-<pre class="r"><code># Visualization
+wild_bipartite_mat &lt;- get_bipartite(wild_web)
+dom_bipartite_mat &lt;- get_bipartite(domestic_web)
 
-plot_web_trophic &lt;- function(g){
-  basal &lt;- which(igraph::degree(g, mode = &#39;in&#39;) == 0) # Basal species do not have ingoing links
-  top &lt;- which(igraph::degree(g, mode = &#39;out&#39;) == 0) # Top species do not have outgoing links
-  interm &lt;- V(g)[which(!V(g) %in% c(basal,top))] # Intermediate are all the rest
-  
-  V(g)$troph_pos &lt;- rep(0,length(V(g)))
-  V(g)$troph_pos[which(V(g)$name %in% basal)] &lt;- 1
-  V(g)$troph_pos[which(V(g)$name %in% top)] &lt;- 3
-  V(g)$troph_pos[which(V(g)$name %in% interm)] &lt;- 2
-  # create a matrix forthe layout coordinates.
-  coords &lt;- matrix(nrow=length(V(g)), ncol=2) #
-  # The x positions are randomly selected
-  coords[,1] &lt;- runif(length(V(g)))
-  # The y positions are the trophoc positions
-  coords[,2] &lt;- V(g)$troph_pos
-  par(mar=c(0,0,0,0))
-  plot(g,layout=coords,
-              vertex.color=V(g)$troph_pos,
-              vertex.label=NA,
-              vertex.size=8,
-              edge.color=&#39;black&#39;,
-              edge.arrow.size=.3,
-              edge.width=.5)
-}</code></pre>
+# Compute metrics
+nl_wild &lt;- networklevel(wild_bipartite_mat)
+nl_dom &lt;- networklevel(dom_bipartite_mat)
+
+# wild
+nl_wild[c(7,8)]</code></pre>
+<pre><code>nestedness       NODF 
+  2.386401   2.012479 </code></pre>
+<pre class="r"><code># domesticated
+nl_dom[c(7,8)]</code></pre>
+<pre><code>nestedness       NODF 
+ 13.329161   2.246256 </code></pre>
+<p>Plot and visualize</p>
+<pre class="r"><code># NODF
+nodf_w &lt;- nestednodf(wild_bipartite_mat)
+nodf_d &lt;- nestednodf(dom_bipartite_mat)
+
+# Wild
+plot(nodf_w, col=&#39;red&#39;,
+       xlab=&quot;Fungi&quot;, ylab=&quot;Bacteria&quot;,
+       main=&quot;Wild (NODF=2.0125, p-value=0.019)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-30-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(nodf_d, col=&#39;red&#39;,
+       xlab=&quot;Fungi&quot;, ylab=&quot;Bacteria&quot;,
+       main=&quot;Domesticated (NODF=2.2463, p-value=0.988)&quot;)</code></pre>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-30-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>nest_sim_wild_cb &lt;- oecosimu(wild_bipartite_mat, nestednodf, &#39;curveball&#39;, nsimul = 1000)
+nest_sim_wild_r00 &lt;- oecosimu(wild_bipartite_mat, nestednodf, &#39;r00&#39;, nsimul = 1000)
+
+nest_sim_dom_cb &lt;- oecosimu(dom_bipartite_mat, nestednodf, &#39;curveball&#39;, nsimul = 1000)
+nest_sim_dom_r00 &lt;- oecosimu(dom_bipartite_mat, nestednodf, &#39;r00&#39;, nsimul = 1000)</code></pre>
 </div>
 <div id="motif" class="section level2">
 <h2>6. Motif</h2>
@@ -2426,7 +2486,7 @@ for (i in 0:15){ # note that counting starts at 0
        main = i + 1)
   box(col=&#39;red&#39;)
 }</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-32-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-31-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>dev.off()</code></pre>
 <pre><code>null device 
           1 </code></pre>
@@ -2447,13 +2507,18 @@ plot_motif &lt;- function(wild_web, title = &quot;Motif relative abundance (Wild
     mytheme
 }
 
-plot_motif(wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
-plot_motif(b_wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
+mt1 &lt;- plot_motif(wild_web, title = &quot;Wild-Bacteria-Fungi&quot;)
+mt2 &lt;- plot_motif(b_wild_web, title = &quot;Wild-Bacteria&quot;)
 # plot_motif(f_wild_web, title = &quot;Motif relative abundance (Wild)&quot;)
 
-plot_motif(domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)
-plot_motif(b_domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)
-# plot_motif(f_domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)</code></pre>
+mt3 &lt;- plot_motif(domestic_web, title = &quot;Domesticated-Bacteria-Fungi&quot;)
+mt4 &lt;- plot_motif(b_domestic_web, title = &quot;Domesticated-Bacteria&quot;)
+# plot_motif(f_domestic_web, title = &quot;Motif relative abundance (Wild)&quot;)
+
+# plot 4 in 1
+ggarrange(mt1, mt2 + rremove(&quot;ylab&quot;), mt3, mt4 + rremove(&quot;ylab&quot;),# + rremove(&quot;x.text&quot;) 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
+          ncol = 2, nrow = 2)</code></pre>
 <p>Nothing noteworthy.</p>
 </div>
 <div id="module-further-analysis" class="section level2">
@@ -2487,11 +2552,11 @@ ggr4 &lt;- plot_graph_module(b_domestic_web)
 ggarrange(ggr1 + rremove(&quot;legend&quot;), ggr2 + rremove(&quot;legend&quot;), ggr3 + rremove(&quot;legend&quot;), ggr4 + rremove(&quot;legend&quot;), # + rremove(&quot;x.text&quot;) 
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-32-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggarrange(ggr1, ggr2, ggr3, ggr4,
           labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;,&quot;D&quot;),
           ncol = 2, nrow = 2)</code></pre>
-<p><img src="figure/network_project.Rmd/unnamed-chunk-33-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/network_project.Rmd/unnamed-chunk-32-2.png" width="1056" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
